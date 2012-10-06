@@ -1,0 +1,24 @@
+- fonctions liens fb, g+, twitter
+
+	function fb_link($url = '', $text = '', $summary = '', $image = '') {
+		include(META_FILE);
+		if (empty($text)) $text = $title;
+		if (empty($summary)) $summary = $description;
+		return 'javascript:void(0);" onclick="window.open(\'http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Btitle%5D='.rawurlencode($text).'&amp;p%5Bsummary%5D='.rawurlencode($summary).'&amp;p%5Burl%5D='.rawurlencode($baselink.$url).'&amp;p%5Bimages%5D%5B0%5D='.rawurlencode($baselink.$image).'\', \'fb_share\', \'directories=no,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no,width=640,height=350\');';
+	}
+
+	function tw_link($url = '', $text = '') {
+		include(META_FILE);
+		if (empty($text)) $text = $title;
+		return 'http://twitter.com/share?url='.rawurlencode($baselink.$url).'&amp;text='.rawurlencode($text);
+	}
+
+
+
+- routing robots.txt (cf. z)
+
+User-agent: *
+Disallow: /
+#Sitemap: http://www.zaibatsu.fr/sitemap.xml
+
+- routing less (cf. z)

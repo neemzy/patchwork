@@ -1,0 +1,10 @@
+{
+    "require": {
+        "silex/silex": "1.0.*",
+        "twig/twig": ">=1.8,<2.0-dev",
+        "symfony/twig-bridge": "2.1.*",
+        "gabordemooij/redbean": "*",
+        "sybio/image-workshop": "*"
+    },
+    "minimum-stability": "dev"
+}

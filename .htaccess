@@ -1,0 +1,22 @@
+SetEnv PHP_VER 5_3
+
+AddType video/mp4 .mp4 .m4v
+AddType video/ogg .ogv
+AddDefaultCharset UTF-8
+Options -Indexes
+Options +FollowSymLinks
+RewriteEngine On
+
+#RewriteCond %{HTTP_HOST} !^www\.
+#RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [L,R=301,QSA]
+RewriteCond %{THE_REQUEST} \ (.*)//+(.*)\  [NC]
+RewriteRule ^(.*)$ %1/%2 [L,R=301]
+RewriteCond %{HTTP_HOST} (.*)\.$
+RewriteRule ^(.*)$ http://%1/$1 [L,R=301]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/patchwork/admin/$
+RewriteRule ^(.*)/$ http://%{HTTP_HOST}/patchwork/$1 [L,R=301]
+RewriteRule ^index\.php/(.*)$ /$1 [L,R=301]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [E=REMOTE_USER:%{HTTP:Authorization},L]
