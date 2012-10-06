@@ -14,9 +14,10 @@ RewriteRule ^(.*)$ %1/%2 [L,R=301]
 RewriteCond %{HTTP_HOST} (.*)\.$
 RewriteRule ^(.*)$ http://%1/$1 [L,R=301]
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_URI} !^/patchwork/admin/$
-RewriteRule ^(.*)/$ http://%{HTTP_HOST}/patchwork/$1 [L,R=301]
+RewriteCond %{REQUEST_URI} !^/admin/$
+RewriteRule ^(.*)/$ http://%{HTTP_HOST}/$1 [L,R=301]
 RewriteRule ^index\.php/(.*)$ /$1 [L,R=301]
 
-RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-f [OR]
+RewriteCond %{REQUEST_FILENAME} \.less$
 RewriteRule ^ index.php [E=REMOTE_USER:%{HTTP:Authorization},L]

@@ -13,9 +13,9 @@ class AdminController implements ControllerProviderInterface
     {
         $ctrl = $app['controllers_factory'];
 
-        $auth = function()
+        $auth = function() use ($app)
         {
-            /*$username = $app['request']->server->get('PHP_AUTH_USER', false);
+            $username = $app['request']->server->get('PHP_AUTH_USER', false);
             $password = $app['request']->server->get('PHP_AUTH_PW');
 
 		    if (( ! $username || ! $password) && preg_match('/Basic\s+(.*)$/i', $_SERVER['REDIRECT_REMOTE_USER'], $matches))
@@ -31,7 +31,7 @@ class AdminController implements ControllerProviderInterface
                 $response->headers->set('WWW-Authenticate', sprintf('Basic realm="%s"', 'Administration'));
                 $response->setStatusCode(401, 'Please sign in.');
                 return $response;
-            }*/
+            }
         };
 
 
@@ -102,7 +102,7 @@ class AdminController implements ControllerProviderInterface
 
             $data = array_flip(array('title', 'content'));
             foreach ($data as $key => $null)
-                $data[$key] = $request->get($key);
+                $data[$key] = strip_tags($request->get($key));
 
             $asserts = new Assert\Collection(array(
                 'title' => new Assert\NotBlank(),
@@ -115,7 +115,7 @@ class AdminController implements ControllerProviderInterface
                 $app['session']->setFlash('error', true);
                 $message = '<p>L\'enregistrement du post a échoué pour les raisons suivantes :</p><ul class="bullets">';
                 foreach ($errors as $error)
-                    $message .= '<li><strong>'.$error->getPropertyPath().'</strong> : '.$error->getMessage().'</li>';
+                    $message .= '<li><strong>'.$app['translator']->trans($error->getPropertyPath()).'</strong> : '.$app['translator']->trans($error->getMessage()).'</li>';
                 $message .= '</ul>';
                 $app['session']->setFlash('message', $message);
                 return $app['twig']->render('admin/form.twig', array(
@@ -151,18 +151,32 @@ class AdminController implements ControllerProviderInterface
 			
 			    $dir = dirname(__DIR__).'/assets/img/post/';
 			    $file = $id_post.'.'.$extension;
+                unlink($dir.$post->image);
 			    $image->move($dir, $file);
 			
-			    $iw = new ImageWorkshop(array('imageFromPath' => $dir.$file));
-                $iw->resizeInPixel(600, null, true, 0, 0, 'MM');
+			    $iw = new PHPImageWorkshop\ImageWorkshop(array('imageFromPath' => $dir.$file));
+                $iw->resizeInPixel(350, null, true, 0, 0, 'MM');
 			    $iw->save($dir, $file, false, null, 90);
 
-			    unlink($dir.$post->image);
 			    $post->image = $file;
 			    R::store($post);
 		    }
             return $app->redirect($app['url_generator']->generate('post.form', array('id' => $id_post)));
         })->assert('id', '\d+')->value('id', 0)->before($auth);
+
+
+
+        // Post image delete
+        $app->get('/post/delete_image/{id}', function($id) use ($app) {
+            $app['session']->clearFlashes();
+            $app['session']->setFlash('message', 'L\'image a bien été supprimée');
+            $post = R::load('post', $id);
+		    $dir = dirname(__DIR__).'/assets/img/post/';
+		    unlink($dir.$post->image);
+		    $post->image = null;
+		    R::store($post);
+            return $app->redirect($this->app['url_generator']->generate('post.form', array('id' => $id)));
+        })->bind('post.delete_image')->assert('id', '\d+')->before($auth);
 
 
 

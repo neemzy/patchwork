@@ -37,4 +37,20 @@ class Tools
 	public function htmail($from, $to, $subject, $message, $headers = '') {
 		return mail($to, '=?UTF-8?B?'.base64_encode($subject).'?=', $message, 'MIME-Version: 1.0'.PHP_EOL.'Content-type: text/html; charset=utf-8'.PHP_EOL.'From: '.$from.(($headers != '') ? PHP_EOL.$headers : ''));
 	}
+
+    // Facebook link generator
+    public function fb_link($url, $text, $summary, $image)
+    {
+		return 'javascript:void(0);" onclick="window.open(\'http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Btitle%5D='.rawurlencode($text).'&amp;p%5Bsummary%5D='.rawurlencode($summary).'&amp;p%5Burl%5D='.rawurlencode($url).'&amp;p%5Bimages%5D%5B0%5D='.rawurlencode($image).'\', \'fb_share\', \'directories=no,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no,width=640,height=350\');';
+    }
+
+    // Twitter link generator
+	public function tw_link($url, $text) {
+		return 'http://twitter.com/share?url='.rawurlencode($url).'&amp;text='.rawurlencode($text);
+	}
+
+    // Google+ link generator
+    public function gp_link($url, $text) {
+        return 'https://plus.google.com/share?url='.rawurlencode($url);
+    }
 } 

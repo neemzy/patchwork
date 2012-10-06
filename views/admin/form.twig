@@ -24,8 +24,8 @@
 			<div class="holder">
 				<input type="file" name="image" />
 				{% if post.image %}
-					<img style="margin: 0px 10px;" src="{{ asset('img/post/' ~ post.image) }}" alt="Image non trouvée !" />
 					<a class="btn" title="Supprimer l'image" href="{{ path('post.delete_image', { 'id': post.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');"><i class="icon-trash"></i></a>
+					<img style="margin: 0px 10px;" src="{{ asset('img/post/' ~ post.image) }}" alt="Image non trouvée !" />
 				{% endif %}
 			</div>
 			<div class="clrb"></div>
