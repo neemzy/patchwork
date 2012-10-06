@@ -15,7 +15,7 @@ ini_set('session.use_only_cookies', 1);
 mb_internal_encoding('UTF-8');
 setlocale(LC_ALL, 'fr_FR.UTF8');
 $app = new Silex\Application();
-R::setup('mysql:host=localhost;dbname=', '', '');
+R::setup('mysql:host=localhost;dbname=patchwork', 'root', 'admin');
 
 // Controllers
 $app->mount('/', new FrontController());

@@ -1,1 +1,39 @@
-body { padding-top: 60px; } 
+body { padding: 60px 0px 40px; }
+.nav-collapse { height: auto !important; }
+
+
+
+/** Lists **/
+
+.nav-tabs.nav-stacked { margin-bottom: 50px; }
+
+.nav-tabs.nav-stacked > li {
+    display: block;
+    border: 1px solid #DDD;
+    height: 26px;
+    line-height: 26px;
+    white-space: nowrap;
+    padding: 8px;
+}
+
+.nav-tabs.nav-stacked > li .btn-group { float: right; }
+
+
+
+/** Forms **/
+
+label span { vertical-align: 3px; }
+input[type=text], select, textarea { margin-left: 10px !important; }
+input[type=text], textarea { width: 500px; }
+select, textarea#content { width: 512px; }
+textarea { height: 200px; }
+form { text-align: right; }
+form .btn-group { clear: both; }
+.clrb { clear: both; }
+
+.holder {
+	float: right;
+	width: 514px;
+	margin: 0px 0px 10px 10px;
+	text-align: left;
+}

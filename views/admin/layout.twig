@@ -22,7 +22,7 @@
                 <a class="brand" href="{{ path('home') }}" target="_blank" title="Retour au site">Patchwork</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav">
-                        <li class="active"><a href="{{ path('admin.home') }}">Accueil</a></li>
+                        <li class="active"><a href="{{ path('post.list') }}">Posts</a></li>
                     </ul>
                 </div>
             </div>
@@ -30,7 +30,8 @@
     </div>
     <div class="container">{% block main %}{% endblock %}</div>
     <script src="http://code.jquery.com/jquery.min.js"></script>
-    <script src=""></script>
+	<script src="{{ asset('js/nicEdit.js') }}"></script>
+	<script>$(function() { new nicEditor({ iconsPath: '{{ asset('img/nicEditorIcons.gif') }}' }).panelInstance('content'); });</script>
 </body>
 
 </html>
