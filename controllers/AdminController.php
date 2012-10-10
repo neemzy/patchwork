@@ -125,9 +125,9 @@ class AdminController implements ControllerProviderInterface
 
             foreach ($data as $key => $val)
                 $post->$key = $val;
-            $post->posted = date('Y-m-d H:i:s');
             if ( ! $id)
             {
+                $post->posted = date('Y-m-d H:i:s');
                 $position = 0;
                 $posts = R::findAll('post');
                 if (is_array($posts))
