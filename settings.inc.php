@@ -16,7 +16,9 @@ $translations = array(
         'fr' => array(
             '[name]' => 'Nom',
             '[desc]' => 'Descriptif',
-            'This value should not be blank.' => 'Ce champ est requis.'
+            'This value should not be blank.' => 'Ce champ est requis.',
+            'This value is not valid.' => 'Ce champ est invalide.',
+            'This value is not a valid email address.' => 'Ce champ doit contenir une adresse e-mail valide.'
         ),
     ),
 );
