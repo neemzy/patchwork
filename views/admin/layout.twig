@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Administration</title>
-    <meta name="author" content="Be Seen" />
+    <meta name="author" content="Denain" />
     <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}" />
@@ -19,10 +19,10 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a class="brand" href="{{ path('home') }}" target="_blank" title="Retour au site">Patchwork</a>
+                <a class="brand" href="{{ path('home') }}" target="_blank" title="Retour au site">Pizz&alpha;Shop</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav">
-                        <li class="active"><a href="{{ path('post.list') }}">Posts</a></li>
+                        <li class="active"><a href="{{ path('pizza.list') }}">Pizzas</a></li>
                     </ul>
                 </div>
             </div>
@@ -31,7 +31,7 @@
     <div class="container">{% block main %}{% endblock %}</div>
     <script src="http://code.jquery.com/jquery.min.js"></script>
 	<script src="{{ asset('js/nicEdit.js') }}"></script>
-	<script>$(function() { new nicEditor({ iconsPath: '{{ asset('img/nicEditorIcons.gif') }}' }).panelInstance('content'); });</script>
+	<script>$(function() { new nicEditor({ iconsPath: '{{ asset('img/nicEditorIcons.gif') }}' }).panelInstance('desc'); });</script>
 </body>
 
 </html>

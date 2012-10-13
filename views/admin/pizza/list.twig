@@ -1,0 +1,40 @@
+{% extends "admin/layout.twig" %}
+
+{% block main %}
+
+    <div class="page-header"><h1>Liste des pizzas</h1></div>
+
+    {% if app.session.hasFlash('message') %}
+        <div class="alert alert-success">
+            {{ app.session.getFlash('message') }}
+        </div>
+    {% endif %}
+
+    {% if pizzas is defined and pizzas|length %}
+        <ul class="nav nav-tabs nav-stacked">
+            {% for pizza in pizzas %}
+                {% set toggle_title = 'Activer' %}
+                {% set toggle_icon = 'remove' %}
+                {% if pizza.active %}
+                    {% set toggle_title = 'Désactiver' %}
+                    {% set toggle_icon = 'ok' %}
+                {% endif %}
+                <li>
+                    <div class="btn-group">
+                        {% if not loop.first %}<a class="btn btn-small" href="{{ path('pizza.move', { 'id': pizza.id, 'up': 1 }) }}" title="Monter"><i class="icon-arrow-up"></i></a>{% endif %}
+                        {% if not loop.last %}<a class="btn btn-small" href="{{ path('pizza.move', { 'id': pizza.id, 'up': 0 }) }}" title="Descendre"><i class="icon-arrow-down"></i></a>{% endif %}
+                        <a class="btn btn-small" href="{{ path('pizza.toggle', { 'id': pizza.id }) }}" title="{{ toggle_title }}"><i class="icon-{{ toggle_icon }}"></i></a>
+                        <a class="btn btn-small" href="{{ path('pizza.post', { 'id': pizza.id }) }}" title="Modifier"><i class="icon-edit"></i></a>
+                        <a class="btn btn-small" href="{{ path('pizza.delete', { 'id': pizza.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');" title="Supprimer"><i class="icon-trash"></i></a>
+                    </div>
+				    {{ pizza.name }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Vous n'avez créé aucune pizza pour le moment.</p>
+    {% endif %}
+
+    <a class="btn btn-inverse pull-right" href="{{ path('pizza.post') }}"><i class="icon-white icon-pencil"></i> Ajouter une pizza</a>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "admin/layout.twig" %}
+{% block main %}
+
+    <div class="page-header"><h1>{% if pizza.id %}Modifier{% else %}Ajouter{% endif %} une pizza</h1></div>
+
+    {% if app.session.hasFlash('message') %}
+        <div class="alert alert-{% if app.session.hasFlash('error') %}error{% else %}success{% endif %}">
+            {{ app.session.getFlash('message')|raw }}
+        </div>
+    {% endif %}
+
+    <form method="post" class="span8 offset2" enctype="multipart/form-data">
+        <label>
+            <span>Nom</span>
+            <input type="text" name="name" value="{% if app.request.get('name') %}{{ app.request.get('name') }}{% else %}{{ pizza.name }}{% endif %}" />
+        </label>
+        <label>
+            <span>Contenu</span>
+            <div class="holder"><textarea name="desc" id="desc" class="nic">{% if app.request.get('desc') %}{{ app.request.get('desc') }}{% else %}{{ pizza.desc }}{% endif %}</textarea></div>
+            <div class="clrb"></div>
+        </label>
+		<label>
+			<span>Image</span>
+			<div class="holder">
+				<input type="file" name="image" />
+				{% if pizza.image %}
+					<a class="btn" title="Supprimer l'image" href="{{ path('pizza.delete_image', { 'id': pizza.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');"><i class="icon-trash"></i></a>
+					<img style="margin: 0px 10px;" src="{{ asset('img/pizza/' ~ pizza.image) }}" alt="Image non trouvée !" />
+				{% endif %}
+			</div>
+			<div class="clrb"></div>
+		</label>
+        <div class="btn-group pull-right">
+            <button class="btn btn-inverse"><i class="icon-ok icon-white"></i> Valider</button>
+            <a class="btn" href="{{ path('pizza.list') }}"><i class="icon-list"></i> Retour à la liste</a>
+        </div>
+    </form>
+
+{% endblock %}

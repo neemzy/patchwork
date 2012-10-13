@@ -10,5 +10,13 @@
         "gabordemooij/redbean": "*",
         "sybio/image-workshop": "*"
     },
+
+    "autoload": {
+        "psr-0": {
+            "Pizza": "src/",
+            "Entea": "src/"
+        }
+    },
+
     "minimum-stability": "dev"
 }
