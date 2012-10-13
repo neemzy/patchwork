@@ -37,6 +37,7 @@ $app['translator.domains'] = $translations;
 
 // Twig extensions
 $app['twig']->addExtension(new Entea\Twig\Extension\AssetExtension($app));
+$app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
 $app['twig']->addFunction('fb_link', new Twig_Function_Function('Tools::fb_link'));
 $app['twig']->addFunction('tw_link', new Twig_Function_Function('Tools::tw_link'));
 $app['twig']->addFunction('gp_link', new Twig_Function_Function('Tools::gp_link'));

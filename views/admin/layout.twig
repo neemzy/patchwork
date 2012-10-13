@@ -22,7 +22,7 @@
                 <a class="brand" href="{{ path('home') }}" target="_blank" title="Retour au site">Pizz&alpha;Shop</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav">
-                        <li class="active"><a href="{{ path('pizza.list') }}">Pizzas</a></li>
+                        <li{% if strpos(app.request.getRequestURI(), 'pizza') %} class="active"{% endif %}><a href="{{ path('pizza.list') }}">Pizzas</a></li>
                     </ul>
                 </div>
             </div>
