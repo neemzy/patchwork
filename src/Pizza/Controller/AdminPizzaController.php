@@ -38,7 +38,7 @@ class AdminPizzaController extends AdminController
             if (count($errors))
             {
                 $app['session']->setFlash('error', true);
-                $message = '<p>L\'enregistrement de la pizza a échoué pour les raisons suivantes :</p><ul class="bullets">';
+                $message = '<p>L\'enregistrement de la pizza a échoué pour les raisons suivantes :</p><ul>';
                 foreach ($errors as $error)
                     $message .= '<li><strong>'.$app['translator']->trans($error->getPropertyPath()).'</strong> : '.$app['translator']->trans($error->getMessage()).'</li>';
                 $message .= '</ul>';
