@@ -15,12 +15,11 @@
     <meta name="author" content="Be Seen" />
     <base href="{{ url('home') }}" />
 	<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-    <link rel="stylesheet" href="{{ asset('css/reset.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/test.less') }}" />
+    <link rel="stylesheet" href="{{ asset('css/reset.less') }}" />
+    <link rel="stylesheet" href="{{ asset('css/style.less') }}" />
 	<!--[if !IE]><!-->
-		<style>@import url('{{ asset('css/webkit.css') }}') screen and (-webkit-min-device-pixel-ratio: 0);</style>
-		<script>if (window.opera) document.write('<link rel="stylesheet" href="{{ asset('css/opera.css') }}" />');</script>
+		<style>@import url('{{ asset('css/webkit.less') }}') screen and (-webkit-min-device-pixel-ratio: 0);</style>
+		<script>if (window.opera) document.write('<link rel="stylesheet" href="{{ asset('css/opera.less') }}" />');</script>
 	<!--<![endif]-->
 	<link rel="apple-touch-icon" href="{{ asset('img/apple-touch-icon.png') }}" />
 	<link rel="apple-touch-icon" sizes="72x72" href="{{ asset('img/apple-touch-icon-72x72.png') }}" />
