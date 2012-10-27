@@ -64,9 +64,7 @@ class FrontController implements ControllerProviderInterface
         {
             return $app->redirect($app['url_generator']->generate('pizza.list'));
         });
-
-
-
+        
         return $ctrl;
     }
 }
