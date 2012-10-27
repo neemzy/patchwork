@@ -16,8 +16,8 @@ $app = new Silex\Application();
 R::setup('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
 
 // Controllers
-$app->mount('/', new Pizza\Controller\FrontController());
-$app->mount('/admin/pizza', new Pizza\Controller\AdminPizzaController());
+$app->mount('/', new Patchwork\Controller\FrontController());
+$app->mount('/admin/pizza', new Patchwork\Controller\AdminPizzaController());
 
 // Session
 $app['session'] = $app->share(function() {

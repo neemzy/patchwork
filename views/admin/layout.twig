@@ -6,7 +6,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Administration</title>
-    <meta name="author" content="Denain" />
     <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}" />
@@ -19,7 +18,7 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a class="brand" href="{{ path('home') }}" target="_blank" title="Retour au site">Pizz&alpha;Shop</a>
+                <a class="brand" href="{{ path('home') }}" target="_blank" title="Retour au site">Patchwork</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav">
                         <li{% if strpos(app.request.getRequestURI(), 'pizza') %} class="active"{% endif %}><a href="{{ path('pizza.list') }}">Pizzas</a></li>

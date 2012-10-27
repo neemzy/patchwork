@@ -1,6 +1,6 @@
 <?php
 
-namespace Pizza\Helper;
+namespace Patchwork\Helper;
 
 class Tools
 {

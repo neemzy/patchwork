@@ -1,6 +1,6 @@
 <?php
 
-namespace Pizza\Controller;
+namespace Patchwork\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

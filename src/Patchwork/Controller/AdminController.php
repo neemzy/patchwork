@@ -1,6 +1,6 @@
 <?php
 
-namespace Pizza\Controller;
+namespace Patchwork\Controller;
 
 use Silex\Application;
 use Silex\ControllerProviderInterface;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints as Assert;
 use \R;
 
-class AdminController implements ControllerProviderInterface
+abstract class AdminController implements ControllerProviderInterface
 {
     public function connect(Application $app)
     {
@@ -38,7 +38,7 @@ class AdminController implements ControllerProviderInterface
 
 
 
-    protected function route($app, $auth, $class = '')
+    protected function route($app, $auth, $class)
     {
         $ctrl = $app['controllers_factory'];
 
@@ -48,7 +48,7 @@ class AdminController implements ControllerProviderInterface
             return $app['twig']->render('admin/'.$class.'/list.twig', array(
                 $class.'s' => R::findAll($class, 'ORDER BY position')
             ));
-        })->bind($class.'.list');
+        })->bind($class.'.list')->before($auth);
 
         // Move
         $ctrl->get('/move/{id}/{up}', function($id, $up) use ($app, $class)

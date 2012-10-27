@@ -1,6 +1,6 @@
 <?php
 
-namespace Pizza\Controller;
+namespace Patchwork\Controller;
 
 use Silex\Application;
 use Silex\ControllerProviderInterface;
