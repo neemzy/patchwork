@@ -2,9 +2,9 @@
 
 require_once(__DIR__.'/vendor/autoload.php');
 require_once(__DIR__.'/settings.inc.php');
-require_once(__DIR__.'/vendor/gabordemooij/redbean/RedBean/redbean.inc.php');
 
 use Symfony\Component\HttpFoundation\Session\Session;
+use \RedBean_Facade as R;
 
 // Scaffolding
 error_reporting(E_ALL ^ E_NOTICE);
