@@ -13,7 +13,10 @@ ini_set('session.use_only_cookies', 1);
 mb_internal_encoding('UTF-8');
 setlocale(LC_ALL, 'fr_FR.UTF8');
 $app = new Silex\Application();
+
+// ORM
 R::setup('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
+R::$toolbox->getRedBean()->setBeanHelper(new Patchwork\Helper\Bean());
 
 // Controllers
 $app->mount('/', new Patchwork\Controller\FrontController());
