@@ -87,7 +87,14 @@ abstract class AdminController implements ControllerProviderInterface
             $bean = R::load($class, $id);
             $dir = dirname(dirname(dirname(__DIR__))).'/assets/img/'.$class.'/';
             unlink($dir.$bean->image);
+            $position = $bean->position;
             R::trash($bean);
+            $beans = R::find($class, 'position > ?', array($position));
+            foreach ($beans as $b)
+            {
+                $b->position--;
+                R::store($b);
+            }
             return $app->redirect($app['url_generator']->generate($class.'.list'));
         })->bind($class.'.delete')->assert('id', '\d+')->before($auth);
 
