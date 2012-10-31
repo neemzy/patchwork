@@ -56,8 +56,8 @@
 			toMove = sObj.find('ul').eq(0);
 			slideWidth = sObj.width();
 			slideNb = toMove.children().length;
-			sObj.find('.arrow').bind('click', function() { slideIt($(this).is('.arrow + .arrow')); });
-			sDots.bind('click', function() { slideIt(sDots.index($(this))); }).eq(0).addClass('current');
+			sObj.find('.arrow').on('click', function() { slideIt($(this).is('.arrow + .arrow')); });
+			sDots.on('click', function() { slideIt(sDots.index($(this))); }).eq(0).addClass('current');
 			if (isAuto) autoSlide = setInterval('slideIt(true)', slideDelay);
 		}
 	});
