@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{ asset('css/reset.less') }}" />
     <link rel="stylesheet" href="{{ asset('css/style.less') }}" />
 	<!--[if !IE]><!-->
-		<style>@import url('{{ asset('css/webkit.less') }}') screen and (-webkit-min-device-pixel-ratio: 0);</style>
+        <link rel="stylesheet" href="{{ asset('css/webkit.less') }}" media="screen and (-webkit-min-device-pixel-ratio: 0)" />
 		<script>if (window.opera) document.write('<link rel="stylesheet" href="{{ asset('css/opera.less') }}" />');</script>
 	<!--<![endif]-->
 	<link rel="apple-touch-icon" href="{{ asset('img/apple-touch-icon.png') }}" />
