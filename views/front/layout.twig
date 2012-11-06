@@ -15,7 +15,6 @@
     <meta name="author" content="Be Seen" />
     <base href="{{ url('home') }}" />
 	<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-    <link rel="stylesheet" href="{{ asset('css/reset.less') }}" />
     <link rel="stylesheet" href="{{ asset('css/style.less') }}" />
 	<!--[if !IE]><!-->
         <link rel="stylesheet" href="{{ asset('css/webkit.less') }}" media="screen and (-webkit-min-device-pixel-ratio: 0)" />
@@ -29,9 +28,7 @@
 <body>
 	<section id="main" role="main">{% block main %}{% endblock %}</section>
 	<script src="http://code.jquery.com/jquery.min.js"></script>
-	<script src="{{ asset('js/reset.js') }}"></script>
 	<script src="{{ asset('js/script.js') }}"></script>
-    <!--[if lte IE 7]><script src="{{ asset('js/ie7.js') }}"></script><![endif]-->
 </body>
 
 </html>
