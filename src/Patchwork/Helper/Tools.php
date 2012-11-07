@@ -35,11 +35,6 @@ class Tools
         return ((int) date('t', strtotime($year.'-'.str_pad($month, 2, '0', STR_PAD_LEFT).'-01')));
     }
 
-    // UTF-8 HTML mail sending
-    public static function htmail($from, $to, $subject, $message, $headers = '') {
-        return mail($to, '=?UTF-8?B?'.base64_encode($subject).'?=', $message, 'MIME-Version: 1.0'.PHP_EOL.'Content-type: text/html; charset=utf-8'.PHP_EOL.'From: '.$from.(($headers != '') ? PHP_EOL.$headers : ''));
-    }
-
     // Facebook link generator
     public static function fb_link($url, $text, $summary, $image)
     {
@@ -55,4 +50,4 @@ class Tools
     public static function gp_link($url, $text) {
         return 'https://plus.google.com/share?url='.rawurlencode($url).'" target="_blank';
     }
-} 
+}
