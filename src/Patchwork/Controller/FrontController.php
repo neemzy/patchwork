@@ -51,9 +51,9 @@ class FrontController implements ControllerProviderInterface
         // Homepage
         $ctrl->get('/', function() use ($app)
         {
-			$root = str_replace('index.php/', '', $app['url_generator']->generate('home'));
-			if ($_SERVER['REQUEST_URI'] != $root)
-				return $app->redirect($root, 301);
+            $root = str_replace('index.php/', '', $app['url_generator']->generate('home'));
+            if ($_SERVER['REQUEST_URI'] != $root)
+                return $app->redirect($root, 301);
             return $app['twig']->render('front/home.twig');
         })->bind('home');
 
