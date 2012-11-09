@@ -19,6 +19,7 @@
 .gt:before { content: '> '; }
 .required:after { content: ' *'; }
 .center { text-align: center; }
+.placeholder { color: #777777; }
 
 
 
@@ -89,8 +90,8 @@ ul { list-style-type: none; }
 ::-webkit-validation-bubble-arrow, ::-webkit-validation-bubble-message {
 	background: #D4D0C8 none;
 	border: 1px solid #808080;
-	box-shadow: none;
 	-webkit-box-shadow: none;
+	box-shadow: none;
 }
 
 ::-webkit-validation-bubble-arrow {
@@ -99,16 +100,15 @@ ul { list-style-type: none; }
 }
 
 ::-webkit-validation-bubble-message {
-	font-family: Helvetica, Arial, sans-serif;
+	.sans;
 	font-size: 11px;
 	white-space: nowrap;
 }
 
-::-webkit-validation-bubble-icon { display: none; }
-::-webkit-input-placeholder { color: #777777; }
-:-ms-input-placeholder { color: #777777; }
-.placeholder { color: #777777; }
-:-moz-placeholder { color: #777777; }
+::-webkit-validation-bubble-icon { .hidden; }
+::-webkit-input-placeholder { .placeholder; }
+:-ms-input-placeholder { .placeholder; }
+:-moz-placeholder { .placeholder; }
 :-moz-ui-invalid { box-shadow: none; }
 
 ::-moz-focus-inner {
