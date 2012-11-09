@@ -35,9 +35,6 @@
         }
     }
     
-    // jQuery outerHTML
-    $.fn.outer = function() { return $($('<div></div>').html(this.clone())).html(); }
-    
 
 
     // DOM ready
@@ -48,14 +45,6 @@
         if (typeof console === 'undefined') console = { log: function(){} };
         initPlaceHolders();
 
-        // Custom rel attribute handling
-        $('[data-rel]').each(function()
-        {
-            var that = $(this);
-            that.attr('rel', function(i, val) { return ((typeof val === 'undefined') ? '' : val+' ')+that.data('rel'); }).removeAttr('data-rel');
-        });
-
-        // lte IE 8
         if ($('body').is('ie6, ie7'))
         {
             $('.gt').prepend('<span>&gt; </span>');
