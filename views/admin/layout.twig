@@ -9,9 +9,9 @@
     <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/admin.less') }}" />
-	<link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
-	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png" />
-	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png" />
 </head>
 
 <body>
@@ -29,8 +29,8 @@
     </div>
     <div class="container">{% block main %}{% endblock %}</div>
     <script src="http://code.jquery.com/jquery.min.js"></script>
-	<script src="{{ asset('js/nicEdit.js') }}"></script>
-	<script>$(function() { new nicEditor({ iconsPath: '{{ asset('img/nicEditorIcons.gif') }}' }).panelInstance('desc'); });</script>
+    <script src="{{ asset('js/nicEdit.js') }}"></script>
+    <script>$(function() { new nicEditor({ iconsPath: '{{ asset('img/nicEditorIcons.gif') }}' }).panelInstance('desc'); });</script>
 </body>
 
 </html>

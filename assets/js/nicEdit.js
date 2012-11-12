@@ -10,28 +10,28 @@ var bkExtend=function(){var A=arguments;if(A.length==1){A=[this,A[0]]}for(var B 
 
 
 var nicEditorConfig = bkClass.extend({
-	buttons : {
-		'bold' : {name : __('Click to Bold'), command : 'Bold', tags : ['B','STRONG'], css : {'font-weight' : 'bold'}, key : 'b'},
-		'italic' : {name : __('Click to Italic'), command : 'Italic', tags : ['EM','I'], css : {'font-style' : 'italic'}, key : 'i'},
-		'underline' : {name : __('Click to Underline'), command : 'Underline', tags : ['U'], css : {'text-decoration' : 'underline'}, key : 'u'},
-		'left' : {name : __('Left Align'), command : 'justifyleft', noActive : true},
-		'center' : {name : __('Center Align'), command : 'justifycenter', noActive : true},
-		'right' : {name : __('Right Align'), command : 'justifyright', noActive : true},
-		'justify' : {name : __('Justify Align'), command : 'justifyfull', noActive : true},
-		'ol' : {name : __('Insert Ordered List'), command : 'insertorderedlist', tags : ['OL']},
-		'ul' : 	{name : __('Insert Unordered List'), command : 'insertunorderedlist', tags : ['UL']},
-		'subscript' : {name : __('Click to Subscript'), command : 'subscript', tags : ['SUB']},
-		'superscript' : {name : __('Click to Superscript'), command : 'superscript', tags : ['SUP']},
-		'strikethrough' : {name : __('Click to Strike Through'), command : 'strikeThrough', css : {'text-decoration' : 'line-through'}},
-		'removeformat' : {name : __('Remove Formatting'), command : 'removeformat', noActive : true},
-		'indent' : {name : __('Indent Text'), command : 'indent', noActive : true},
-		'outdent' : {name : __('Remove Indent'), command : 'outdent', noActive : true},
-		'hr' : {name : __('Horizontal Rule'), command : 'insertHorizontalRule', noActive : true}
-	},
-	iconsPath : '../nicEditorIcons.gif',
-	buttonList : ['save','bold','italic','underline','left','center','right','justify','ol','ul','fontSize','fontFamily','fontFormat','indent','outdent','image','upload','link','unlink','forecolor','bgcolor'],
-	iconList : {"bold":1,"center":2,"hr":3,"indent":4,"italic":5,"justify":6,"left":7,"ol":8,"outdent":9,"removeformat":10,"right":11,"save":12,"strikethrough":13,"subscript":14,"superscript":15,"ul":16,"underline":17,"image":18,"link":19,"unlink":20,"close":21,"upload":22}
-	
+    buttons : {
+        'bold' : {name : __('Click to Bold'), command : 'Bold', tags : ['B','STRONG'], css : {'font-weight' : 'bold'}, key : 'b'},
+        'italic' : {name : __('Click to Italic'), command : 'Italic', tags : ['EM','I'], css : {'font-style' : 'italic'}, key : 'i'},
+        'underline' : {name : __('Click to Underline'), command : 'Underline', tags : ['U'], css : {'text-decoration' : 'underline'}, key : 'u'},
+        'left' : {name : __('Left Align'), command : 'justifyleft', noActive : true},
+        'center' : {name : __('Center Align'), command : 'justifycenter', noActive : true},
+        'right' : {name : __('Right Align'), command : 'justifyright', noActive : true},
+        'justify' : {name : __('Justify Align'), command : 'justifyfull', noActive : true},
+        'ol' : {name : __('Insert Ordered List'), command : 'insertorderedlist', tags : ['OL']},
+        'ul' :  {name : __('Insert Unordered List'), command : 'insertunorderedlist', tags : ['UL']},
+        'subscript' : {name : __('Click to Subscript'), command : 'subscript', tags : ['SUB']},
+        'superscript' : {name : __('Click to Superscript'), command : 'superscript', tags : ['SUP']},
+        'strikethrough' : {name : __('Click to Strike Through'), command : 'strikeThrough', css : {'text-decoration' : 'line-through'}},
+        'removeformat' : {name : __('Remove Formatting'), command : 'removeformat', noActive : true},
+        'indent' : {name : __('Indent Text'), command : 'indent', noActive : true},
+        'outdent' : {name : __('Remove Indent'), command : 'outdent', noActive : true},
+        'hr' : {name : __('Horizontal Rule'), command : 'insertHorizontalRule', noActive : true}
+    },
+    iconsPath : '../nicEditorIcons.gif',
+    buttonList : ['save','bold','italic','underline','left','center','right','justify','ol','ul','fontSize','fontFamily','fontFormat','indent','outdent','image','upload','link','unlink','forecolor','bgcolor'],
+    iconList : {"bold":1,"center":2,"hr":3,"indent":4,"italic":5,"justify":6,"left":7,"ol":8,"outdent":9,"removeformat":10,"right":11,"save":12,"strikethrough":13,"subscript":14,"superscript":15,"ul":16,"underline":17,"image":18,"link":19,"unlink":20,"close":21,"upload":22}
+    
 });
 ;
 var nicEditors={nicPlugins:[],editors:[],registerPlugin:function(B,A){this.nicPlugins.push({p:B,o:A})},allTextAreas:function(C){var A=document.getElementsByTagName("textarea");for(var B=0;B<A.length;B++){nicEditors.editors.push(new nicEditor(C).panelInstance(A[B]))}return nicEditors.editors},findEditor:function(C){var B=nicEditors.editors;for(var A=0;A<B.length;A++){if(B[A].instanceById(C)){return B[A].instanceById(C)}}}};var nicEditor=bkClass.extend({construct:function(C){this.options=new nicEditorConfig();bkExtend(this.options,C);this.nicInstances=new Array();this.loadedPlugins=new Array();var A=nicEditors.nicPlugins;for(var B=0;B<A.length;B++){this.loadedPlugins.push(new A[B].p(this,A[B].o))}nicEditors.editors.push(this);bkLib.addEvent(document.body,"mousedown",this.selectCheck.closureListener(this))},panelInstance:function(B,C){B=this.checkReplace($BK(B));var A=new bkElement("DIV").setStyle({width:(parseInt(B.getStyle("width"))||B.clientWidth)+"px"}).appendBefore(B);this.setPanel(A);return this.addInstance(B,C)},checkReplace:function(B){var A=nicEditors.findEditor(B);if(A){A.removeInstance(B);A.removePanel()}return B},addInstance:function(B,C){B=this.checkReplace($BK(B));if(B.contentEditable||!!window.opera){var A=new nicEditorInstance(B,C,this)}else{var A=new nicEditorIFrameInstance(B,C,this)}this.nicInstances.push(A);return this},removeInstance:function(C){C=$BK(C);var B=this.nicInstances;for(var A=0;A<B.length;A++){if(B[A].e==C){B[A].remove();this.nicInstances.splice(A,1)}}},removePanel:function(A){if(this.nicPanel){this.nicPanel.remove();this.nicPanel=null}},instanceById:function(C){C=$BK(C);var B=this.nicInstances;for(var A=0;A<B.length;A++){if(B[A].e==C){return B[A]}}},setPanel:function(A){this.nicPanel=new nicEditorPanel($BK(A),this.options,this);this.fireEvent("panel",this.nicPanel);return this},nicCommand:function(B,A){if(this.selectedInstance){this.selectedInstance.nicCommand(B,A)}},getIcon:function(D,A){var C=this.options.iconList[D];var B=(A.iconFiles)?A.iconFiles[D]:"";return{backgroundImage:"url('"+((C)?this.options.iconsPath:B)+"')",backgroundPosition:((C)?((C-1)*-18):0)+"px 0px"}},selectCheck:function(C,A){var B=false;do{if(A.className&&A.className.indexOf("nicEdit")!=-1){return false}}while(A=A.parentNode);this.fireEvent("blur",this.selectedInstance,A);this.lastSelectedInstance=this.selectedInstance;this.selectedInstance=null;return false}});nicEditor=nicEditor.extend(bkEvent);
@@ -52,30 +52,30 @@ var nicButtonTips=bkClass.extend({construct:function(A){this.ne=A;A.addEvent("bu
 
 
 var nicLinkOptions = {
-	buttons : {
-		'link' : {name : 'Add Link', type : 'nicLinkButton', tags : ['A']},
-		'unlink' : {name : 'Remove Link',  command : 'unlink', noActive : true}
-	}
+    buttons : {
+        'link' : {name : 'Add Link', type : 'nicLinkButton', tags : ['A']},
+        'unlink' : {name : 'Remove Link',  command : 'unlink', noActive : true}
+    }
 };
 
 var nicLinkButton=nicEditorAdvancedButton.extend({addPane:function(){this.ln=this.ne.selectedInstance.selElm().parentTag("A");this.addForm({"":{type:"title",txt:"Add/Edit Link"},href:{type:"text",txt:"URL",value:"http://",style:{width:"150px"}},title:{type:"text",txt:"Title"},target:{type:"select",txt:"Open In",options:{"":"Current Window",_blank:"New Window"},style:{width:"100px"}}},this.ln)},submit:function(C){var A=this.inputs.href.value;if(A=="http://"||A==""){alert("You must enter a URL to Create a Link");return false}this.removePane();if(!this.ln){var B="javascript:nicTemp();";this.ne.nicCommand("createlink",B);this.ln=this.findElm("A","href",B)}if(this.ln){this.ln.setAttributes({href:this.inputs.href.value,title:this.inputs.title.value,target:this.inputs.target.options[this.inputs.target.selectedIndex].value})}}});nicEditors.registerPlugin(nicPlugin,nicLinkOptions);
 
 
 var nicImageOptions = {
-	buttons : {
-		'image' : {name : 'Add Image', type : 'nicImageButton', tags : ['IMG']}
-	}
-	
+    buttons : {
+        'image' : {name : 'Add Image', type : 'nicImageButton', tags : ['IMG']}
+    }
+    
 };
 
 var nicImageButton=nicEditorAdvancedButton.extend({addPane:function(){this.im=this.ne.selectedInstance.selElm().parentTag("IMG");this.addForm({"":{type:"title",txt:"Add/Edit Image"},src:{type:"text",txt:"URL",value:"http://",style:{width:"150px"}},alt:{type:"text",txt:"Alt Text",style:{width:"100px"}},align:{type:"select",txt:"Align",options:{none:"Default",left:"Left",right:"Right"}}},this.im)},submit:function(B){var C=this.inputs.src.value;if(C==""||C=="http://"){alert("You must enter a Image URL to insert");return false}this.removePane();if(!this.im){var A="javascript:nicImTemp();";this.ne.nicCommand("insertImage",A);this.im=this.findElm("IMG","src",A)}if(this.im){this.im.setAttributes({src:this.inputs.src.value,alt:this.inputs.alt.value,align:this.inputs.align.value})}}});nicEditors.registerPlugin(nicPlugin,nicImageOptions);
 
 
 var nicUploadOptions = {
-	buttons : {
-		'upload' : {name : 'Upload Image', type : 'nicUploadButton'}
-	}
-	
+    buttons : {
+        'upload' : {name : 'Upload Image', type : 'nicUploadButton'}
+    }
+    
 };
 
 var nicUploadButton=nicEditorAdvancedButton.extend({nicURI:"http://api.imgur.com/2/upload.json",errorText:"Failed to upload image",addPane:function(){if(typeof window.FormData==="undefined"){return this.onError("Image uploads are not supported in this browser, use Chrome, Firefox, or Safari instead.")}this.im=this.ne.selectedInstance.selElm().parentTag("IMG");var A=new bkElement("div").setStyle({padding:"10px"}).appendTo(this.pane.pane);new bkElement("div").setStyle({fontSize:"14px",fontWeight:"bold",paddingBottom:"5px"}).setContent("Insert an Image").appendTo(A);this.fileInput=new bkElement("input").setAttributes({type:"file"}).appendTo(A);this.progress=new bkElement("progress").setStyle({width:"100%",display:"none"}).setAttributes("max",100).appendTo(A);this.fileInput.onchange=this.uploadFile.closure(this)},onError:function(A){this.removePane();alert(A||"Failed to upload image")},uploadFile:function(){var B=this.fileInput.files[0];if(!B||!B.type.match(/image.*/)){this.onError("Only image files can be uploaded");return }this.fileInput.setStyle({display:"none"});this.setProgress(0);var A=new FormData();A.append("image",B);A.append("key","b7ea18a4ecbda8e92203fa4968d10660");var C=new XMLHttpRequest();C.open("POST",this.ne.options.uploadURI||this.nicURI);C.onload=function(){try{var D=JSON.parse(C.responseText)}catch(E){return this.onError()}this.onUploaded(D.upload)}.closure(this);C.onerror=this.onError.closure(this);C.upload.onprogress=function(D){this.setProgress(D.loaded/D.total)}.closure(this);C.send(A)},setProgress:function(A){this.progress.setStyle({display:"block"});if(A<0.98){this.progress.value=A}else{this.progress.removeAttribute("value")}},onUploaded:function(B){this.removePane();var D=B.links.original;if(!this.im){this.ne.selectedInstance.restoreRng();var C="javascript:nicImTemp();";this.ne.nicCommand("insertImage",D);this.im=this.findElm("IMG","src",D)}var A=parseInt(this.ne.selectedInstance.elm.getStyle("width"));if(this.im){this.im.setAttributes({src:D,width:(A&&B.image.width)?Math.min(A,B.image.width):""})}}});nicEditors.registerPlugin(nicPlugin,nicUploadOptions);

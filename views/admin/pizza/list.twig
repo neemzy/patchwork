@@ -27,7 +27,7 @@
                         <a class="btn btn-small" href="{{ path('pizza.post', { 'id': pizza.id }) }}" title="Modifier"><i class="icon-edit"></i></a>
                         <a class="btn btn-small" href="{{ path('pizza.delete', { 'id': pizza.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');" title="Supprimer"><i class="icon-trash"></i></a>
                     </div>
-				    {{ pizza.name }}
+                    {{ pizza.name }}
                 </li>
             {% endfor %}
         </ul>
