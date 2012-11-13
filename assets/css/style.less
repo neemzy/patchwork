@@ -1,16 +1,17 @@
 /** Classes **/
 
 .away {
-    display: block;
+    .block;
     text-align: left !important;
     text-indent: -99999px;
 }
 
+.block { display: block; }
+.hidden { display: none; }
 .inline-top, .inline-middle, .notice { display: inline-block; }
 .inline-top { vertical-align: top; }
 .inline-middle { vertical-align: middle; }
 .pr { position: relative; }
-.hidden { display: none; }
 .bullets { list-style-type: square; }
 .sans { font-family: Helvetica, Arial, sans-serif; }
 .serif { font-family: Georgia, Times New Roman, serif; }
@@ -82,6 +83,7 @@ video, table { width: 100%; }
 table { border-collapse: collapse; }
 img { border: none; }
 ul { list-style-type: none; }
+label { .block; }
 
 
 
