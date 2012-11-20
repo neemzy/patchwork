@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<!--[if lte IE 6]><html class="ie ie6" lang="fr"><![endif]-->
-<!--[if IE 7]><html class="ie ie7" lang="fr"><![endif]-->
-<!--[if IE 8]><html class="ie ie8" lang="fr"><![endif]-->
+<!--[if lte IE 8]><html class="oldie" lang="fr"><![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="fr"><!--<![endif]-->
 
 <head>
@@ -14,7 +12,7 @@
     <meta name="description" content="{% block description %}{% endblock %}" />
     <meta name="author" content="Be Seen" />
     <base href="{{ url('home') }}" />
-    <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <!--[if lte IE 8]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <link rel="stylesheet" href="{{ asset('css/style.less') }}" />
     <!--[if !IE]><!-->
         <link rel="stylesheet" href="{{ asset('css/webkit.less') }}" media="screen and (-webkit-min-device-pixel-ratio: 0)" />
