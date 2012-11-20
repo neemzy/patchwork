@@ -3,9 +3,9 @@
     // HTML5 placeholder polyfill
     function initPlaceHolders()
     {
-        if (!('placeholder' in document.createElement('input')))
+        if ( ! ('placeholder' in document.createElement('input')))
         {
-            $('input[type=password][placeholder]').attr('placeholder', $('input[type=password][placeholder]').eq(0).attr('placeholder'));
+            $('[type=password][placeholder]').attr('placeholder', $('[type=password][placeholder]').eq(0).attr('placeholder'));
             var items = $('[placeholder]');
             items.each(function()
             {
@@ -44,12 +44,6 @@
         $('select').mouseleave(function(event) { event.stopPropagation(); });
         if (typeof console === 'undefined') console = { log: function(){} };
         initPlaceHolders();
-
-        if ($('body').is('ie6, ie7'))
-        {
-            $('.gt').prepend('<span>&gt; </span>');
-            $('.required').append('<span> *</span>');
-        }
     });
     
 
