@@ -78,7 +78,7 @@ class AdminPizzaController extends AdminController
                 unlink($dir.$bean->image);
                 $image->move($dir, $file);
             
-                $iw = new ImageWorkshop(array('imageFromPath' => $dir.$file));
+                $iw = ImageWorkshop::initFromPath($dir.$file);
                 $iw->resizeInPixel(150, null, true, 0, 0, 'MM');
                 $iw->save($dir, $file, false, null, 90);
 
