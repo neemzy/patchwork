@@ -23,7 +23,8 @@ $app->mount('/', new Patchwork\Controller\FrontController());
 $app->mount('/admin/pizza', new Patchwork\Controller\AdminPizzaController());
 
 // Session
-$app['session'] = $app->share(function() {
+$app['session'] = $app->share(function()
+{
     $session = new Session();
     $session->start();
     return $session;

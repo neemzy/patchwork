@@ -30,7 +30,7 @@ class AdminPizzaController extends AdminController
             );
             
             foreach ($asserts as $key => $assert)
-                $data[$key] = strip_tags($request->get($key));
+                $data[$key] = $request->get($key);
 
             $asserts = new Assert\Collection($asserts);
             $errors = $app['validator']->validateValue($data, $asserts);
