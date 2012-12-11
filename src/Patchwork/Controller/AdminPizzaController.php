@@ -23,6 +23,7 @@ class AdminPizzaController extends AdminController
 
             $bean = R::load($class, $id);
             $data = array();
+            $data_stripped = array();
 
             $asserts = array(
                 'name' => new Assert\NotBlank(),
@@ -30,10 +31,13 @@ class AdminPizzaController extends AdminController
             );
             
             foreach ($asserts as $key => $assert)
+            {
                 $data[$key] = $request->get($key);
+                $data_stripped[$key] = strip_tags($data[$key]);
+            }
 
             $asserts = new Assert\Collection($asserts);
-            $errors = $app['validator']->validateValue($data, $asserts);
+            $errors = $app['validator']->validateValue($data_stripped, $asserts);
 
             if (count($errors))
             {
@@ -75,7 +79,8 @@ class AdminPizzaController extends AdminController
             
                 $dir = dirname(dirname(dirname(__DIR__))).'/assets/img/'.$class.'/';
                 $file = $id_bean.'.'.$extension;
-                unlink($dir.$bean->image);
+                if ($bean->image)
+                    unlink($dir.$bean->image);
                 $image->move($dir, $file);
             
                 $iw = ImageWorkshop::initFromPath($dir.$file);
