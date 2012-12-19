@@ -50,12 +50,14 @@ class Tools
     }
 
     // Twitter link generator
-    public static function tw_link($url, $text) {
+    public static function tw_link($url, $text)
+    {
         return 'http://twitter.com/share?url='.rawurlencode($url).'&amp;text='.rawurlencode($text).'" target="_blank';
     }
 
     // Google+ link generator
-    public static function gp_link($url, $text) {
+    public static function gp_link($url, $text)
+    {
         return 'https://plus.google.com/share?url='.rawurlencode($url).'" target="_blank';
     }
 }
