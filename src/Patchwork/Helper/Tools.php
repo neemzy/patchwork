@@ -46,18 +46,24 @@ class Tools
     // Facebook link generator
     public static function fb_link($url, $text, $summary, $image)
     {
-        return 'javascript:void(0);" onclick="window.open(\'http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Btitle%5D='.rawurlencode($text).'&amp;p%5Bsummary%5D='.rawurlencode($summary).'&amp;p%5Burl%5D='.rawurlencode($url).'&amp;p%5Bimages%5D%5B0%5D='.rawurlencode($image).'\', \'fb_share\', \'directories=no,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no,width=640,height=350\');';
+        return 'javascript:window.open(\'http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Btitle%5D='.rawurlencode($text).'&amp;p%5Bsummary%5D='.rawurlencode($summary).'&amp;p%5Burl%5D='.rawurlencode($url).'&amp;p%5Bimages%5D%5B0%5D='.rawurlencode($image).'\', \'\', \'directories=no,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no,width=640,height=350\');';
     }
 
     // Twitter link generator
     public static function tw_link($url, $text)
     {
-        return 'http://twitter.com/share?url='.rawurlencode($url).'&amp;text='.rawurlencode($text).'" target="_blank';
+        return 'javascript:window.open(\'http://twitter.com/share?url='.rawurlencode($url).'&amp;text='.rawurlencode($text).'\', \'\', \'directories=no,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no,width=640,height=435\');';
     }
 
     // Google+ link generator
     public static function gp_link($url, $text)
     {
-        return 'https://plus.google.com/share?url='.rawurlencode($url).'" target="_blank';
+        return 'javascript:window.open(\'https://plus.google.com/share?url='.rawurlencode($url).'\', \'\', \'directories=no,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no,width=640,height=500\');';
+    }
+
+    // LinkedIn link generator
+    public static function li_link($url, $text, $summary, $source)
+    {
+        return 'javascript:window.open(\'http://www.linkedin.com/shareArticle?mini=true&amp;url='.rawurlencode($url).'&amp;title='.rawurlencode($text).'&amp;summary='.rawurlencode($summary).'&amp;source='.rawurlencode($source).'\', \'\', \'directories=no,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no,width=520,height=410\');';
     }
 }

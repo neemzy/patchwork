@@ -45,6 +45,7 @@ $app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
 $app['twig']->addFunction('fb_link', new Twig_Function_Function('Patchwork\Helper\Tools::fb_link'));
 $app['twig']->addFunction('tw_link', new Twig_Function_Function('Patchwork\Helper\Tools::tw_link'));
 $app['twig']->addFunction('gp_link', new Twig_Function_Function('Patchwork\Helper\Tools::gp_link'));
+$app['twig']->addFunction('li_link', new Twig_Function_Function('Patchwork\Helper\Tools::li_link'));
 $app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Helper\Tools::vulgarize'));
 $app['twig']->addFilter('var_dump', new Twig_Filter_Function('var_dump'));
 
