@@ -42,9 +42,10 @@ $app['translator.domains'] = $translations;
 // Twig extensions
 $app['twig']->addExtension(new Entea\Twig\Extension\AssetExtension($app));
 $app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
-$app['twig']->addFunction('fb_link', new Twig_Function_Function('Tools::fb_link'));
-$app['twig']->addFunction('tw_link', new Twig_Function_Function('Tools::tw_link'));
-$app['twig']->addFunction('gp_link', new Twig_Function_Function('Tools::gp_link'));
+$app['twig']->addFunction('fb_link', new Twig_Function_Function('Patchwork\Helper\Tools::fb_link'));
+$app['twig']->addFunction('tw_link', new Twig_Function_Function('Patchwork\Helper\Tools::tw_link'));
+$app['twig']->addFunction('gp_link', new Twig_Function_Function('Patchwork\Helper\Tools::gp_link'));
+$app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Helper\Tools::vulgarize'));
 $app['twig']->addFilter('var_dump', new Twig_Filter_Function('var_dump'));
 
 // Environment
