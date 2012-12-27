@@ -10,9 +10,8 @@ use PHPImageWorkshop\ImageWorkshop;
 
 class AdminPizzaController extends AdminController
 {
-    protected function route($app, $auth)
+    protected function route($app, $auth, $class = 'pizza')
     {
-        $class = 'pizza';
         $ctrl = parent::route($app, $auth, $class);
 
         // Submit
