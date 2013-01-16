@@ -6,30 +6,34 @@
         if ( ! ('placeholder' in document.createElement('input')))
         {
             $('[type=password][placeholder]').attr('placeholder', $('[type=password][placeholder]').eq(0).attr('placeholder'));
-            var items = $('[placeholder]');
-            items.each(function()
+            var items = '[placeholder]';
+            $(items).each(function()
             {
-                if (($(this).val() == '') && ($(this).attr('placeholder')))
-                    $(this).val($(this).attr('placeholder')).addClass('placeholder');
-                else if ($(this).val() == $(this).attr('placeholder'))
-                    $(this).addClass('placeholder');
+                var $this = $(this);
+                if (($this.val() == '') && ($this.attr('placeholder')))
+                    $this.val($this.attr('placeholder')).addClass('placeholder');
+                else if ($this.val() == $this.attr('placeholder'))
+                    $this.addClass('placeholder');
             });
-            items.live('focus', function()
+            $(document).on('focus', items, function()
             {
-                if ($(this).val() == $(this).attr('placeholder'))
-                    $(this).val('').removeClass('placeholder');
+                var $this = $(this);
+                if ($this.val() == $this.attr('placeholder'))
+                    $this.val('').removeClass('placeholder');
             });
-            items.live('blur', function()
+            $(document).on('blur', items, function()
             {
-                if (($(this).val() == '') && ($(this).attr('placeholder')))
-                    $(this).val($(this).attr('placeholder')).addClass('placeholder');
+                var $this = $(this);
+                if (($this.val() == '') && ($this.attr('placeholder')))
+                    $this.val($this.attr('placeholder')).addClass('placeholder');
             });
-            $('form').bind('submit', function()
+            $('form')on('submit', function()
             {
-                $(this).find('[placeholder]').each(function()
+                var $this = $(this);
+                $this.find('[placeholder]').each(function()
                 {
-                    if ($(this).val() == $(this).attr('placeholder'))
-                        $(this).val('').removeClass('placeholder');
+                    if ($this.val() == $this.attr('placeholder'))
+                        $this.val('').removeClass('placeholder');
                 });
             });
         }
