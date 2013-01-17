@@ -50,8 +50,7 @@ $app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Helper\
 $app['twig']->addFilter('var_dump', new Twig_Filter_Function('var_dump'));
 
 // Environment
-$app['debug'] = true;
-if ( ! $app['debug'])
+if ( ! ($app['debug'] = true))
 {
     R::freeze(true);
 
@@ -65,7 +64,7 @@ if ( ! $app['debug'])
                 $message = 'La page que vous recherchez n\'existe pas ou est indisponible.';
             break;
         }
-        return $app['twig']->render('front/error.twig', array('message' => $message));
+        return $app['twig']->render('front/error.twig', compact('message'));
     });
 }
 
