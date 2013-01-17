@@ -7,7 +7,6 @@ use Silex\ControllerProviderInterface;
 use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Constraints as Assert;
 use \RedBean_Facade as R;
 
 abstract class AdminController implements ControllerProviderInterface
