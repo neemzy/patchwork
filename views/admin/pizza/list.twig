@@ -4,9 +4,9 @@
 
     <div class="page-header"><h1>Liste des pizzas</h1></div>
 
-    {% if app.session.hasFlash('message') %}
+    {% if app.session.getFlashBag().has('message') %}
         <div class="alert alert-success">
-            {{ app.session.getFlash('message') }}
+            {{ app.session.getFlashBag().get('message')[0] }}
         </div>
     {% endif %}
 

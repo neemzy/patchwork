@@ -81,8 +81,8 @@ abstract class AdminController implements ControllerProviderInterface
         // Delete
         $ctrl->get('/delete/{id}', function($id) use ($app, $class)
         {
-            $app['session']->clearFlashes();
-            $app['session']->setFlash('message', 'La suppression a bien été effectuée');
+            $app['session']->getFlashBag()->clear();
+            $app['session']->getFlashBag()->set('message', 'La suppression a bien été effectuée');
             $bean = R::load($class, $id);
             $dir = dirname(dirname(dirname(__DIR__))).'/assets/img/'.$class.'/';
             unlink($dir.$bean->image);
@@ -107,8 +107,8 @@ abstract class AdminController implements ControllerProviderInterface
 
         // Image delete
         $ctrl->get('/delete_image/{id}', function($id) use ($app, $class) {
-            $app['session']->clearFlashes();
-            $app['session']->setFlash('message', 'L\'image a bien été supprimée');
+            $app['session']->getFlashBag()->clear();
+            $app['session']->getFlashBag()->set('message', 'L\'image a bien été supprimée');
             $bean = R::load($class, $id);
             $dir = dirname(dirname(dirname(__DIR__))).'/assets/img/'.$class.'/';
             unlink($dir.$bean->image);

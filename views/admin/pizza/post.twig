@@ -4,9 +4,9 @@
 
     <div class="page-header"><h1>{% if pizza.id %}Modifier{% else %}Ajouter{% endif %} une pizza</h1></div>
 
-    {% if app.session.hasFlash('message') %}
-        <div class="alert alert-{% if app.session.hasFlash('error') %}error{% else %}success{% endif %}">
-            {{ app.session.getFlash('message')|raw }}
+    {% if app.session.getFlashBag().has('message') %}
+        <div class="alert alert-{% if app.session.getFlashBag().has('error') %}error{% else %}success{% endif %}">
+            {{ app.session.getFlashBag().get('message')[0]|raw }}
         </div>
     {% endif %}
 
@@ -16,7 +16,7 @@
             <input type="text" name="name" value="{% if app.request.get('name') %}{{ app.request.get('name') }}{% else %}{{ pizza.name }}{% endif %}" />
         </label>
         <label>
-            <span>Contenu</span>
+            <span>Descriptif</span>
             <div class="holder"><textarea name="desc" id="desc" class="nic">{% if app.request.get('desc') %}{{ app.request.get('desc') }}{% else %}{{ pizza.desc }}{% endif %}</textarea></div>
             <div class="clrb"></div>
         </label>

@@ -17,8 +17,8 @@ class AdminPizzaController extends AdminController
         // Submit
         $ctrl->post('/post/{id}', function(Request $request, $id) use ($app, $class)
         {
-            $app['session']->clearFlashes();
-            $app['session']->setFlash('message', 'La pizza a bien été enregistrée');
+            $app['session']->getFlashBag()->clear();
+            $app['session']->getFlashBag()->set('message', 'La pizza a bien été enregistrée');
 
             $bean = R::load($class, $id);
             $data = array();
@@ -40,12 +40,12 @@ class AdminPizzaController extends AdminController
 
             if (count($errors))
             {
-                $app['session']->setFlash('error', true);
+                $app['session']->getFlashBag()->set('error', true);
                 $message = '<p>L\'enregistrement de la pizza a échoué pour les raisons suivantes :</p><ul>';
                 foreach ($errors as $error)
                     $message .= '<li><strong>'.$app['translator']->trans($error->getPropertyPath()).'</strong> : '.$app['translator']->trans($error->getMessage()).'</li>';
                 $message .= '</ul>';
-                $app['session']->setFlash('message', $message);
+                $app['session']->getFlashBag()->set('message', $message);
                 return $app['twig']->render('admin/'.$class.'/post.twig', array(
                     $class => $bean
                 ));
