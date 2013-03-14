@@ -27,7 +27,7 @@
                 if (($this.val() == '') && ($this.attr('placeholder')))
                     $this.val($this.attr('placeholder')).addClass('placeholder');
             });
-            $('form')on('submit', function()
+            $.('form')on('submit', function()
             {
                 var $this = $(this);
                 $this.find('[placeholder]').each(function()
