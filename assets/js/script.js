@@ -47,6 +47,7 @@
         $('form').attr('autocomplete', 'off');
         $('select').mouseleave(function(event) { event.stopPropagation(); });
         if (typeof console === 'undefined') console = { log: function(){} };
+        $('html').removeClass('nojs');
         initPlaceHolders();
     });
     
