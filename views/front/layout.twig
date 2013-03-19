@@ -13,10 +13,7 @@
     <base href="{{ url('home') }}" />
     <!--[if lte IE 8]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <link rel="stylesheet" href="{{ asset('css/style.less') }}" />
-    <!--[if !IE]><!-->
-        <link rel="stylesheet" href="{{ asset('css/webkit.less') }}" media="screen and (-webkit-min-device-pixel-ratio: 0)" />
-        <script>if (window.opera) document.write('<link rel="stylesheet" href="{{ asset('css/opera.less') }}" />');</script>
-    <!--<![endif]-->
+    <!--[if !IE]><!--><link rel="stylesheet" href="{{ asset('css/webkit.less') }}" media="screen and (-webkit-min-device-pixel-ratio: 0)" /><!--<![endif]-->
     <link rel="apple-touch-icon" href="{{ asset('img/apple-touch-icon.png') }}" />
     <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('img/apple-touch-icon-72x72.png') }}" />
     <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('img/apple-touch-icon-114x114.png') }}" />

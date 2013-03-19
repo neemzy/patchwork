@@ -27,7 +27,7 @@
                 if (($this.val() == '') && ($this.attr('placeholder')))
                     $this.val($this.attr('placeholder')).addClass('placeholder');
             });
-            $('form')on('submit', function()
+            $('form').on('submit', function()
             {
                 var $this = $(this);
                 $this.find('[placeholder]').each(function()
@@ -44,7 +44,7 @@
     // DOM ready
     $(function()
     {
-        if ($.browser.mozilla) $('form').attr('autocomplete', 'off');
+        $('form').attr('autocomplete', 'off');
         $('select').mouseleave(function(event) { event.stopPropagation(); });
         if (typeof console === 'undefined') console = { log: function(){} };
         initPlaceHolders();

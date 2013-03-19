@@ -1,7 +1,8 @@
 SetEnv PHP_VER 5_3
 
 AddType video/mp4 .mp4 .m4v
-AddType video/ogg .ogv
+AddType video/ogg .ogv .ogg
+AddType video/webm .webm
 AddDefaultCharset UTF-8
 Options -Indexes
 Options +FollowSymLinks
