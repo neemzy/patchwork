@@ -1,6 +1,6 @@
 {% extends "admin/layout.twig" %}
 
-{% block main %}
+{% block body %}
 
     <div class="page-header"><h1>{% if pizza.id %}Modifier{% else %}Ajouter{% endif %} une pizza</h1></div>
 
@@ -13,11 +13,11 @@
     <form method="post" class="span8 offset2" enctype="multipart/form-data">
         <label>
             <span>Nom</span>
-            <input type="text" name="name" value="{% if app.request.get('name') %}{{ app.request.get('name') }}{% else %}{{ pizza.name }}{% endif %}" />
+            <input type="text" name="title" value="{% if app.request.get('title') %}{{ app.request.get('title') }}{% else %}{{ pizza.title }}{% endif %}" />
         </label>
         <label>
             <span>Descriptif</span>
-            <div class="holder"><textarea name="desc" id="desc" class="nic">{% if app.request.get('desc') %}{{ app.request.get('desc') }}{% else %}{{ pizza.desc }}{% endif %}</textarea></div>
+            <div class="holder"><textarea name="content" id="content" class="nic">{% if app.request.get('content') %}{{ app.request.get('content') }}{% else %}{{ pizza.content }}{% endif %}</textarea></div>
             <div class="clrb"></div>
         </label>
         <label>
@@ -38,3 +38,5 @@
     </form>
 
 {% endblock %}
+
+{% block javascript %}<script>$(function() { new nicEditor({ iconsPath: '{{ asset('img/nicEditorIcons.gif') }}' }).panelInstance('content'); });</script>{% endblock %}

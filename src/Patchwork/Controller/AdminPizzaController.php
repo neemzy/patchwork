@@ -25,8 +25,8 @@ class AdminPizzaController extends AdminController
             $data_stripped = array();
 
             $asserts = array(
-                'name' => new Assert\NotBlank(),
-                'desc' => new Assert\NotBlank()
+                'title' => new Assert\NotBlank(),
+                'content' => new Assert\NotBlank()
             );
             
             foreach ($asserts as $key => $assert)

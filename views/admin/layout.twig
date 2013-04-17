@@ -23,10 +23,10 @@
             </div>
         </div>
     </div>
-    <div class="container">{% block main %}{% endblock %}</div>
+    <div class="container">{% block body %}{% endblock %}</div>
     <script src="http://code.jquery.com/jquery.min.js"></script>
     <script src="{{ asset('js/nicEdit.js') }}"></script>
-    <script>$(function() { new nicEditor({ iconsPath: '{{ asset('img/nicEditorIcons.gif') }}' }).panelInstance('desc'); });</script>
+    {% block javascript %}{% endblock %}
 </body>
 
 </html>
