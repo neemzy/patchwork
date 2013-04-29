@@ -53,6 +53,7 @@ class AdminPizzaController extends AdminController
 
             foreach ($data as $key => $val)
                 $bean->$key = $val;
+
             if ( ! $id)
             {
                 $position = 0;
@@ -62,6 +63,7 @@ class AdminPizzaController extends AdminController
                         $position = max($position, $b->position);
                 $bean->position = $position + 1;
             }
+
             $id_bean = R::store($bean);
 
             if (($request->files->has('image')) && ($image = $request->files->get('image')))
@@ -89,6 +91,7 @@ class AdminPizzaController extends AdminController
                 $bean->image = $file;
                 R::store($bean);
             }
+
             return $app->redirect($app['url_generator']->generate($class.'.post', array('id' => $id_bean)));
         })->assert('id', '\d+')->value('id', 0)->before($auth);
 
