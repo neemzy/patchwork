@@ -12,11 +12,11 @@
 
     <form method="post" class="span8 offset2" enctype="multipart/form-data">
         <label>
-            <span>Nom</span>
+            <span>Titre</span>
             <input type="text" name="title" value="{% if app.request.get('title') %}{{ app.request.get('title') }}{% else %}{{ pizza.title }}{% endif %}" />
         </label>
         <label>
-            <span>Descriptif</span>
+            <span>Contenu</span>
             <div class="holder"><textarea name="content" id="content" class="nic">{% if app.request.get('content') %}{{ app.request.get('content') }}{% else %}{{ pizza.content }}{% endif %}</textarea></div>
             <div class="clrb"></div>
         </label>
@@ -39,4 +39,7 @@
 
 {% endblock %}
 
-{% block javascript %}<script>$(function() { new nicEditor({ iconsPath: '{{ asset('img/nicEditorIcons.gif') }}' }).panelInstance('content'); });</script>{% endblock %}
+{% block javascript %}
+    <script src="{{ asset('js/nicEdit.js') }}"></script>
+    <script>$(function() { new nicEditor({ iconsPath: '{{ asset('img/nicEditorIcons.gif') }}' }).panelInstance('content'); });</script>
+{% endblock %}
