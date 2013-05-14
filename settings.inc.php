@@ -1,5 +1,8 @@
 <?php
 
+// Environment
+define('DEBUG_MODE', true);
+
 // Database
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'pizza');

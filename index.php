@@ -50,7 +50,7 @@ $app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Helper\
 $app['twig']->addFilter('var_dump', new Twig_Filter_Function('var_dump'));
 
 // Environment
-if ( ! ($app['debug'] = true))
+if ( ! ($app['debug'] = DEBUG_MODE))
 {
     R::freeze(true);
 
