@@ -104,23 +104,27 @@ abstract class AdminController implements ControllerProviderInterface
             $app['session']->getFlashBag()->set('message', 'La suppression a bien été effectuée');
 
             $bean = R::load($class, $id);
-            $dir = dirname(dirname(dirname(__DIR__))).'/assets/img/'.$class.'/';
-            unlink($dir.$bean->image);
-            $position = $bean->position;
-            R::trash($bean);
 
             if (isset($bean->position))
             {
-                $beans = R::find($class, 'position > ?', array($position));
+                $beans = R::find($class, 'position > ?', array($bean->position));
 
                 foreach ($beans as $b)
                 {
                     $b->position--;
                     R::store($b);
                 }
-
-                return $app->redirect($app['url_generator']->generate($class.'.list'));
             }
+
+            if (isset($bean->image))
+            {
+                $dir = dirname(dirname(dirname(__DIR__))).'/assets/img/'.$class.'/';
+                unlink($dir.$bean->image);
+            }
+
+            R::trash($bean);
+
+            return $app->redirect($app['url_generator']->generate($class.'.list'));
 
         })->bind($class.'.delete')->assert('id', '\d+')->before($auth);
 
