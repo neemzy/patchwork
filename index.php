@@ -19,6 +19,7 @@ R::setup('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
 R::$toolbox->getRedBean()->setBeanHelper(new Patchwork\Helper\Bean());
 
 // Controllers
+$app['controllers_factory'] = function() use ($app) { return new Patchwork\Helper\ControllerCollection($app['route_factory']); };
 $app->mount('/', new Patchwork\Controller\FrontController());
 $app->mount('/admin/pizza', new Patchwork\Controller\AdminPizzaController());
 
