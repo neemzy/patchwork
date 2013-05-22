@@ -6,7 +6,6 @@ class AdminPizzaController extends AdminController
 {
     protected function route($app, $auth, $class = 'pizza')
     {
-        $ctrl = parent::route($app, $auth, $class);
-        return $ctrl;
+        return parent::route($app, $auth, $class);
     }
 }
