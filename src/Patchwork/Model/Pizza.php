@@ -10,9 +10,9 @@ class Pizza extends \RedBean_SimpleModel
     public function getAsserts()
     {
         return array(
-                'title' => new Assert\NotBlank(),
-                'content' => new Assert\NotBlank()
-            );
+            'title' => new Assert\NotBlank(),
+            'content' => new Assert\NotBlank()
+        );
     }
 
     public function setImage($dir, $file)
