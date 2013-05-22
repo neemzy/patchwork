@@ -147,7 +147,7 @@ abstract class AdminController implements ControllerProviderInterface
         $ctrl->post('/post/{id}', function(Request $request, $id) use ($app, $class)
         {
             $app['session']->getFlashBag()->clear();
-            $app['session']->getFlashBag()->set('message', 'Enregistrement OK !');
+            $app['session']->getFlashBag()->set('message', 'L\'enregistrement a bien été effectué');
 
             $bean = R::load($class, $id);
             $data = array();
