@@ -240,6 +240,8 @@ abstract class AdminController implements ControllerProviderInterface
 
         })->bind($class.'.delete_image')->assert('id', '\d+')->before($auth);
 
+        
+
         return $ctrl;
     }
 }

@@ -14,7 +14,10 @@ class FrontController implements ControllerProviderInterface
     {
         $ctrl = $app['controllers_factory'];
 
+
+
         // robots.txt
+
         $ctrl->get('/robots.txt', function() use ($app)
         {
             $response = new Response('User-agent: *'.PHP_EOL.($app['debug'] ? 'Disallow: /' : 'Sitemap: '.$app['url_generator']->generate('home').'sitemap.xml'));
@@ -22,26 +25,34 @@ class FrontController implements ControllerProviderInterface
             return $response;
         });
 
+
+
         // LESS
+
         $ctrl->get('/assets/css/{file}.less', function($file) use ($app)
         {
             $dir = dirname(dirname(dirname(__DIR__))).'/assets/css/';
             $less = $dir.$file.'.less';
             $css = $dir.$file.'.css';
+
             if ( ! file_exists($less))
                 $app->abort(404);
+
             if ( ! $app['debug'])
             {
                 if ( ! file_exists($css))
                     system('lessc -x '.$less.' > '.$css);
+
                 $response = new Response(file_get_contents($css));
             }
+
             else
             {
                 $output = array();
                 exec('lessc '.$less, $output);
                 $response = new Response(implode(PHP_EOL, $output));
             }
+            
             $response->headers->set('Content-Type', 'text/css');
             return $response;
         });
@@ -49,21 +60,28 @@ class FrontController implements ControllerProviderInterface
 
 
         // Homepage
+
         $ctrl->get('/', function() use ($app)
         {
             $root = str_replace('index.php/', '', $app['url_generator']->generate('home'));
+
             if ($_SERVER['REQUEST_URI'] != $root)
                 return $app->redirect($root, 301);
+
             return $app['twig']->render('front/home.twig');
+
         })->bind('home');
 
 
 
         // Admin root
+
         $ctrl->get('/admin', function() use ($app)
         {
             return $app->redirect($app['url_generator']->generate('pizza.list'));
         });
+
+        
         
         return $ctrl;
     }
