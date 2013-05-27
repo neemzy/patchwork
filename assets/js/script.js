@@ -1,6 +1,7 @@
 (function($)
 {
     // HTML5 placeholder polyfill
+
     function initPlaceHolders()
     {
         if ( ! ('placeholder' in document.createElement('input')))
@@ -42,6 +43,7 @@
 
 
     // DOM ready
+
     $(function()
     {
         $('form').attr('autocomplete', 'off');
@@ -54,8 +56,10 @@
 
 
     // Loading complete
+
     $(window).load(function()
     {
         
     });
+    
 })(jQuery);
