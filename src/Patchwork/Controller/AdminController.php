@@ -8,7 +8,7 @@ use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints as Assert;
-use \RedBean_Facade as R;
+use Patchwork\Helper\Facade as R;
 use PHPImageWorkshop\ImageWorkshop;
 
 abstract class AdminController implements ControllerProviderInterface
@@ -50,7 +50,7 @@ abstract class AdminController implements ControllerProviderInterface
         $ctrl->get('/list', function() use ($app, $class)
         {
             return $app['twig']->render('admin/'.$class.'/list.twig', array(
-                $class.'s' => R::findAll($class, 'ORDER BY position')
+                $class.'s' => R::findAll($class, (R::typeHasField($class, 'position') ? 'ORDER BY position' : ''))
             ));
 
         })->bind($class.'.list')->before($auth);
@@ -105,7 +105,7 @@ abstract class AdminController implements ControllerProviderInterface
 
             $bean = R::load($class, $id);
 
-            if (isset($bean->position))
+            if (R::typeHasField($class, 'position'))
             {
                 $beans = R::find($class, 'position > ?', array($bean->position));
 
@@ -116,7 +116,7 @@ abstract class AdminController implements ControllerProviderInterface
                 }
             }
 
-            if (isset($bean->image))
+            if (R::typeHasField($class, 'image'))
             {
                 $dir = dirname(dirname(dirname(__DIR__))).'/public/assets/img/'.$class.'/';
                 unlink($dir.$bean->image);
@@ -180,7 +180,7 @@ abstract class AdminController implements ControllerProviderInterface
             foreach ($data as $key => $val)
                 $bean->$key = $val;
 
-            if ((isset($bean->position)) && ( ! $id))
+            if ((R::typeHasField($class, 'position')) && ( ! $id))
             {
                 $position = 0;
                 $beans = R::findAll($class);
@@ -194,7 +194,7 @@ abstract class AdminController implements ControllerProviderInterface
 
             $id_bean = R::store($bean);
 
-            if ((isset($bean->image)) && ($request->files->has('image')) && ($image = $request->files->get('image')))
+            if ((R::typeHasField($class, 'image')) && ($request->files->has('image')) && ($image = $request->files->get('image')))
             {
                 $extension = strtolower($image->guessExtension());
 

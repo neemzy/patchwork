@@ -4,7 +4,7 @@ require_once(dirname(__DIR__).'/vendor/autoload.php');
 require_once(dirname(__DIR__).'/config.php');
 
 use Symfony\Component\HttpFoundation\Session\Session;
-use \RedBean_Facade as R;
+use Patchwork\Helper\Facade as R;
 
 // Scaffolding
 error_reporting(E_ALL ^ E_NOTICE);
@@ -16,7 +16,7 @@ $app = new Silex\Application();
 
 // ORM
 R::setup('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
-R::$toolbox->getRedBean()->setBeanHelper(new Patchwork\Helper\Bean());
+R::$toolbox->getRedBean()->setBeanHelper(new Patchwork\Helper\BeanHelper());
 
 // Controllers
 $app['controllers_factory'] = function() use ($app) { return new Patchwork\Helper\ControllerCollection($app['route_factory']); };

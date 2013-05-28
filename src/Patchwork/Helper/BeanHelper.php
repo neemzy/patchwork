@@ -2,7 +2,7 @@
 
 namespace Patchwork\Helper;
 
-class Bean extends \RedBean_BeanHelper_Facade
+class BeanHelper extends \RedBean_BeanHelper_Facade
 {
     public function getModelForBean(\RedBean_OODBBean $bean)
     {
