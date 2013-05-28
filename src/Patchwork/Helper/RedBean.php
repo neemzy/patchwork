@@ -2,7 +2,7 @@
 
 namespace Patchwork\Helper;
 
-class Facade extends \RedBean_Facade
+class RedBean extends \RedBean_Facade
 {
     public static function typeHasField($type, $field)
     {

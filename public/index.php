@@ -4,7 +4,7 @@ require_once(dirname(__DIR__).'/vendor/autoload.php');
 require_once(dirname(__DIR__).'/config.php');
 
 use Symfony\Component\HttpFoundation\Session\Session;
-use Patchwork\Helper\Facade as R;
+use Patchwork\Helper\RedBean as R;
 
 // Scaffolding
 error_reporting(E_ALL ^ E_NOTICE);
