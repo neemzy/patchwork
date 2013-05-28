@@ -12,6 +12,7 @@ ini_set('session.use_trans_sid', 0);
 ini_set('session.use_only_cookies', 1);
 mb_internal_encoding('UTF-8');
 setlocale(LC_ALL, 'fr_FR.UTF8');
+date_default_timezone_set('Europe/Paris');
 $app = new Silex\Application();
 
 // ORM
