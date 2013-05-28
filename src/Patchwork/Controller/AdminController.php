@@ -196,12 +196,30 @@ abstract class AdminController implements ControllerProviderInterface
 
             if ((R::typeHasField($class, 'image')) && ($request->files->has('image')) && ($image = $request->files->get('image')))
             {
+                if ($error = $image->getError())
+                {
+                    $message = 'Une erreur est survenue lors de l\'envoi du fichier';
+
+                    switch ($error)
+                    {
+                        case UPLOAD_ERR_INI_SIZE:
+                        case UPLOAD_ERR_FORM_SIZE:
+                            $message = 'Le fichier sélectionné est trop lourd';
+                        break;
+                    }
+
+                    $app['session']->getFlashBag()->set('error', true);
+                    $app['session']->getFlashBag()->set('message', $message);
+
+                    return $app['twig']->render('admin/'.$class.'/post.twig', array($class => $bean));
+                }
+
                 $extension = strtolower($image->guessExtension());
 
                 if ( ! in_array($extension, array('jpeg', 'png', 'gif')))
                 {
-                    $app['session']->setFlash('error', true);
-                    $app['session']->setFlash('message', 'Seuls les formats JPEG, PNG et GIF sont autorisés');
+                    $app['session']->getFlashBag()->set('error', true);
+                    $app['session']->getFlashBag()->set('message', 'Seuls les formats JPEG, PNG et GIF sont autorisés');
 
                     return $app['twig']->render('admin/'.$class.'/post.twig', array($class => $bean));
                 }
