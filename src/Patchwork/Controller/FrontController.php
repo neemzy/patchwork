@@ -31,7 +31,7 @@ class FrontController implements ControllerProviderInterface
 
         $ctrl->get('/assets/css/{file}.less', function($file) use ($app)
         {
-            $dir = dirname(dirname(dirname(__DIR__))).'/assets/css/';
+            $dir = dirname(dirname(dirname(__DIR__))).'/public/assets/css/';
             $less = $dir.$file.'.less';
             $css = $dir.$file.'.css';
 

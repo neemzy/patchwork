@@ -1,7 +1,7 @@
 <?php
 
-require_once(__DIR__.'/vendor/autoload.php');
-require_once(__DIR__.'/settings.inc.php');
+require_once(dirname(__DIR__).'/vendor/autoload.php');
+require_once(dirname(__DIR__).'/config.php');
 
 use Symfony\Component\HttpFoundation\Session\Session;
 use \RedBean_Facade as R;
@@ -36,7 +36,7 @@ $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new Silex\Provider\ValidatorServiceProvider());
 
 // Twig
-$app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/views'));
+$app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => dirname(__DIR__).'/views'));
 $app['twig']->addExtension(new Entea\Twig\Extension\AssetExtension($app, array('asset.directory' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']).'assets')));
 $app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
 $app['twig']->addFunction('fb_link', new Twig_Function_Function('Patchwork\Helper\Tools::fb_link'));

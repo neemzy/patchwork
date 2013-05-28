@@ -118,7 +118,7 @@ abstract class AdminController implements ControllerProviderInterface
 
             if (isset($bean->image))
             {
-                $dir = dirname(dirname(dirname(__DIR__))).'/assets/img/'.$class.'/';
+                $dir = dirname(dirname(dirname(__DIR__))).'/public/assets/img/'.$class.'/';
                 unlink($dir.$bean->image);
             }
 
@@ -206,7 +206,7 @@ abstract class AdminController implements ControllerProviderInterface
                     return $app['twig']->render('admin/'.$class.'/post.twig', array($class => $bean));
                 }
 
-                $dir = dirname(dirname(dirname(__DIR__))).'/assets/img/'.$class.'/';
+                $dir = dirname(dirname(dirname(__DIR__))).'/public/assets/img/'.$class.'/';
                 $file = $id_bean.'.'.$extension;
 
                 if ($bean->image)
@@ -231,7 +231,7 @@ abstract class AdminController implements ControllerProviderInterface
             $app['session']->getFlashBag()->set('message', 'L\'image a bien été supprimée');
 
             $bean = R::load($class, $id);
-            $dir = dirname(dirname(dirname(__DIR__))).'/assets/img/'.$class.'/';
+            $dir = dirname(dirname(dirname(__DIR__))).'/public/assets/img/'.$class.'/';
             unlink($dir.$bean->image);
             $bean->image = null;
             R::store($bean);
