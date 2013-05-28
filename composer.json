@@ -8,13 +8,13 @@
         "symfony/config": "2.2.*",
         "swiftmailer/swiftmailer": ">=4.1.2,<4.2-dev",
         "gabordemooij/redbean": "*",
+        "entea/silex-twig-simple-asset-extension": "dev-master",
         "sybio/image-workshop": "*"
     },
 
     "autoload": {
         "psr-0": {
-            "Patchwork": "src/",
-            "Entea": "src/"
+            "Patchwork": "src/"
         }
     },
 

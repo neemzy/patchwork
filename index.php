@@ -37,7 +37,7 @@ $app->register(new Silex\Provider\ValidatorServiceProvider());
 
 // Twig
 $app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/views'));
-$app['twig']->addExtension(new Entea\Twig\Extension\AssetExtension($app));
+$app['twig']->addExtension(new Entea\Twig\Extension\AssetExtension($app, array('asset.directory' => 'assets')));
 $app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
 $app['twig']->addFunction('fb_link', new Twig_Function_Function('Patchwork\Helper\Tools::fb_link'));
 $app['twig']->addFunction('tw_link', new Twig_Function_Function('Patchwork\Helper\Tools::tw_link'));
