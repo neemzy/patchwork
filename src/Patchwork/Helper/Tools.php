@@ -10,12 +10,12 @@ class Tools
     {
         $pass = '';
 
-        while (strlen($pass) < $length)
-        {
+        while (strlen($pass) < $length) {
             $chr = rand(48, 122);
 
-            if (($chr <= 57) || (($chr >= 65) && ($chr <= 90)) || ($chr >= 97))
+            if (($chr <= 57) || (($chr >= 65) && ($chr <= 90)) || ($chr >= 97)) {
                 $pass .= chr($chr);
+            }
         }
 
         return $pass;
@@ -54,45 +54,10 @@ class Tools
 
     public static function dayCount($month, $year = 0)
     {
-        if ( ! $year)
+        if (! $year) {
             $year = date('Y');
+        }
 
         return ((int) date('t', strtotime($year.'-'.str_pad($month, 2, '0', STR_PAD_LEFT).'-01')));
-    }
-
-
-
-    // Facebook link generator
-
-    public static function fb_link($url, $text = '', $summary = '', $image = '')
-    {
-        return 'javascript:window.open(\'http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Btitle%5D='.rawurlencode($text).'&amp;p%5Bsummary%5D='.rawurlencode($summary).'&amp;p%5Burl%5D='.rawurlencode($url).'&amp;p%5Bimages%5D%5B0%5D='.rawurlencode($image).'\', \'\', \'directories=no,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no,width=640,height=350\');';
-    }
-
-
-
-    // Twitter link generator
-
-    public static function tw_link($url, $text = '')
-    {
-        return 'javascript:window.open(\'http://twitter.com/share?url='.rawurlencode($url).'&amp;text='.rawurlencode($text).'\', \'\', \'directories=no,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no,width=640,height=435\');';
-    }
-
-
-
-    // Google+ link generator
-
-    public static function gp_link($url)
-    {
-        return 'javascript:window.open(\'https://plus.google.com/share?url='.rawurlencode($url).'\', \'\', \'directories=no,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no,width=640,height=500\');';
-    }
-
-
-
-    // LinkedIn link generator
-    
-    public static function li_link($url, $text = '', $summary = '', $source = '')
-    {
-        return 'javascript:window.open(\'http://www.linkedin.com/shareArticle?mini=true&amp;url='.rawurlencode($url).'&amp;title='.rawurlencode($text).'&amp;summary='.rawurlencode($summary).'&amp;source='.rawurlencode($source).'\', \'\', \'directories=no,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no,width=520,height=410\');';
     }
 }
