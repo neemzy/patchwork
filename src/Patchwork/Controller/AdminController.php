@@ -210,29 +210,29 @@ abstract class AdminController implements ControllerProviderInterface
 
                     $app['session']->getFlashBag()->set('error', true);
                     $app['session']->getFlashBag()->set('message', $message);
-
-                    return $app['twig']->render('admin/'.$class.'/post.twig', array($class => $bean));
                 }
 
-                $extension = strtolower($image->guessExtension());
-
-                if ( ! in_array($extension, array('jpeg', 'png', 'gif')))
+                else
                 {
-                    $app['session']->getFlashBag()->set('error', true);
-                    $app['session']->getFlashBag()->set('message', 'Seuls les formats JPEG, PNG et GIF sont autorisés');
+                    if ( ! in_array($extension = strtolower($image->guessExtension()), array('jpeg', 'png', 'gif')))
+                    {
+                        $app['session']->getFlashBag()->set('error', true);
+                        $app['session']->getFlashBag()->set('message', 'Seuls les formats JPEG, PNG et GIF sont autorisés');
+                    }
 
-                    return $app['twig']->render('admin/'.$class.'/post.twig', array($class => $bean));
+                    else
+                    {
+                        $dir = dirname(dirname(dirname(__DIR__))).'/public/assets/img/'.$class.'/';
+                        $file = $id_bean.'.'.$extension;
+
+                        if ($bean->image)
+                            unlink($dir.$bean->image);
+
+                        $image->move($dir, $file);
+                        $bean->setImage($dir, $file);
+                        R::store($bean);
+                    }
                 }
-
-                $dir = dirname(dirname(dirname(__DIR__))).'/public/assets/img/'.$class.'/';
-                $file = $id_bean.'.'.$extension;
-
-                if ($bean->image)
-                    unlink($dir.$bean->image);
-
-                $image->move($dir, $file);
-                $bean->setImage($dir, $file);
-                R::store($bean);
             }
 
             return $app->redirect($app['url_generator']->generate($class.'.post', array('id' => $id_bean)));
