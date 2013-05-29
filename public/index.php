@@ -45,6 +45,8 @@ $app['twig']->addExtension(new Entea\Twig\Extension\AssetExtension($app, array('
 $app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
 $app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Helper\Tools::vulgarize'));
 $app['twig']->addFilter('var_dump', new Twig_Filter_Function('var_dump'));
+$app['twig']->addFunction('twitter', new Twig_Function_Function('Patchwork\Helper\Tools::twitter'));
+$app['twig']->addFunction('facebook', new Twig_Function_Function('Patchwork\Helper\Tools::facebook'));
 
 // Translations
 $app->register(new Silex\Provider\TranslationServiceProvider(), array('locale' => 'fr'));

@@ -10,6 +10,10 @@
     <title>{% block title %}{% endblock %}</title>
     <meta name="description" content="{% block description %}{% endblock %}" />
     <meta name="author" content="Be Seen" />
+    <meta property="og:url" content="{{ url('home') }}" />
+    <meta property="og:title" content="{{ block('title') }}" />
+    <meta property="og:description" content="{{ block('description') }}" />
+    <meta property="og:image" content="{{ url('home') ~ 'assets/img/apple-touch-icon.png' }}" />
     <base href="{{ url('home') }}" />
     <!--[if lte IE 8]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <link rel="stylesheet" href="{{ asset('css/style.less') }}" />
