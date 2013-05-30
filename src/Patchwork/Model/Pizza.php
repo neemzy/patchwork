@@ -22,4 +22,9 @@ class Pizza extends \RedBean_SimpleModel
         $iw->save($dir, $file, false, null, 90);
         $this->image = $file;
     }
+
+    public function __toString()
+    {
+        return $this->title;
+    }
 }
