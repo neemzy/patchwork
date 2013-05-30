@@ -25,7 +25,7 @@
                 <input type="file" name="image" />
                 {% if pizza.image %}
                     <a class="btn" title="Supprimer l'image" href="{{ path('pizza.delete_image', { 'id': pizza.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');"><i class="icon-trash"></i></a>
-                    <img style="margin: 0px 10px;" src="{{ asset('img/pizza/' ~ pizza.image) }}" alt="Image non trouvée !" />
+                    <img src="{{ asset('img/pizza/' ~ pizza.image) }}" alt="Image non trouvée !" />
                 {% endif %}
             </div>
         </label>

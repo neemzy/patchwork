@@ -33,8 +33,8 @@ body { padding: 60px 0 40px; }
 form { text-align: right; }
 .label-like { margin-bottom: 5px; }
 label, .label-like { line-height: 31px; }
-[type=text], select, textarea { margin-left: 10px !important; }
-[type=text], textarea { width: 500px; }
+[type=text], [type=email], [type=password], select, textarea { margin-left: 10px !important; }
+[type=text], [type=email], [type=password], textarea { width: 500px; }
 select, textarea.nic { width: 514px; }
 select { padding: 4px 4px 4px 3px; }
 textarea { height: 200px; }
@@ -62,3 +62,4 @@ textarea { height: 200px; }
 }
 
 .holder label { display: inline; }
+.holder [type=text], .holder [type=email], .holder [type=password], .holder select, .holder textarea { margin-left: 0 !important; }
