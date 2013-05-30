@@ -30,6 +30,7 @@ body { padding: 60px 0 40px; }
 
 /** Forms **/
 
+label { line-height: 31px; }
 label span { vertical-align: 3px; }
 [type=text], select, textarea { margin-left: 10px !important; }
 [type=text], textarea { width: 500px; }
@@ -51,12 +52,14 @@ textarea { height: 200px; }
 }
 
 form { text-align: right; }
-form .btn-group, .clrb { clear: both; }
+form > div { margin-bottom: 5px; }
+form .btn-group { margin-bottom: 0; }
 .holder label { display: inline; }
 
 .holder {
+    display: inline-block;
+    vertical-align: top;
     position: relative;
-    float: right;
     width: 514px;
     margin: 0 0 10px 10px;
     text-align: left;

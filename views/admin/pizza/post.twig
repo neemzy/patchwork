@@ -18,7 +18,6 @@
         <label>
             <span>Contenu</span>
             <div class="holder"><textarea name="content" id="content" class="nic">{% if app.request.get('content') %}{{ app.request.get('content') }}{% else %}{{ pizza.content }}{% endif %}</textarea></div>
-            <div class="clrb"></div>
         </label>
         <label>
             <span>Image</span>
@@ -29,7 +28,6 @@
                     <img style="margin: 0px 10px;" src="{{ asset('img/pizza/' ~ pizza.image) }}" alt="Image non trouvée !" />
                 {% endif %}
             </div>
-            <div class="clrb"></div>
         </label>
         <div class="btn-group pull-right">
             <button class="btn btn-inverse"><i class="icon-ok icon-white"></i> Valider</button>
