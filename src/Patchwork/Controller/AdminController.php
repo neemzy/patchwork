@@ -8,7 +8,7 @@ use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints as Assert;
-use Patchwork\Helper\Facade as R;
+use Patchwork\Helper\RedBean as R;
 use PHPImageWorkshop\ImageWorkshop;
 
 abstract class AdminController implements ControllerProviderInterface
