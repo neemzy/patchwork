@@ -30,8 +30,9 @@ body { padding: 60px 0 40px; }
 
 /** Forms **/
 
-label { line-height: 31px; }
-label span { vertical-align: 3px; }
+form { text-align: right; }
+.label-like { margin-bottom: 5px; }
+label, .label-like { line-height: 31px; }
 [type=text], select, textarea { margin-left: 10px !important; }
 [type=text], textarea { width: 500px; }
 select, textarea.nic { width: 514px; }
@@ -50,11 +51,6 @@ textarea { height: 200px; }
     top: 0;
 }
 
-form { text-align: right; }
-form > div { margin-bottom: 5px; }
-form .btn-group { margin-bottom: 0; }
-.holder label { display: inline; }
-
 .holder {
     display: inline-block;
     vertical-align: top;
@@ -64,3 +60,5 @@ form .btn-group { margin-bottom: 0; }
     text-align: left;
     list-style-type: none;
 }
+
+.holder label { display: inline; }
