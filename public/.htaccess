@@ -18,6 +18,7 @@ RewriteRule ^(.*)$ http://%1/$1 [L,R=301]
 RewriteCond %{THE_REQUEST} ^(GET|HEAD|POST)\ /[^\ \?]*\?($|\ )
 RewriteRule ^(.*)$ /$1? [L,R=301]
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/api/
 RewriteRule ^(.*)/$ http://%{HTTP_HOST}/$1 [L,R=301]
 RewriteRule ^index\.php/(.*)$ /$1 [L,R=301]
 
