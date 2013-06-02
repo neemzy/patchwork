@@ -1,6 +1,8 @@
 <?php
 
-namespace Patchwork\Controller;
+namespace Pizza\Controller;
+
+use Patchwork\Controller\AdminController;
 
 class AdminPizzaController extends AdminController
 {

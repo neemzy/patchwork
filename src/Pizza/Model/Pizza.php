@@ -1,6 +1,6 @@
 <?php
 
-namespace Patchwork\Model;
+namespace Pizza\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use PHPImageWorkshop\ImageWorkshop;

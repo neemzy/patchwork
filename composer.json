@@ -1,20 +1,11 @@
 {
     "require": {
-        "silex/silex": "1.0.*",
-        "twig/twig": ">=1.8,<2.0-dev",
-        "symfony/twig-bridge": "2.1.*",
-        "symfony/validator": "2.1.*",
-        "symfony/translation": "2.1.*",
-        "symfony/config": "2.2.*",
-        "swiftmailer/swiftmailer": ">=4.1.2,<4.2-dev",
-        "gabordemooij/redbean": "*",
-        "entea/silex-twig-simple-asset-extension": "dev-master",
-        "sybio/image-workshop": "*"
+        "neemzy/patchwork-core": "*"
     },
 
     "autoload": {
         "psr-0": {
-            "Patchwork": "src/"
+            "Pizza": "src/"
         }
     },
 
