@@ -4,6 +4,8 @@ require_once(dirname(__DIR__).'/vendor/autoload.php');
 require_once(dirname(__DIR__).'/config.php');
 
 use Symfony\Component\HttpFoundation\Session\Session;
+use Patchwork\Controller\AdminController;
+use Patchwork\Controller\ApiController;
 use Patchwork\Helper\RedBean as R;
 
 // Scaffolding
@@ -23,8 +25,9 @@ R::$toolbox->getRedBean()->setBeanHelper(new Patchwork\Helper\BeanHelper());
 $app['controllers_factory'] = function () use ($app) {
     return new Patchwork\Helper\ControllerCollection($app['route_factory']);
 };
-$app->mount('/', new Patchwork\Controller\FrontController());
-$app->mount('/admin/pizza', new Patchwork\Controller\AdminPizzaController());
+$app->mount('/', new Pizza\Controller\FrontController());
+$app->mount('/admin/pizza', AdminController::getInstanceFor('pizza'));
+$app->mount('/api/pizza', ApiController::getInstanceFor('pizza'));
 
 // Session
 $app['session'] = $app->share(
