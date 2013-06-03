@@ -9,8 +9,8 @@ Options -Indexes
 Options +FollowSymLinks
 RewriteEngine On
 
-#RewriteCond %{HTTP_HOST} !^www\.
-#RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [L,R=301,QSA]
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [L,R=301,QSA]
 RewriteCond %{THE_REQUEST} \ (.*)//+(.*)\  [NC]
 RewriteRule ^(.*)$ %1/%2 [L,R=301]
 RewriteCond %{HTTP_HOST} (.*)\.$
