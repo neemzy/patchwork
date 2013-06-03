@@ -1,6 +1,7 @@
 <?php
 
 define('DEBUG_MODE', true);
+define('BASE_PATH', __DIR__);
 define('MODEL_NAMESPACE', 'Pizza\\Model\\');
 
 define('DB_HOST', 'localhost');
