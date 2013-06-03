@@ -8,7 +8,7 @@ class FrontController extends BaseFrontController
 {
     protected function route($app)
     {
-        $ctrl = parent::route($app, $class);
+        $ctrl = parent::route($app);
 
 
 
