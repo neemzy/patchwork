@@ -1,10 +1,8 @@
 (function($)
 {
-    // HTML5 placeholder polyfill
-
     function initPlaceHolders()
     {
-        if ( ! ('placeholder' in document.createElement('input'))) {
+        if (! ('placeholder' in document.createElement('input'))) {
             $('[type=password][placeholder]').attr('placeholder', $('[type=password][placeholder]').eq(0).attr('placeholder'));
             var items = '[placeholder]', $doc = $(document);
 
@@ -37,8 +35,7 @@
             $('form').on('submit', function() {
                 var $this = $(this);
 
-                $this.find('[placeholder]').each(function()
-                {
+                $this.find('[placeholder]').each(function() {
                     if ($this.val() == $this.attr('placeholder')) {
                         $this.val('').removeClass('placeholder');
                     }
@@ -49,29 +46,17 @@
     
 
 
-    // DOM ready
+    $('form').attr('autocomplete', 'off');
 
-    $(function() {
-        $('form').attr('autocomplete', 'off');
-
-        $('select').mouseleave(function(event) {
-            event.stopPropagation();
-        });
-
-        if (typeof console === 'undefined') {
-            console = { log: function() {} };
-        }
-        
-        $('html').removeClass('nojs');
-        initPlaceHolders();
+    $('select').mouseleave(function(event) {
+        event.stopPropagation();
     });
+
+    if (typeof console === 'undefined') {
+        console = { log: function() {} };
+    }
     
-
-
-    // Loading complete
-
-    $(window).on('load', function() {
-        
-    });
-    
-})(jQuery);
+    $('html').removeClass('nojs');
+    initPlaceHolders();
+})
+(jQuery);
