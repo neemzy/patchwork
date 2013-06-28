@@ -47,7 +47,7 @@ body {
     min-height: 100%;
     background: white none;
     .sans;
-    font-size: 12px;
+    font-size: 62.5%;
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: 100%;
     color: #333333;
@@ -116,7 +116,7 @@ canvas { -ms-touch-action: double-tap-zoom; }
 
 ::-webkit-validation-bubble-message {
     .sans;
-    font-size: 11px;
+    font-size: 1.1em;
     white-space: nowrap;
 }
 
@@ -124,6 +124,11 @@ canvas { -ms-touch-action: double-tap-zoom; }
 ::-webkit-input-placeholder { .placeholder; }
 :-ms-input-placeholder { .placeholder; }
 ::-moz-placeholder { .placeholder; }
+
+@-ms-viewport{
+    width: device-width;
+}
+
 :-moz-ui-invalid { box-shadow: none; }
 
 ::-moz-focus-inner {
