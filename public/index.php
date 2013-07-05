@@ -25,7 +25,7 @@ R::$toolbox->getRedBean()->setBeanHelper(new Patchwork\Helper\BeanHelper());
 $app['controllers_factory'] = function () use ($app) {
     return new Patchwork\Helper\ControllerCollection($app['route_factory']);
 };
-$app->mount('/', new Pizza\Controller\FrontController());
+$app->mount('/', new Patchwork\Controller\FrontController());
 $app->mount('/admin/pizza', AdminController::getInstanceFor('pizza'));
 $app->mount('/api/pizza', ApiController::getInstanceFor('pizza'));
 

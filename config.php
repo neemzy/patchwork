@@ -3,6 +3,7 @@
 define('DEBUG_MODE', true);
 define('BASE_PATH', __DIR__);
 define('MODEL_NAMESPACE', 'Pizza\\Model\\');
+define('ADMIN_ROOT', 'pizza.list');
 
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'pizza');
