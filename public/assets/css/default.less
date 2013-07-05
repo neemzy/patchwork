@@ -1,5 +1,12 @@
 /** Classes **/
 
+.container {
+    .block;
+    .auto;
+    width: 100%;
+    max-width: 980px;
+}
+
 .away {
     .block;
     text-align: left !important;
@@ -11,9 +18,10 @@
     opacity: 1;
 }
 
+.center { text-align: center; }
+.auto { margin: 0 auto; }
 .block { display: block; }
 .hidden { display: none; }
-.inline { display: inline; }
 .inline-top, .inline-middle, .notice { display: inline-block; }
 .inline-top { vertical-align: top; }
 .inline-middle { vertical-align: middle; }
@@ -25,15 +33,6 @@
 .under:hover { text-decoration: underline; }
 .gt:before { content: '> '; }
 .required:after { content: ' *'; }
-.center { text-align: center; }
-.auto { margin: 0 auto; }
-
-.container {
-    .block;
-    .auto;
-    width: 100%;
-    max-width: 980px;
-}
 
 
 
@@ -56,7 +55,7 @@ body {
     min-height: 100%;
     background: white none;
     .sans;
-    font-size: 12px;
+    font-size: 62.5%;
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: 100%;
     color: #333333;
@@ -125,20 +124,24 @@ canvas { -ms-touch-action: double-tap-zoom; }
 
 ::-webkit-validation-bubble-message {
     .sans;
-    font-size: 11px;
+    font-size: 1.1em;
     white-space: nowrap;
 }
 
 ::-webkit-validation-bubble-icon { .hidden; }
 ::-webkit-input-placeholder { .placeholder; }
-:-ms-input-placeholder { .placeholder; }
 ::-moz-placeholder { .placeholder; }
+:-ms-input-placeholder { .placeholder; }
 :-moz-ui-invalid { box-shadow: none; }
 
 ::-moz-focus-inner {
     margin: 0;
     padding: 0;
     border: none;
+}
+
+@-ms-viewport {
+    width: device-width;
 }
 
 

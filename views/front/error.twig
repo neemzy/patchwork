@@ -1,3 +1,6 @@
-{{ message }}
-<br /><br />
-<a href="{{ path('home') }}">Retour à l'accueil</a>
+{% extends 'front/layout.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+{% block description %}{{ parent() }}{% endblock %}
+
+{% block body %}{{ message }}{% endblock %}
