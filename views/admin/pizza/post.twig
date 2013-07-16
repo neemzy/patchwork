@@ -38,6 +38,6 @@
 {% endblock %}
 
 {% block javascript %}
-    <script src="{{ asset('js/nicEdit.js') }}"></script>
-    <script>new nicEditor({ iconsPath: '{{ asset('img/nicEditorIcons.gif') }}' }).panelInstance('content');</script>
+    <script src="{{ asset('../../vendor/neemzy/patchwork-core/assets/js/nicEdit.js') }}"></script>
+    <script>new nicEditor({ iconsPath: '{{ asset('../../vendor/neemzy/patchwork-core/assets/img/nicEditorIcons.gif') }}' }).panelInstance('content');</script>
 {% endblock %}
