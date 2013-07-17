@@ -5,10 +5,14 @@ require_once(dirname(__DIR__).'/config.php');
 
 class PizzaTest extends PHPUnit_Framework_TestCase
 {
-    public function testCanCreateAPizza()
+    protected function setUp()
     {
         $class = MODEL_NAMESPACE.'Pizza';
-        $pizza = new $class();
-        $this->assertNotNull($pizza);
+        $this->pizza = new $class;
+    }
+
+    public function testCanCreateAPizza()
+    {
+        $this->assertNotNull($this->pizza);
     }
 }
