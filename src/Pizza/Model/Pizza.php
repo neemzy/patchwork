@@ -4,8 +4,9 @@ namespace Pizza\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use PHPImageWorkshop\ImageWorkshop;
+use Patchwork\Model\AbstractModel;
 
-class Pizza extends \RedBean_SimpleModel
+class Pizza extends AbstractModel
 {
     public function getAsserts()
     {
@@ -15,6 +16,8 @@ class Pizza extends \RedBean_SimpleModel
         );
     }
 
+
+
     public function setImage($dir, $file)
     {
         $iw = ImageWorkshop::initFromPath($dir.$file);
@@ -22,6 +25,8 @@ class Pizza extends \RedBean_SimpleModel
         $iw->save($dir, $file, false, null, 90);
         $this->image = $file;
     }
+
+    
 
     public function __toString()
     {
