@@ -1,7 +1,8 @@
 {
     "require": {
         "neemzy/patchwork-core": "*",
-        "phpunit/phpunit": "dev-configuration"
+        "phpunit/phpunit": "dev-configuration",
+        "firephp/firephp-core": "dev-master"
     },
 
     "autoload": {
