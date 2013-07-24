@@ -2,28 +2,16 @@
 
 /** CSS3 fonts **/
 
-@font-face {
-    font-family: AvenirMedium;
-    src: url('../font/avenir65.eot?') format('embedded-opentype'),
-         url('../font/avenir65.woff') format('woff'),
-         url('../font/avenir65.otf') format('opentype'),
-         url('../font/fonts.svg#avenir65') format('svg');
-}
+@font-face { .font-face(AvenirMedium, avenirmedium); }
+@font-face { .font-face(AvenirHeavy, avenirheavy); }
+@font-face { .font-face(AvenirBlack, avenirblack); }
+.avenir-medium { font-family: AvenirMedium; }
+.avenir-heavy { font-family: AvenirHeavy; }
+.avenir-black { font-family: AvenirBlack; }
 
-@font-face {
-    font-family: AvenirHeavy;
-    src: url('../font/avenir85.eot?') format('embedded-opentype'),
-         url('../font/avenir85.woff') format('woff'),
-         url('../font/avenir85.otf') format('opentype'),
-         url('../font/fonts.svg#avenir85') format('svg');
-}
-
-@font-face {
-    font-family: AvenirBlack;
-    src: url('../font/avenir95.eot?') format('embedded-opentype'),
-         url('../font/avenir95.woff') format('woff'),
-         url('../font/avenir95.otf') format('opentype'),
-         url('../font/fonts.svg#avenir95') format('svg');
+.avenir-medium, .avenir-heavy, .avenir-black {
+    .font-reset;
+    .upper;
 }
 
 
