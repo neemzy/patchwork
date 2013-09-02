@@ -4,7 +4,7 @@
 
     <div class="page-header">
         <h1>Liste des pizzas</h1>
-        <a class="btn btn-inverse" href="{{ path('pizza.post') }}"><i class="icon-white icon-pencil"></i> Ajouter une pizza</a>
+        <a class="btn btn-primary" href="{{ path('pizza.post') }}"><i class="glyphicon glyphicon-pencil"></i> Ajouter une pizza</a>
     </div>
 
     {% if app.session.getFlashBag().has('message') %}
@@ -24,12 +24,12 @@
                 {% endif %}
                 <li>
                     <div class="btn-group">
-                        {% if not loop.first %}<a class="btn btn-small" href="{{ path('pizza.move', { 'id': pizza.id, 'up': 1 }) }}" title="Monter"><i class="icon-arrow-up"></i></a>{% endif %}
-                        {% if not loop.last %}<a class="btn btn-small" href="{{ path('pizza.move', { 'id': pizza.id, 'up': 0 }) }}" title="Descendre"><i class="icon-arrow-down"></i></a>{% endif %}
-                        <a class="btn btn-small" href="{{ path('pizza.clone', { 'id': pizza.id }) }}" title="Dupliquer"><i class="icon-repeat"></i></a>
-                        <a class="btn btn-small" href="{{ path('pizza.toggle', { 'id': pizza.id }) }}" title="{{ toggle_title }}"><i class="icon-{{ toggle_icon }}"></i></a>
-                        <a class="btn btn-small" href="{{ path('pizza.post', { 'id': pizza.id }) }}" title="Modifier"><i class="icon-edit"></i></a>
-                        <a class="btn btn-small" href="{{ path('pizza.delete', { 'id': pizza.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');" title="Supprimer"><i class="icon-trash"></i></a>
+                        {% if not loop.first %}<a class="btn btn-default btn-sm" href="{{ path('pizza.move', { 'id': pizza.id, 'up': 1 }) }}" title="Monter"><i class="glyphicon glyphicon-arrow-up"></i></a>{% endif %}
+                        {% if not loop.last %}<a class="btn btn-default btn-sm" href="{{ path('pizza.move', { 'id': pizza.id, 'up': 0 }) }}" title="Descendre"><i class="glyphicon glyphicon-arrow-down"></i></a>{% endif %}
+                        <a class="btn btn-default btn-sm" href="{{ path('pizza.clone', { 'id': pizza.id }) }}" title="Dupliquer"><i class="glyphicon glyphicon-repeat"></i></a>
+                        <a class="btn btn-default btn-sm" href="{{ path('pizza.toggle', { 'id': pizza.id }) }}" title="{{ toggle_title }}"><i class="glyphicon glyphicon-{{ toggle_icon }}"></i></a>
+                        <a class="btn btn-default btn-sm" href="{{ path('pizza.post', { 'id': pizza.id }) }}" title="Modifier"><i class="glyphicon glyphicon-edit"></i></a>
+                        <a class="btn btn-default btn-sm" href="{{ path('pizza.delete', { 'id': pizza.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');" title="Supprimer"><i class="glyphicon glyphicon-trash"></i></a>
                     </div>
                     {{ pizza }}
                 </li>
@@ -39,6 +39,6 @@
         <p>Vous n'avez créé aucune pizza pour le moment.</p>
     {% endif %}
 
-    <a class="btn btn-inverse pull-right" href="{{ path('pizza.post') }}"><i class="icon-white icon-pencil"></i> Ajouter une pizza</a>
+    <a class="btn btn-primary pull-right" href="{{ path('pizza.post') }}"><i class="glyphicon glyphicon-pencil"></i> Ajouter une pizza</a>
 
 {% endblock %}
