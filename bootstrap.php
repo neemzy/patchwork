@@ -45,17 +45,30 @@ $app['environ']->add(
         return (preg_match('/localhost/', $_SERVER['REQUEST_URI']) !== false);
     },
     function () {
-        R::setup('sqlite:../dev.db');
+        R::addDatabase('dev', 'sqlite:dev.db');
+        R::selectDatabase('dev');
+        R::$toolbox->getRedBean()->setBeanHelper(new Patchwork\Helper\BeanHelper());
     }
-);
-
-$app['environ']->add(
+)->add(
+    'test',
+    function () {
+        return false;
+    },
+    function () {
+        R::addDatabase('test', 'sqlite:test.db');
+        R::selectDatabase('test');
+        R::$toolbox->getRedBean()->setBeanHelper(new Patchwork\Helper\BeanHelper());
+    }
+)->add(
     'prod',
     function () {
         return true;
     },
     function () {
-        R::setup('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
+        R::addDatabase('prod', 'mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
+        R::selectDatabase('prod');
+        R::$toolbox->getRedBean()->setBeanHelper(new Patchwork\Helper\BeanHelper());
+        R::freeze(true);
 
         $app->error(
             function (\Exception $e, $code) use ($app) {
@@ -72,8 +85,7 @@ $app['environ']->add(
 );
 
 $app['environ']->init();
-R::$toolbox->getRedBean()->setBeanHelper(new Patchwork\Helper\BeanHelper());
-R::freeze(! ($app['debug'] = (! $app['environ']->is('prod'))));
+$app['debug'] = (! $app['environ']->is('prod'));
 
 
 
