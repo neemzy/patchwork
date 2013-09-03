@@ -18,7 +18,7 @@
         <label>
             <span>Contenu</span>
             <div class="holder">
-                <textarea name="content" id="content" class="nic">{% if app.request.get('content') %}{{ app.request.get('content') }}{% else %}{{ pizza.content }}{% endif %}</textarea>
+                <textarea name="content" id="content">{% if app.request.get('content') %}{{ app.request.get('content') }}{% else %}{{ pizza.content }}{% endif %}</textarea>
             </div>
         </label>
         <label>
