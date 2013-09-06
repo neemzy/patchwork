@@ -10,8 +10,7 @@ use Patchwork\Helper\RedBean as R;
 
 // Configuration
 
-define('MODEL_NAMESPACE', 'Pizza\\Model\\');
-
+define('REDBEAN_MODEL_PREFIX', 'Pizza\\Model\\');
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'pizza');
 define('DB_USER', 'root');
@@ -47,7 +46,6 @@ $app['environ']->add(
     function () {
         R::addDatabase('dev', 'sqlite:'.BASE_PATH.'/db/dev.sqlite');
         R::selectDatabase('dev');
-        R::$toolbox->getRedBean()->setBeanHelper(new Patchwork\Helper\BeanHelper());
     }
 )->add(
     'test',
@@ -57,7 +55,6 @@ $app['environ']->add(
     function () {
         R::addDatabase('test', 'sqlite:'.BASE_PATH.'/db/test.sqlite');
         R::selectDatabase('test');
-        R::$toolbox->getRedBean()->setBeanHelper(new Patchwork\Helper\BeanHelper());
     }
 )->add(
     'prod',
@@ -67,17 +64,18 @@ $app['environ']->add(
     function () use ($app) {
         R::addDatabase('prod', 'mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
         R::selectDatabase('prod');
-        R::$toolbox->getRedBean()->setBeanHelper(new Patchwork\Helper\BeanHelper());
         R::freeze(true);
 
         $app->error(
             function (\Exception $e, $code) use ($app) {
                 $message = $e->getMessage();
+
                 switch ($code) {
                     case 404:
                         $message = 'La page que vous recherchez n\'existe pas ou est indisponible.';
                         break;
                 }
+
                 return $app['twig']->render('front/error.twig', compact('message'));
             }
         );
