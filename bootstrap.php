@@ -42,10 +42,10 @@ $app['environ'] = new Environ\Environ();
 $app['environ']->add(
     'dev',
     function () {
-        return (preg_match('/localhost/', $_SERVER['REQUEST_URI']) !== false);
+        return preg_match('/localhost/', $_SERVER['SERVER_NAME']);
     },
     function () {
-        R::addDatabase('dev', 'sqlite:'.BASE_PATH.'/dev.db');
+        R::addDatabase('dev', 'sqlite:'.BASE_PATH.'/db/dev.sqlite');
         R::selectDatabase('dev');
         R::$toolbox->getRedBean()->setBeanHelper(new Patchwork\Helper\BeanHelper());
     }
@@ -55,7 +55,7 @@ $app['environ']->add(
         return false;
     },
     function () {
-        R::addDatabase('test', 'sqlite:'.BASE_PATH.'/test.db');
+        R::addDatabase('test', 'sqlite:'.BASE_PATH.'/db/test.sqlite');
         R::selectDatabase('test');
         R::$toolbox->getRedBean()->setBeanHelper(new Patchwork\Helper\BeanHelper());
     }
@@ -64,7 +64,7 @@ $app['environ']->add(
     function () {
         return true;
     },
-    function () {
+    function () use ($app) {
         R::addDatabase('prod', 'mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
         R::selectDatabase('prod');
         R::$toolbox->getRedBean()->setBeanHelper(new Patchwork\Helper\BeanHelper());
