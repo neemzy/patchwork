@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<!--[if lte IE 8]><html class="nojs oldie" lang="fr"><![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html class="nojs" lang="fr"><!--<![endif]-->
+<!--[if lt IE 9]><html class="nojs oldie" lang="fr"><![endif]-->
+<!--[if IE 9]><html class="nojs ie9" lang="fr"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html class="nojs" lang="fr"><!--<![endif]-->
 
 <head>
     <meta charset="utf-8" />
@@ -15,7 +16,7 @@
     <meta property="og:description" content="{{ block('description') }}" />
     <meta property="og:image" content="{{ url('home') ~ 'assets/img/apple-touch-icon.png' }}" />
     <base href="{{ url('home') }}" />
-    <!--[if lte IE 8]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <link rel="stylesheet" href="{{ asset('css/front.less') }}" />
     <link rel="apple-touch-icon-precomposed" href="{{ asset('img/apple-touch-icon.png') }}" />
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('img/apple-touch-icon-72x72.png') }}" />
