@@ -1,4 +1,11 @@
 {
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://bitbucket.org/neemzy/patchwork-core.git"
+        }
+    ],
+
     "require": {
         "neemzy/patchwork-core": "*",
         "phpunit/phpunit": "dev-configuration",
