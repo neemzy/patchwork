@@ -35,7 +35,7 @@ date_default_timezone_set('Europe/Paris');
 
 // Environments && database
 
-$app = new Silex\Application();
+R::bindApp($app = new Silex\Application());
 $app['environ'] = new Environ\Environ();
 
 $app['environ']->add(
@@ -135,17 +135,22 @@ $app['twig']->addFilter('var_dump', new Twig_Filter_Function('var_dump'));
 $app['twig']->addFunction('twitter', new Twig_Function_Function('Patchwork\Helper\Tools::twitter'));
 $app['twig']->addFunction('facebook', new Twig_Function_Function('Patchwork\Helper\Tools::facebook'));
 
-$app->register(new Silex\Provider\TranslationServiceProvider(), array('locale' => 'fr'));
-$app['translator.domains'] = array(
-    'messages' => array(
-        'fr' => array(
-            '[title]' => 'Titre',
-            '[content]' => 'Contenu',
-            'This value should not be blank.' => 'Ce champ est requis.',
-            'This value is not valid.' => 'Ce champ est invalide.',
-            'This value is not a valid email address.' => 'Ce champ doit contenir une adresse e-mail valide.'
-        ),
-    ),
+$app->register(
+    new Silex\Provider\TranslationServiceProvider(),
+    array(
+        'locale_fallback' => 'fr',
+        'translator.domains' => array(
+            'messages' => array(
+                'fr' => array(
+                    '[title]' => 'Titre',
+                    '[content]' => 'Contenu',
+                    'This value should not be blank.' => 'Ce champ est requis.',
+                    'This value is not valid.' => 'Ce champ est invalide.',
+                    'This value is not a valid email address.' => 'Ce champ doit contenir une adresse e-mail valide.'
+                ),
+            ),
+        )
+    )
 );
 
 $app->register(new Silex\Provider\SwiftmailerServiceProvider());
