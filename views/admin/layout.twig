@@ -20,7 +20,19 @@
             </div>
         </div>
     </div>
-    <div class="container">{% block body %}{% endblock %}</div>
+
+    <div class="container">
+        <div class="page-header clearfix">{% block head %}{% endblock %}</div>
+
+        {% if app.session.getFlashBag().has('message') %}
+            <div class="alert alert-{% if app.session.getFlashBag().has('error') %}danger{% else %}success{% endif %}">
+                {{ app.session.getFlashBag().get('message')[0]|raw }}
+            </div>
+        {% endif %}
+
+        {% block body %}{% endblock %}
+    </div>
+
     <script src="http://code.jquery.com/jquery.min.js"></script>
     {% block javascript %}{% endblock %}
 </body>
