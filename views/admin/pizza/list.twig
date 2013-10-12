@@ -2,9 +2,9 @@
 
 {% block body %}
 
-    <div class="page-header">
-        <h1>Liste des pizzas</h1>
-        <a class="btn btn-primary" href="{{ path('pizza.post') }}"><i class="glyphicon glyphicon-pencil"></i> Ajouter une pizza</a>
+    <div class="page-header clearfix">
+        <h1 class="pull-left">Liste des pizzas</h1>
+        <a class="btn btn-primary pull-right" href="{{ path('pizza.post') }}"><i class="glyphicon glyphicon-pencil"></i> Ajouter une pizza</a>
     </div>
 
     {% if app.session.getFlashBag().has('message') %}
@@ -14,7 +14,7 @@
     {% endif %}
 
     {% if pizzas is defined and pizzas|length %}
-        <ul class="nav nav-tabs nav-stacked">
+        <ul class="list-group">
             {% for pizza in pizzas %}
                 {% set toggle_title = 'Activer' %}
                 {% set toggle_icon = 'remove' %}
@@ -22,8 +22,8 @@
                     {% set toggle_title = 'Désactiver' %}
                     {% set toggle_icon = 'ok' %}
                 {% endif %}
-                <li>
-                    <div class="btn-group">
+                <li class="list-group-item clearfix">
+                    <div class="btn-group pull-right">
                         {% if not loop.first %}<a class="btn btn-default btn-sm" href="{{ path('pizza.move', { 'id': pizza.id, 'up': 1 }) }}" title="Monter"><i class="glyphicon glyphicon-arrow-up"></i></a>{% endif %}
                         {% if not loop.last %}<a class="btn btn-default btn-sm" href="{{ path('pizza.move', { 'id': pizza.id, 'up': 0 }) }}" title="Descendre"><i class="glyphicon glyphicon-arrow-down"></i></a>{% endif %}
                         <a class="btn btn-default btn-sm" href="{{ path('pizza.clone', { 'id': pizza.id }) }}" title="Dupliquer"><i class="glyphicon glyphicon-repeat"></i></a>
