@@ -11,19 +11,11 @@
     <title>{% block title %}Patchwork{% endblock %}</title>
     <meta name="description" content="{% block description %}A Composer-based PHP web framework using Silex (microframework) and RedBeanPHP (ORM){% endblock %}" />
     <meta name="author" content="Be Seen" />
-    <meta property="og:url" content="{{ url('home') }}" />
     <meta property="og:title" content="{{ block('title') }}" />
     <meta property="og:description" content="{{ block('description') }}" />
-    <meta property="og:image" content="{{ url('home') ~ 'assets/img/apple-touch-icon.png' }}" />
     <base href="{{ url('home') }}" />
     <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <link rel="stylesheet" href="{{ asset('css/front/global.less') }}" />
-    <link rel="apple-touch-icon-precomposed" href="{{ asset('img/apple-touch-icon.png') }}" />
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('img/apple-touch-icon-72x72.png') }}" />
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('img/apple-touch-icon-114x114.png') }}" />
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('img/apple-touch-icon-144x144.png') }}" />
-    <meta name="msapplication-TileColor" content="#333333" />
-    <meta name="msapplication-TileImage" content="{{ asset('img/apple-touch-icon-144x144.png') }}" />
 </head>
 
 <body>
