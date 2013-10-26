@@ -4,6 +4,7 @@ define('BASE_PATH', __DIR__);
 require_once(BASE_PATH.'/vendor/autoload.php');
 
 use Symfony\Component\HttpFoundation\Session\Session;
+use Patchwork\App;
 use Patchwork\Controller\AdminController;
 use Patchwork\Controller\ApiController;
 use Patchwork\Helper\RedBean as R;
@@ -35,7 +36,7 @@ date_default_timezone_set('Europe/Paris');
 
 // Environments && database
 
-R::bindApp($app = new Silex\Application());
+$app = App::getInstance();
 $app['environ'] = new Environ\Environ();
 
 $app['environ']->add(
