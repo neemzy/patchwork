@@ -1,9 +1,10 @@
 <?php
 
-define('BASE_PATH', __DIR__);
+define('BASE_PATH', dirname(__DIR__));
 require_once(BASE_PATH.'/vendor/autoload.php');
 
 use Symfony\Component\HttpFoundation\Session\Session;
+use Monolog\Logger;
 use Patchwork\App;
 use Patchwork\Controller\AdminController;
 use Patchwork\Controller\ApiController;
@@ -47,6 +48,15 @@ $app['environ']->add(
     function () {
         R::addDatabase('dev', 'sqlite:'.BASE_PATH.'/db/dev.sqlite');
         R::selectDatabase('dev');
+
+        $app->register(
+            new Silex\Provider\MonologServiceProvider(),
+            array(
+                'monolog.logfile' => BASE_PATH.'/logs/dev.log',
+                'monolog.level' => Logger::DEBUG,
+                'monolog.name' => 'dev'
+            )
+        );
     }
 )->add(
     'test',
@@ -56,6 +66,15 @@ $app['environ']->add(
     function () {
         R::addDatabase('test', 'sqlite:'.BASE_PATH.'/db/test.sqlite');
         R::selectDatabase('test');
+
+        $app->register(
+            new Silex\Provider\MonologServiceProvider(),
+            array(
+                'monolog.logfile' => BASE_PATH.'/logs/test.log',
+                'monolog.level' => Logger::INFO,
+                'monolog.name' => 'test'
+            )
+        );
     }
 )->add(
     'prod',
@@ -66,6 +85,15 @@ $app['environ']->add(
         R::addDatabase('prod', 'mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
         R::selectDatabase('prod');
         R::freeze(true);
+
+        $app->register(
+            new Silex\Provider\MonologServiceProvider(),
+            array(
+                'monolog.logfile' => BASE_PATH.'/logs/prod.log',
+                'monolog.level' => Logger::WARNING,
+                'monolog.name' => 'prod'
+            )
+        );
 
         $app->error(
             function (\Exception $e, $code) use ($app) {
@@ -128,7 +156,7 @@ $app['session'] = $app->share(
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new Silex\Provider\ValidatorServiceProvider());
 
-$app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => BASE_PATH.'/views'));
+$app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => BASE_PATH.'/app/views'));
 $app['twig']->addExtension(new Entea\Twig\Extension\AssetExtension($app, array('asset.directory' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']).'assets')));
 $app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
 $app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Helper\Tools::vulgarize'));
