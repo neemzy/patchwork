@@ -43,9 +43,9 @@ $app['environ'] = new Environ\Environ();
 $app['environ']->add(
     'dev',
     function () {
-        return preg_match('/localhost/', $_SERVER['SERVER_NAME']);
+        return preg_match('/(localhost|patch\.work)/', $_SERVER['SERVER_NAME']);
     },
-    function () {
+    function () use ($app) {
         R::addDatabase('dev', 'sqlite:'.BASE_PATH.'/db/dev.sqlite');
         R::selectDatabase('dev');
 
@@ -63,7 +63,7 @@ $app['environ']->add(
     function () {
         return false;
     },
-    function () {
+    function () use ($app) {
         R::addDatabase('test', 'sqlite:'.BASE_PATH.'/db/test.sqlite');
         R::selectDatabase('test');
 
