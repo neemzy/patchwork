@@ -1,6 +1,8 @@
 SetEnv PHP_VER 5_3
-
 AddHandler x-httpd-php53 .php
+
+FileETag MTime Size
+
 AddDefaultCharset UTF-8
 AddType video/mp4 .mp4 .m4v
 AddType video/ogg .ogv .ogg
@@ -24,4 +26,4 @@ RewriteRule ^index\.php/(.*)$ /$1 [L,R=301]
 
 RewriteCond %{REQUEST_FILENAME} !-f [OR]
 RewriteCond %{REQUEST_FILENAME} \.less$
-RewriteRule ^ index.php [E=REMOTE_USER:%{HTTP:Authorization},L] 
+RewriteRule ^ index.php [E=REMOTE_USER:%{HTTP:Authorization},L]
