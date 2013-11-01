@@ -21,8 +21,7 @@
 <body>
     <div class="container">{% block body %}{% endblock %}</div>
     
-    <script src="http://code.jquery.com/jquery.min.js"></script>
-    <script src="{{ asset('js/script.js') }}"></script>
+    <script data-main="{{ asset('js/app.js') }}" src="/vendor/ajbdev/requirejs/require.js"></script>
 </body>
 
 </html>
