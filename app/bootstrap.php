@@ -184,3 +184,5 @@ $app->register(
 
 $app->register(new Silex\Provider\SwiftmailerServiceProvider());
 $app['swiftmailer.transport'] = new Swift_MailTransport();
+
+return $app;
