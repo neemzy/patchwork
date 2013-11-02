@@ -13,11 +13,7 @@ class PizzaTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
-        global $app;
-        $this->app = $app;
-
         $this->pizza = R::dispense('pizza');
-        $this->pizza->bindApp($this->app);
     }
 
 
