@@ -1,15 +1,16 @@
 <?php
 
-require_once(dirname(__DIR__).'/bootstrap.php');
+namespace Tests\Model;
 
 use Patchwork\Helper\RedBean as R;
 
+$app = require(dirname(dirname(__DIR__)).'/bootstrap.php');
 $app['environ']->set('test');
 
 /**
  * @backupGlobals disabled
  */
-class PizzaTest extends PHPUnit_Framework_TestCase
+class PizzaTest extends \PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {

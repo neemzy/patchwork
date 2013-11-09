@@ -11,8 +11,9 @@
     },
 
     "require-dev": {
-        "phpunit/phpunit": "dev-configuration",
-        "firephp/firephp-core": "dev-master"
+        "firephp/firephp-core": "dev-master",
+        "phpunit/phpunit": "dev-master",
+        "phpunit/phpunit-selenium": "dev-master"
     },
 
     "autoload": {
