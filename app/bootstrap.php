@@ -85,6 +85,7 @@ $app['environ']->add(
         R::addDatabase('prod', 'mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
         R::selectDatabase('prod');
         R::freeze(true);
+        R::useWriterCache(true);
 
         $app->register(
             new Silex\Provider\MonologServiceProvider(),
@@ -163,6 +164,7 @@ $app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Helper\
 $app['twig']->addFilter('var_dump', new Twig_Filter_Function('var_dump'));
 $app['twig']->addFunction('twitter', new Twig_Function_Function('Patchwork\Helper\Tools::twitter'));
 $app['twig']->addFunction('facebook', new Twig_Function_Function('Patchwork\Helper\Tools::facebook'));
+$app['twig']->addFunction('pinterest', new Twig_Function_Function('Patchwork\Helper\Tools::pinterest'));
 
 $app->register(
     new Silex\Provider\TranslationServiceProvider(),
