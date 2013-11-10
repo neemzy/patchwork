@@ -3,6 +3,7 @@
 define('BASE_PATH', dirname(__DIR__));
 require_once(BASE_PATH.'/vendor/autoload.php');
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Monolog\Logger;
 use Patchwork\App;
@@ -22,10 +23,6 @@ define('ADMIN_ROOT', 'pizza.list');
 define('ADMIN_USER', 'pizza');
 define('ADMIN_PASS', 'admin');
 
-
-
-// Scaffolding
-
 error_reporting(E_ALL ^ E_NOTICE);
 ini_set('session.use_trans_sid', 0);
 ini_set('session.use_only_cookies', 1);
@@ -33,9 +30,11 @@ mb_internal_encoding('UTF-8');
 setlocale(LC_ALL, 'fr_FR.UTF8');
 date_default_timezone_set('Europe/Paris');
 
+Request::enableHttpMethodParameterOverride();
 
 
-// Environments && database
+
+// Environments (databases, logs)
 
 $app = App::getInstance();
 $app['environ'] = new Environ\Environ();
