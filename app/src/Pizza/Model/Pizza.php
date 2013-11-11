@@ -4,6 +4,7 @@ namespace Pizza\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use PHPImageWorkshop\ImageWorkshop;
+use Patchwork\Helper\RedBean as R;
 use Patchwork\Model\AbstractModel;
 
 class Pizza extends AbstractModel
@@ -12,7 +13,10 @@ class Pizza extends AbstractModel
     {
         return array(
             'title' => new Assert\NotBlank(),
-            'content' => new Assert\NotBlank()
+            'content' => new Assert\NotBlank(),
+            'position' => null,
+            'active' => null,
+            'image' => null
         );
     }
 
@@ -23,7 +27,8 @@ class Pizza extends AbstractModel
         $iw = ImageWorkshop::initFromPath($dir.$file);
         $iw->resizeInPixel(150, null, true, 0, 0, 'MM');
         $iw->save($dir, $file, false, null, 90);
-        $this->image = $file;
+        
+        parent::setImage($dir, $file);
     }
 
     
