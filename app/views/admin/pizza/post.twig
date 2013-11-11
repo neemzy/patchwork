@@ -28,6 +28,8 @@
     </div>{% endif %}
 
     <div class="btn-group pull-right">
+        <input type="hidden" name="position" value="{{ pizza.position }}" />
+        <input type="hidden" name="active" value="{{ pizza.active }}" />
         <button class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Valider</button>
         <a class="btn btn-default" href="{{ path('pizza.list') }}"><i class="glyphicon glyphicon-list"></i> Retour à la liste</a>
     </div>
