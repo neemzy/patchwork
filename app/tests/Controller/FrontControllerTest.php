@@ -2,8 +2,7 @@
 
 namespace Tests\Controller;
 
-$app = require(dirname(dirname(__DIR__)).'/bootstrap.php');
-$app['environ']->set('test');
+require(dirname(dirname(__DIR__)).'/bootstrap.php');
 
 /**
  * @backupGlobals disabled

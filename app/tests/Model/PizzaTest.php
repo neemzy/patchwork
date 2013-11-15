@@ -4,8 +4,7 @@ namespace Tests\Model;
 
 use Patchwork\Helper\RedBean as R;
 
-$app = require(dirname(dirname(__DIR__)).'/bootstrap.php');
-$app['environ']->set('test');
+require(dirname(dirname(__DIR__)).'/bootstrap.php');
 
 /**
  * @backupGlobals disabled
