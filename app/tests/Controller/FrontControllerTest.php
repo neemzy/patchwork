@@ -2,8 +2,6 @@
 
 namespace Tests\Controller;
 
-use Patchwork\Helper\RedBean as R;
-
 $app = require(dirname(dirname(__DIR__)).'/bootstrap.php');
 $app['environ']->set('test');
 
