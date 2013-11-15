@@ -40,6 +40,24 @@ $app = App::getInstance();
 $app['environ'] = new Environ\Environ();
 
 $app['environ']->add(
+    'test',
+    function () {
+        return (! $_SERVER['HTTP_USER_AGENT']);
+    },
+    function () use ($app) {
+        R::addDatabase('test', 'sqlite:'.BASE_PATH.'/db/test.sqlite');
+        R::selectDatabase('test');
+
+        $app->register(
+            new Silex\Provider\MonologServiceProvider(),
+            array(
+                'monolog.logfile' => BASE_PATH.'/logs/test.log',
+                'monolog.level' => Logger::INFO,
+                'monolog.name' => 'test'
+            )
+        );
+    }
+)->add(
     'dev',
     function () {
         return preg_match('/(localhost|patch\.work)/', $_SERVER['SERVER_NAME']);
@@ -54,24 +72,6 @@ $app['environ']->add(
                 'monolog.logfile' => BASE_PATH.'/logs/dev.log',
                 'monolog.level' => Logger::DEBUG,
                 'monolog.name' => 'dev'
-            )
-        );
-    }
-)->add(
-    'test',
-    function () {
-        return false;
-    },
-    function () use ($app) {
-        R::addDatabase('test', 'sqlite:'.BASE_PATH.'/db/test.sqlite');
-        R::selectDatabase('test');
-
-        $app->register(
-            new Silex\Provider\MonologServiceProvider(),
-            array(
-                'monolog.logfile' => BASE_PATH.'/logs/test.log',
-                'monolog.level' => Logger::INFO,
-                'monolog.name' => 'test'
             )
         );
     }
