@@ -22,13 +22,15 @@ class Pizza extends AbstractModel
 
 
 
-    public function setImage($dir, $file)
+    public function setImage($file)
     {
+        $dir = $this->getImageDir();
+
         $iw = ImageWorkshop::initFromPath($dir.$file);
         $iw->resizeInPixel(150, null, true, 0, 0, 'MM');
         $iw->save($dir, $file, false, null, 90);
         
-        parent::setImage($dir, $file);
+        parent::setImage($file);
     }
 
     

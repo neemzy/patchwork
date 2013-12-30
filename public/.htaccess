@@ -24,6 +24,5 @@ RewriteCond %{REQUEST_URI} !^/api/
 RewriteRule ^(.*)/$ http://%{HTTP_HOST}/$1 [L,R=301]
 RewriteRule ^index\.php/(.*)$ /$1 [L,R=301]
 
-RewriteCond %{REQUEST_FILENAME} !-f [OR]
-RewriteCond %{REQUEST_FILENAME} \.(less|js)$
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [E=REMOTE_USER:%{HTTP:Authorization},L]

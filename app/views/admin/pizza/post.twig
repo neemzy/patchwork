@@ -24,7 +24,7 @@
         <a class="btn btn-default pull-right" title="Supprimer l'image" href="{{ path('pizza.delete_image', { 'id': pizza.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');">
             <i class="glyphicon glyphicon-trash"></i>
         </a>
-        <img src="{{ asset('img/pizza/' ~ pizza.image) }}" alt="" />
+        <img src="{{ asset('../upload/pizza/' ~ pizza.image) }}" alt="" />
     </div>{% endif %}
 
     <div class="btn-group pull-right">
@@ -38,6 +38,6 @@
 {% endblock %}
 
 {% block javascript %}
-    <script src="/vendor/neemzy/patchwork-core/assets/js/nicEdit.js"></script>
-    <script>new nicEditor({ iconsPath: '/vendor/neemzy/patchwork-core/assets/img/nicEditorIcons.gif' }).panelInstance('content');</script>
+    <script src="{{ asset('js/nicEdit.js') }}"></script>
+    <script>new nicEditor({ iconsPath: '{{ asset('img/nicEditorIcons.gif') }}' }).panelInstance('content');</script>
 {% endblock %}

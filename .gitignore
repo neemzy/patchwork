@@ -1,5 +1,8 @@
-db
-logs
+bower_components
+node_modules
 vendor
 
-*.css
+db
+logs
+
+composer.lock

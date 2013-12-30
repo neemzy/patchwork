@@ -1,27 +1,28 @@
 <!DOCTYPE html>
-<!--[if lt IE 9]><html class="nojs oldie" lang="fr"><![endif]-->
-<!--[if IE 9]><html class="nojs ie9" lang="fr"><![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--><html class="nojs" lang="fr"><!--<![endif]-->
+<!--[if lt IE 9]><html class="nojs oldie"><![endif]-->
+<!--[if IE 9]><html class="nojs ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html class="nojs"><!--<![endif]-->
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="format-detection" content="telephone=no" />
     <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge" /><![endif]-->
-    <title>{% block title %}Patchwork{% endblock %}</title>
-    <meta name="description" content="{% block description %}A Composer-based PHP web framework using Silex (microframework) and RedBeanPHP (ORM){% endblock %}" />
+    <title>{% block title %}{{ app.globals.meta.title }}{% endblock %}</title>
+    <meta name="description" content="{% block description %}{{ app.globals.meta.description }}{% endblock %}" />
     <meta name="author" content="Be Seen" />
     <meta property="og:title" content="{{ block('title') }}" />
     <meta property="og:description" content="{{ block('description') }}" />
     <base href="{{ url('home') }}" />
     <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-    <link rel="stylesheet" href="{{ asset('css/front/global.less') }}" />
+    <link rel="stylesheet" href="{{ asset('css/front.css') }}" />
 </head>
 
 <body>
     <div class="container">{% block body %}{% endblock %}</div>
     
-    <script data-main="{{ asset('js/app.js') }}" src="/vendor/ajbdev/requirejs/require.js"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+    {% include 'livereload.twig' %}
 </body>
 
 </html>

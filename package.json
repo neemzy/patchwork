@@ -1,0 +1,20 @@
+{
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "load-grunt-tasks": "~0.2.1",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-phpunit": "~0.3.2",
+    "grunt-contrib-less": "~0.8.3",
+    "grunt-autoprefixer": "~0.6.3",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-open": "~0.2.2",
+    "grunt-ttf2eot": "~0.1.0",
+    "grunt-ttf2woff": "~0.1.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-concurrent": "~0.4.2",
+    "grunt-csso": "~0.5.2",
+    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-contrib-imagemin": "~0.4.0"
+  }
+}

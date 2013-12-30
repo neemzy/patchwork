@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Administration</title>
     <!--[if lte IE 8]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-    <link rel="stylesheet" href="{{ asset('css/admin.less') }}" />
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}" />
 </head>
 
 <body>
@@ -33,8 +33,8 @@
         {% block body %}{% endblock %}
     </div>
 
-    <script src="http://code.jquery.com/jquery.min.js"></script>
     {% block javascript %}{% endblock %}
+    {% include 'livereload.twig' %}
 </body>
 
 </html>

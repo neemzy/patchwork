@@ -81,6 +81,8 @@ $app['environ']->add(
         return true;
     },
     function () use ($app) {
+        error_reporting(0);
+
         R::addDatabase('prod', 'mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
         R::selectDatabase('prod');
         R::freeze(true);
@@ -160,7 +162,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => BA
 $app['twig']->addExtension(new Entea\Twig\Extension\AssetExtension($app, array('asset.directory' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']).'assets')));
 $app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
 $app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Helper\Tools::vulgarize'));
-$app['twig']->addFilter('var_dump', new Twig_Filter_Function('var_dump'));
+$app['twig']->addFilter('dump', new Twig_Filter_Function('Patchwork\Helper\Tools::dump'));
 $app['twig']->addFunction('twitter', new Twig_Function_Function('Patchwork\Helper\Tools::twitter'));
 $app['twig']->addFunction('facebook', new Twig_Function_Function('Patchwork\Helper\Tools::facebook'));
 $app['twig']->addFunction('pinterest', new Twig_Function_Function('Patchwork\Helper\Tools::pinterest'));
@@ -185,5 +187,18 @@ $app->register(
 
 $app->register(new Silex\Provider\SwiftmailerServiceProvider());
 $app['swiftmailer.transport'] = new Swift_MailTransport();
+
+
+
+// Globals
+
+$app['globals'] = array(
+    'meta' => array(
+        'title' => 'Patchwork',
+        'description' => 'A Composer-based PHP web framework using Silex (microframework) and RedBeanPHP (ORM)'
+    )
+);
+
+
 
 return $app;
