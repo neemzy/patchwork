@@ -4,5 +4,3 @@ vendor
 
 db
 logs
-
-composer.lock
