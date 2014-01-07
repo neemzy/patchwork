@@ -1,40 +1,40 @@
 {% extends 'admin/layout.twig' %}
 
-{% block head %}<h1>{% if pizza.id %}Modifier{% else %}Ajouter{% endif %} une pizza</h1>{% endblock %}
+{% block head %}
+    <h1>{% if pizza.id %}Modifier{% else %}Ajouter{% endif %} une pizza</h1>
+{% endblock %}
 
 {% block body %}
+    <form method="post" class="col-md-8 col-md-offset-2" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">Titre</label>
+            <input type="text" class="form-control" name="title" id="title" value="{% if app.request.get('title') %}{{ app.request.get('title') }}{% else %}{{ pizza.title }}{% endif %}" />
+        </div>
 
-<form method="post" class="col-md-8 col-md-offset-2" enctype="multipart/form-data">
-    <div class="form-group">
-        <label for="title">Titre</label>
-        <input type="text" class="form-control" name="title" id="title" value="{% if app.request.get('title') %}{{ app.request.get('title') }}{% else %}{{ pizza.title }}{% endif %}" />
-    </div>
+        <div class="form-group">
+            <label for="content">Contenu</label>
+            <textarea class="form-control" name="content" id="content">{% if app.request.get('content') %}{{ app.request.get('content') }}{% else %}{{ pizza.content }}{% endif %}</textarea>
+        </div>
 
-    <div class="form-group">
-        <label for="content">Contenu</label>
-        <textarea class="form-control" name="content" id="content">{% if app.request.get('content') %}{{ app.request.get('content') }}{% else %}{{ pizza.content }}{% endif %}</textarea>
-    </div>
+        <div class="form-group">
+            <label for="image">Image</label>
+            <input class="form-control" type="file" name="image" />
+        </div>
 
-    <div class="form-group">
-        <label for="image">Image</label>
-        <input class="form-control" type="file" name="image" />
-    </div>
+        {% if pizza.image %}<div class="form-group well">
+            <a class="btn btn-default pull-right" title="Supprimer l'image" href="{{ path('pizza.delete_image', { 'id': pizza.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');">
+                <i class="glyphicon glyphicon-trash"></i>
+            </a>
+            <img src="{{ asset('../upload/pizza/' ~ pizza.image) }}" alt="" />
+        </div>{% endif %}
 
-    {% if pizza.image %}<div class="form-group well">
-        <a class="btn btn-default pull-right" title="Supprimer l'image" href="{{ path('pizza.delete_image', { 'id': pizza.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');">
-            <i class="glyphicon glyphicon-trash"></i>
-        </a>
-        <img src="{{ asset('../upload/pizza/' ~ pizza.image) }}" alt="" />
-    </div>{% endif %}
-
-    <div class="btn-group pull-right">
-        <input type="hidden" name="position" value="{{ pizza.position }}" />
-        <input type="hidden" name="active" value="{{ pizza.active }}" />
-        <button class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Valider</button>
-        <a class="btn btn-default" href="{{ path('pizza.list') }}"><i class="glyphicon glyphicon-list"></i> Retour à la liste</a>
-    </div>
-</form>
-
+        <div class="btn-group pull-right">
+            <input type="hidden" name="position" value="{{ pizza.position }}" />
+            <input type="hidden" name="active" value="{{ pizza.active }}" />
+            <button class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Valider</button>
+            <a class="btn btn-default" href="{{ path('pizza.list') }}"><i class="glyphicon glyphicon-list"></i> Retour à la liste</a>
+        </div>
+    </form>
 {% endblock %}
 
 {% block javascript %}

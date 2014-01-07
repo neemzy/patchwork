@@ -1,44 +1,40 @@
 {% extends 'admin/layout.twig' %}
 
 {% block head %}
-
-<h1 class="pull-left">Liste des pizzas</h1>
-<a class="btn btn-success pull-right" href="{{ path('pizza.post') }}"><i class="glyphicon glyphicon-pencil"></i> Ajouter une pizza</a>
-
+    <h1 class="pull-left">Liste des pizzas</h1>
+    <a class="btn btn-success pull-right" href="{{ path('pizza.post') }}"><i class="glyphicon glyphicon-pencil"></i> Ajouter une pizza</a>
 {% endblock %}
 
 {% block body %}
+    {% if pizzas is defined and pizzas|length %}
+        <ul class="list-group">
+            {% for pizza in pizzas %}
+                {% set toggle_title = 'Activer' %}
+                {% set toggle_icon = 'remove' %}
+                {% if pizza.active %}
+                    {% set toggle_title = 'Désactiver' %}
+                    {% set toggle_icon = 'ok' %}
+                {% endif %}
+                <li class="list-group-item clearfix">
+                    <div class="btn-group pull-right">
+                        {% if not loop.first %}
+                            <a class="btn btn-default btn-sm" href="{{ path('pizza.move', { 'id': pizza.id, 'up': 1 }) }}" title="Monter"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        {% endif %}
+                        {% if not loop.last %}
+                            <a class="btn btn-default btn-sm" href="{{ path('pizza.move', { 'id': pizza.id, 'up': 0 }) }}" title="Descendre"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                        {% endif %}
+                        <a class="btn btn-default btn-sm" href="{{ path('pizza.clone', { 'id': pizza.id }) }}" title="Dupliquer"><i class="glyphicon glyphicon-repeat"></i></a>
+                        <a class="btn btn-default btn-sm" href="{{ path('pizza.toggle', { 'id': pizza.id }) }}" title="{{ toggle_title }}"><i class="glyphicon glyphicon-{{ toggle_icon }}"></i></a>
+                        <a class="btn btn-default btn-sm" href="{{ path('pizza.post', { 'id': pizza.id }) }}" title="Modifier"><i class="glyphicon glyphicon-edit"></i></a>
+                        <a class="btn btn-default btn-sm" href="{{ path('pizza.delete', { 'id': pizza.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');" title="Supprimer"><i class="glyphicon glyphicon-trash"></i></a>
+                    </div>
+                    {{ pizza }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="alert alert-warning">Vous n'avez créé aucune pizza pour le moment.</p>
+    {% endif %}
 
-{% if pizzas is defined and pizzas|length %}
-    <ul class="list-group">
-        {% for pizza in pizzas %}
-            {% set toggle_title = 'Activer' %}
-            {% set toggle_icon = 'remove' %}
-            {% if pizza.active %}
-                {% set toggle_title = 'Désactiver' %}
-                {% set toggle_icon = 'ok' %}
-            {% endif %}
-            <li class="list-group-item clearfix">
-                <div class="btn-group pull-right">
-                    {% if not loop.first %}
-                        <a class="btn btn-default btn-sm" href="{{ path('pizza.move', { 'id': pizza.id, 'up': 1 }) }}" title="Monter"><i class="glyphicon glyphicon-arrow-up"></i></a>
-                    {% endif %}
-                    {% if not loop.last %}
-                        <a class="btn btn-default btn-sm" href="{{ path('pizza.move', { 'id': pizza.id, 'up': 0 }) }}" title="Descendre"><i class="glyphicon glyphicon-arrow-down"></i></a>
-                    {% endif %}
-                    <a class="btn btn-default btn-sm" href="{{ path('pizza.clone', { 'id': pizza.id }) }}" title="Dupliquer"><i class="glyphicon glyphicon-repeat"></i></a>
-                    <a class="btn btn-default btn-sm" href="{{ path('pizza.toggle', { 'id': pizza.id }) }}" title="{{ toggle_title }}"><i class="glyphicon glyphicon-{{ toggle_icon }}"></i></a>
-                    <a class="btn btn-default btn-sm" href="{{ path('pizza.post', { 'id': pizza.id }) }}" title="Modifier"><i class="glyphicon glyphicon-edit"></i></a>
-                    <a class="btn btn-default btn-sm" href="{{ path('pizza.delete', { 'id': pizza.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');" title="Supprimer"><i class="glyphicon glyphicon-trash"></i></a>
-                </div>
-                {{ pizza }}
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p class="alert alert-warning">Vous n'avez créé aucune pizza pour le moment.</p>
-{% endif %}
-
-<a class="btn btn-success pull-right" href="{{ path('pizza.post') }}"><i class="glyphicon glyphicon-pencil"></i> Ajouter une pizza</a>
-
+    <a class="btn btn-success pull-right" href="{{ path('pizza.post') }}"><i class="glyphicon glyphicon-pencil"></i> Ajouter une pizza</a>
 {% endblock %}

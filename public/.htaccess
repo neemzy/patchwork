@@ -1,5 +1,5 @@
-SetEnv PHP_VER 5_3
-AddHandler x-httpd-php53 .php
+#SetEnv PHP_VER 5_3
+#AddHandler x-httpd-php53 .php
 
 FileETag MTime Size
 
@@ -9,6 +9,7 @@ AddType video/ogg .ogv .ogg
 AddType video/webm .webm
 Options -Indexes
 Options +FollowSymLinks
+
 RewriteEngine On
 
 RewriteCond %{HTTP_HOST} !^www\.
