@@ -2,7 +2,7 @@
 
 {% block head %}
     <h1 class="pull-left">Liste des pizzas</h1>
-    <a class="btn btn-success pull-right" href="{{ path('pizza.post') }}"><i class="glyphicon glyphicon-pencil"></i> Ajouter une pizza</a>
+    <a class="btn btn-primary pull-right" href="{{ path('pizza.post') }}"><i class="glyphicon glyphicon-pencil"></i> Ajouter une pizza</a>
 {% endblock %}
 
 {% block body %}
@@ -36,5 +36,5 @@
         <p class="alert alert-warning">Vous n'avez créé aucune pizza pour le moment.</p>
     {% endif %}
 
-    <a class="btn btn-success pull-right" href="{{ path('pizza.post') }}"><i class="glyphicon glyphicon-pencil"></i> Ajouter une pizza</a>
+    <a class="btn btn-primary pull-right" href="{{ path('pizza.post') }}"><i class="glyphicon glyphicon-pencil"></i> Ajouter une pizza</a>
 {% endblock %}
