@@ -1,8 +1,6 @@
 #SetEnv PHP_VER 5_3
 #AddHandler x-httpd-php53 .php
 
-FileETag MTime Size
-
 AddDefaultCharset UTF-8
 AddType video/mp4 .mp4 .m4v
 AddType video/ogg .ogv .ogg
