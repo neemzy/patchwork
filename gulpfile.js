@@ -19,7 +19,7 @@ gulp.task('phpunit', function () {
 
 
 gulp.task('css', function () {
-    gulp.src('app/assets/less/*.less') // https://github.com/plus3network/gulp-less/pull/21
+    gulp.src('app/assets/less/*.less')
         .pipe(tasks.less())
         .pipe(tasks.autoprefixer())
         .pipe(tasks['if'](gulp.env.production, tasks.csso()))
@@ -72,7 +72,7 @@ gulp.task('font', function () {
 
 
 gulp.task('icon', function () {
-    gulp.src(['bower_components/bootstrap/dist/fonts/*', '!bower_components/bootstrap/dist/fonts/*.svg'], { buffer: false })
+    gulp.src(['node_modules/bootstrap/fonts/*', '!node_modules/bootstrap/fonts/*.svg'], { buffer: false })
         .pipe(gulp.dest('public/assets/font/'))
 });
 
@@ -80,7 +80,7 @@ gulp.task('icon', function () {
 
 gulp.task('workflow', function () {
     gulp.src('gulpfile.js')
-        .pipe(open('', { url: 'http://www.patch.work/' }));
+        .pipe(tasks.open('', { url: 'http://www.patch.work/' }));
 
     server.listen(35727, function (err) {
         gulp.watch('app/assets/less/**/*.less', function () {
