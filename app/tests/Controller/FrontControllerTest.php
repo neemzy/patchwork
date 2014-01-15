@@ -2,11 +2,6 @@
 
 namespace Tests\Controller;
 
-require(dirname(dirname(__DIR__)).'/bootstrap.php');
-
-/**
- * @backupGlobals disabled
- */
 class FrontControllerTest extends \PHPUnit_Extensions_Selenium2TestCase
 {
     public function setUp()

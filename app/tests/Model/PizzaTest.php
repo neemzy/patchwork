@@ -4,11 +4,6 @@ namespace Tests\Model;
 
 use Patchwork\Helper\RedBean as R;
 
-require(dirname(dirname(__DIR__)).'/bootstrap.php');
-
-/**
- * @backupGlobals disabled
- */
 class PizzaTest extends \PHPUnit_Framework_TestCase
 {
     protected function setUp()
