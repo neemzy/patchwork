@@ -22,9 +22,7 @@
         </div>
 
         {% if pizza.image %}<div class="form-group well">
-            <a class="btn btn-default pull-right" title="Supprimer l'image" href="{{ path('pizza.delete_image', { 'id': pizza.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');">
-                <i class="glyphicon glyphicon-trash"></i>
-            </a>
+            <a class="btn btn-default pull-right" title="Supprimer l'image" href="{{ path('pizza.delete_image', { 'id': pizza.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');"><i class="glyphicon glyphicon-trash"></i></a>
             <img src="{{ asset('../upload/pizza/' ~ pizza.image) }}" alt="" />
         </div>{% endif %}
         
@@ -32,8 +30,8 @@
         <input type="hidden" name="active" value="{{ pizza.active }}" />
 
         <div class="btn-group pull-right">
-            <button class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i> Valider</button>
             <a class="btn btn-default" href="{{ path('pizza.list') }}"><i class="glyphicon glyphicon-list"></i> Retour à la liste</a>
+            <button class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i> Valider</button>
         </div>
     </form>
 {% endblock %}
