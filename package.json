@@ -4,7 +4,6 @@
         "gulp-load-tasks": "*",
         "gulp-if": "*",
         "gulp-rimraf": "*",
-        "gulp-exec": "*",
         "gulp-less": "*",
         "gulp-autoprefixer": "*",
         "gulp-csso": "*",
