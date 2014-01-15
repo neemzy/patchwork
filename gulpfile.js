@@ -11,13 +11,6 @@ gulp.task('rimraf', function () {
 
 
 
-gulp.task('phpunit', function () {
-    gulp.src('app/tests/')
-        .pipe(tasks.exec('phpunit <%= file.path %>'));
-});
-
-
-
 gulp.task('css', function () {
     gulp.src('app/assets/less/*.less')
         .pipe(tasks.less())
@@ -46,7 +39,7 @@ gulp.task('js', function () {
 
 gulp.task('img', function () {
     gulp.src(['app/assets/img/**/*', 'vendor/neemzy/patchwork-core/assets/img/**/*'])
-        .pipe(tasks['if'](gulp.env.production, tasks.imagemin()))
+        .pipe(tasks['if'](gulp.env.production, tasks.imagemin({ interlaced: true, progressive: true })))
         .pipe(gulp.dest('public/assets/img/'))
         .pipe(tasks.livereload(server));
 });
@@ -82,7 +75,7 @@ gulp.task('workflow', function () {
     gulp.src('gulpfile.js')
         .pipe(tasks.open('', { url: 'http://www.patch.work/' }));
 
-    server.listen(35727, function (err) {
+    server.listen(35729, function (err) {
         gulp.watch('app/assets/less/**/*.less', function () {
             gulp.run('css');
         });
@@ -94,13 +87,16 @@ gulp.task('workflow', function () {
         gulp.watch('app/assets/img/**/*', function () {
             gulp.run('img');
         });
+
+        gulp.watch('app/views/**/*.twig', function () {
+            gulp.src('').pipe(tasks.livereload(server));
+        });
     });
 });
 
 
 
 gulp.task('default', function() {
-    gulp.run('phpunit');
     //gulp.run('rimraf');
     gulp.run('css', 'js', 'img', 'font', 'icon');
     gulp.env.production || gulp.run('workflow');
