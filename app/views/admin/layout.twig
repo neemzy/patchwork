@@ -26,7 +26,7 @@
         <div class="page-header clearfix">{% block head %}{% endblock %}</div>
 
         {% if app.session.getFlashBag().has('message') %}
-            <div class="alert-{% if app.session.getFlashBag().has('error') %}danger{% else %}success{% endif %}">
+            <div class="alert alert-{% if app.session.getFlashBag().has('error') %}danger{% else %}success{% endif %}">
                 {{ app.session.getFlashBag().get('message')[0]|raw }}
             </div>
         {% endif %}
