@@ -96,8 +96,7 @@ gulp.task('workflow', function () {
 
 
 
-gulp.task('default', function() {
-    //gulp.run('rimraf');
+gulp.task('default'/*, ['rimraf']*/, function() {
     gulp.run('css', 'js', 'img', 'font', 'icon');
     gulp.env.production || gulp.run('workflow');
 });
