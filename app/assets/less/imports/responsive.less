@@ -13,6 +13,8 @@
 
 @large-min: 1200px;
 
+@hi-density: 2;
+
 
 
 /** Media queries **/
@@ -32,6 +34,8 @@
 @desktop-down: ~'(max-width: @{desktop-max})';
 
 @large-up: ~'(min-width: @{large-min})';
+
+@retina: ~'(-webkit-min-device-pixel-ratio: @hi-density), (min-resolution: 96dpi * @hi-density)';
 
 
 
