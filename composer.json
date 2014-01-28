@@ -1,4 +1,6 @@
 {
+    "minimum-stability": "dev",
+
     "repositories": [
         {
             "type": "vcs",
@@ -17,10 +19,8 @@
     },
 
     "autoload": {
-        "psr-0": {
-            "Pizza": "app/src/"
+        "psr-4": {
+            "Pizza\\": "app/src/"
         }
-    },
-
-    "minimum-stability": "dev"
+    }
 }
