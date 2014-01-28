@@ -9,14 +9,14 @@ use Patchwork\Model\AbstractModel;
 
 class Pizza extends AbstractModel
 {
-    public function getAsserts()
+    protected function asserts()
     {
         return array(
             'title' => new Assert\NotBlank(),
             'content' => new Assert\NotBlank(),
+            'image' => new Assert\Image(),
             'position' => null,
-            'active' => null,
-            'image' => null
+            'active' => null
         );
     }
 
