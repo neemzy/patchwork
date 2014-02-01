@@ -1,13 +1,7 @@
 var gulp = require('gulp'),
     tasks = require('gulp-load-tasks')(),
-    server = require('tiny-lr')();
-
-
-
-gulp.task('rimraf', function () {
-    gulp.src('public/assets/', { read: false })
-        .pipe(tasks.rimraf());
-});
+    server = require('tiny-lr')(),
+    rimraf = require('rimraf');
 
 
 
@@ -15,7 +9,7 @@ gulp.task('css', function () {
     gulp.src('app/assets/less/*.less')
         .pipe(tasks.less())
         .pipe(tasks.autoprefixer())
-        .pipe(tasks['if'](gulp.env.production, tasks.csso()))
+        .pipe(tasks.if(tasks.util.env.dist, tasks.csso()))
         .pipe(gulp.dest('public/assets/css/'))
         .pipe(tasks.livereload(server));
 });
@@ -27,7 +21,7 @@ gulp.task('js', function () {
         .pipe(tasks.jshint())
         .pipe(tasks.jshint.reporter('default'))
         .pipe(tasks.browserify())
-        .pipe(tasks['if'](gulp.env.production, tasks.uglify()))
+        .pipe(tasks.if(tasks.util.env.dist, tasks.uglify()))
         .pipe(gulp.dest('public/assets/js/'))
         .pipe(tasks.livereload(server));
 
@@ -39,7 +33,7 @@ gulp.task('js', function () {
 
 gulp.task('img', function () {
     gulp.src(['app/assets/img/**/*', 'vendor/neemzy/patchwork-core/assets/img/**/*'])
-        .pipe(tasks['if'](gulp.env.production, tasks.imagemin({ interlaced: true, progressive: true })))
+        .pipe(tasks.if(tasks.util.env.dist, tasks.imagemin({ interlaced: true, progressive: true })))
         .pipe(gulp.dest('public/assets/img/'))
         .pipe(tasks.livereload(server));
 });
@@ -96,7 +90,9 @@ gulp.task('workflow', function () {
 
 
 
-gulp.task('default'/*, ['rimraf']*/, function() {
-    gulp.run('css', 'js', 'img', 'font', 'icon');
-    gulp.env.production || gulp.run('workflow');
+gulp.task('default', function () {
+    rimraf('public/assets/', function () {
+        gulp.run('css', 'js', 'img', 'font', 'icon');
+        tasks.util.env.dist || gulp.run('workflow'); 
+    });
 });

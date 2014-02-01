@@ -2,8 +2,8 @@
     "devDependencies": {
         "gulp": "*",
         "gulp-load-tasks": "*",
+        "gulp-util": "*",
         "gulp-if": "*",
-        "gulp-rimraf": "*",
         "gulp-less": "*",
         "gulp-autoprefixer": "*",
         "gulp-csso": "*",
@@ -16,6 +16,7 @@
         "gulp-open": "*",
         "gulp-livereload": "*",
         "tiny-lr": "*",
+        "rimraf": "*",
         "napa": "*"
     },
 
