@@ -2,14 +2,14 @@
 
 @phone-max: 480px;
 
-@hybrid-min: @phone-max + 1;
-@hybrid-max: @tablet-min - 1;
+@hybrid-min: (@phone-max + 1);
+@hybrid-max: (@tablet-min - 1);
 
 @tablet-min: 768px;
-@tablet-max: @desktop-min - 1;
+@tablet-max: (@desktop-min - 1);
 
 @desktop-min: 980px;
-@desktop-max: @large-min - 1;
+@desktop-max: (@large-min - 1);
 
 @large-min: 1200px;
 
