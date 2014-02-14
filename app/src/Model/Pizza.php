@@ -4,7 +4,6 @@ namespace Pizza\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use PHPImageWorkshop\ImageWorkshop;
-use Patchwork\Helper\RedBean as R;
 use Patchwork\Model\AbstractModel;
 
 class Pizza extends AbstractModel
