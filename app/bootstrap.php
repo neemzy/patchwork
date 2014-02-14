@@ -60,7 +60,7 @@ $app['environ']->add(
 )->add(
     'dev',
     function () {
-        return preg_match('/(localhost|patch\.work)/', $_SERVER['SERVER_NAME']);
+        return preg_match('/(localhost|192\.168|patch\.work)/', $_SERVER['SERVER_NAME']);
     },
     function () use ($app) {
         R::addDatabase('dev', 'sqlite:'.BASE_PATH.'/db/dev.sqlite');
