@@ -1,7 +1,14 @@
 var gulp = require('gulp'),
     tasks = require('gulp-load-tasks')(),
-    server = require('tiny-lr')(),
-    rimraf = require('rimraf');
+    rimraf = require('rimraf'),
+    server = require('tiny-lr')();
+
+
+
+gulp.task('clean', function (callback) {
+    rimraf.sync('public/assets/');
+    callback();
+});
 
 
 
@@ -66,33 +73,22 @@ gulp.task('icon', function () {
 
 
 gulp.task('workflow', function () {
-    gulp.src('gulpfile.js')
-        .pipe(tasks.open('', { url: 'http://www.patch.work/' }));
+    if (! tasks.util.env.dist) {
+        gulp.src('gulpfile.js')
+            .pipe(tasks.open('', { url: 'http://www.patch.work/' }));
 
-    server.listen(35729, function (err) {
-        gulp.watch('app/assets/less/**/*.less', function () {
-            gulp.run('css');
-        });
+        server.listen(35729, function (err) {
+            gulp.watch('app/assets/less/**/*.less', ['css']);
+            gulp.watch('app/assets/js/**/*.js', ['js']);
+            gulp.watch('app/assets/img/**/*', ['img']);
 
-        gulp.watch('app/assets/js/**/*.js', function () {
-            gulp.run('js');
+            gulp.watch('app/views/**/*.twig', function () {
+                gulp.src('').pipe(tasks.livereload(server));
+            });
         });
-
-        gulp.watch('app/assets/img/**/*', function () {
-            gulp.run('img');
-        });
-
-        gulp.watch('app/views/**/*.twig', function () {
-            gulp.src('').pipe(tasks.livereload(server));
-        });
-    });
+    }
 });
 
 
 
-gulp.task('default', function () {
-    rimraf('public/assets/', function () {
-        gulp.run('css', 'js', 'img', 'font', 'icon');
-        tasks.util.env.dist || gulp.run('workflow'); 
-    });
-});
+gulp.task('default', ['clean', 'css', 'js', 'img', 'font', 'icon', 'workflow']);
