@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <form method="post" class="col-md-8 col-md-offset-2" enctype="multipart/form-data">
+    <form method="POST" class="col-md-8 col-md-offset-2" enctype="multipart/form-data" autocomplete="off" novalidate>
         <div class="form-group">
             <label for="title">Titre</label>
             <input type="text" class="form-control" name="title" id="title" value="{% if app.request.get('title') %}{{ app.request.get('title') }}{% else %}{{ pizza.title }}{% endif %}" />
@@ -18,7 +18,7 @@
 
         <div class="form-group">
             <label for="image">Image</label>
-            <input class="form-control" type="file" name="image" />
+            <input class="form-control" type="file" name="image" id="image" />
         </div>
 
         {% if pizza.image %}<div class="form-group well">
