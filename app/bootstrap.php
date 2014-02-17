@@ -107,7 +107,7 @@ $app['environ']->add(
                         break;
                 }
 
-                return $app['twig']->render('front/error.twig', compact('message'));
+                return $app['twig']->render('front/partials/error.twig', compact('message'));
             }
         );
     }
@@ -196,7 +196,7 @@ $app['swiftmailer.transport'] = new Swift_MailTransport();
 $app['globals'] = array(
     'meta' => array(
         'title' => 'Patchwork',
-        'description' => 'A Composer-based PHP web framework using Silex (microframework) and RedBeanPHP (ORM)'
+        'description' => 'A Composer-based PHP web framework powered by Silex (microframework) and RedBean (ORM)'
     )
 );
 
