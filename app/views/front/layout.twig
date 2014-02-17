@@ -19,7 +19,9 @@
 </head>
 
 <body>
-    <div class="container">{% block body %}{% endblock %}</div>
+    <div class="container">
+        {% block body %}{% endblock %}
+    </div>
     
     <script src="{{ asset('js/main.js') }}"></script>
     {% include 'livereload.twig' %}
