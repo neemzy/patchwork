@@ -1,6 +1,4 @@
-bower_components
 node_modules
 vendor
-
 db
 logs
