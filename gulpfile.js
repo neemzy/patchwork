@@ -39,7 +39,7 @@ gulp.task('js', function () {
 
 
 gulp.task('img', function () {
-    gulp.src(['app/assets/img/**/*', 'vendor/neemzy/patchwork-core/assets/img/**/*'])
+    gulp.src('app/assets/img/**/*')
         .pipe(tasks.if(tasks.util.env.dist, tasks.imagemin({ interlaced: true, progressive: true })))
         .pipe(gulp.dest('public/assets/img/'))
         .pipe(tasks.livereload(server));
