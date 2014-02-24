@@ -158,15 +158,6 @@ $app['session'] = $app->share(
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new Silex\Provider\ValidatorServiceProvider());
 
-$app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => BASE_PATH.'/app/views'));
-$app['twig']->addExtension(new Entea\Twig\Extension\AssetExtension($app, array('asset.directory' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']).'assets')));
-$app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
-$app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Helper\Tools::vulgarize'));
-$app['twig']->addFilter('dump', new Twig_Filter_Function('Patchwork\Helper\Tools::dump'));
-$app['twig']->addFunction('twitter', new Twig_Function_Function('Patchwork\Helper\Tools::twitter'));
-$app['twig']->addFunction('facebook', new Twig_Function_Function('Patchwork\Helper\Tools::facebook'));
-$app['twig']->addFunction('pinterest', new Twig_Function_Function('Patchwork\Helper\Tools::pinterest'));
-
 $app->register(
     new Silex\Provider\TranslationServiceProvider(),
     array(
@@ -176,6 +167,7 @@ $app->register(
                 'fr' => array(
                     '[title]' => 'Titre',
                     '[content]' => 'Contenu',
+                    '[image]' => 'Image',
                     'This value should not be blank.' => 'Ce champ est requis.',
                     'This value is not valid.' => 'Ce champ est invalide.',
                     'This value is not a valid email address.' => 'Ce champ doit contenir une adresse e-mail valide.',
@@ -185,6 +177,15 @@ $app->register(
         )
     )
 );
+
+$app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => BASE_PATH.'/app/views'));
+$app['twig']->addExtension(new Entea\Twig\Extension\AssetExtension($app, array('asset.directory' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']).'assets')));
+$app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
+$app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Helper\Tools::vulgarize'));
+$app['twig']->addFilter('dump', new Twig_Filter_Function('Patchwork\Helper\Tools::dump'));
+$app['twig']->addFunction('twitter', new Twig_Function_Function('Patchwork\Helper\Tools::twitter'));
+$app['twig']->addFunction('facebook', new Twig_Function_Function('Patchwork\Helper\Tools::facebook'));
+$app['twig']->addFunction('pinterest', new Twig_Function_Function('Patchwork\Helper\Tools::pinterest'));
 
 $app->register(new Silex\Provider\SwiftmailerServiceProvider());
 $app['swiftmailer.transport'] = new Swift_MailTransport();
