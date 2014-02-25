@@ -4,10 +4,15 @@ namespace Pizza\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use PHPImageWorkshop\ImageWorkshop;
-use Patchwork\Model\AbstractModel;
+use Patchwork\Model\BaseModel;
 
-class Pizza extends AbstractModel
+class Pizza extends BaseModel
 {
+    const WIDTH = 480;
+    const HEIGHT = 320;
+
+
+
     protected function asserts()
     {
         return array(
@@ -17,19 +22,6 @@ class Pizza extends AbstractModel
             'position' => null,
             'active' => null
         );
-    }
-
-
-
-    public function setImage($file)
-    {
-        $dir = $this->getImageDir();
-
-        $iw = ImageWorkshop::initFromPath($dir.$file);
-        $iw->resizeInPixel(150, null, true, 0, 0, 'MM');
-        $iw->save($dir, $file, false, null, 90);
-        
-        parent::setImage($file);
     }
 
     

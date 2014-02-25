@@ -6,10 +6,10 @@ require_once(BASE_PATH.'/vendor/autoload.php');
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Monolog\Logger;
+use \RedBean_Facade as R;
 use Patchwork\App;
 use Patchwork\Controller\AdminController;
 use Patchwork\Controller\ApiController;
-use Patchwork\Helper\RedBean as R;
 
 // Configuration
 

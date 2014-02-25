@@ -2,7 +2,7 @@
 
 namespace Tests\Model;
 
-use Patchwork\Helper\RedBean as R;
+use \RedBean_Facade as R;
 
 class PizzaTest extends \PHPUnit_Framework_TestCase
 {
