@@ -190,11 +190,11 @@ $app->register(
 $app->register(new Twig(), array('twig.path' => BASE_PATH.'/app/views'));
 $app['twig']->addExtension(new AssetExtension($app, array('asset.directory' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']).'assets')));
 $app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
-$app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Tools::vulgarize'));
-$app['twig']->addFilter('dump', new Twig_Filter_Function('Patchwork\Tools::dump'));
 $app['twig']->addFunction('twitter', new Twig_Function_Function('Patchwork\Tools::twitter'));
 $app['twig']->addFunction('facebook', new Twig_Function_Function('Patchwork\Tools::facebook'));
 $app['twig']->addFunction('pinterest', new Twig_Function_Function('Patchwork\Tools::pinterest'));
+$app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Tools::vulgarize'));
+$app['twig']->addFilter('dump', new Twig_Filter_Function('Patchwork\Tools::dump', array('is_safe' => array('all'))));
 $app['twig']->addGlobal('title', 'Patchwork');
 $app['twig']->addGlobal('description', '#PHP 5.4+ web framework powered by #Composer #Silex #RedBean #NPM');
 
