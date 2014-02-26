@@ -7,14 +7,28 @@ use Patchwork\Model\AbstractModel;
 use Patchwork\Model\SortableModel;
 use Patchwork\Model\ClonableModel;
 use Patchwork\Model\TogglableModel;
+use Patchwork\Model\SlugModel;
 use Patchwork\Model\ImageModel;
+use Patchwork\Helper\Tools;
 
 class Pizza extends AbstractModel
 {
-    use SortableModel, ClonableModel, TogglableModel, ImageModel;
+    use SortableModel, ClonableModel, TogglableModel, SlugModel, ImageModel;
 
-    const WIDTH = 480;
-    const HEIGHT = 320;
+    public function getSlug()
+    {
+        return Tools::vulgarize($this->title);
+    }
+
+    public function getWidth()
+    {
+        return 480;
+    }
+
+    public function getHeight()
+    {
+        return 320;
+    }
 
 
 
