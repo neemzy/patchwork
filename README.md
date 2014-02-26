@@ -1,6 +1,6 @@
 # Patchwork
 
-#PHP 5.4+ web framework powered by #Composer #Silex #RedBean #NPM
+\#PHP 5.4+ web framework powered by #Composer #Silex #RedBean #NPM
 
 ## Setup
 
