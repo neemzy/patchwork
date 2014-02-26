@@ -61,11 +61,11 @@ $app['environ']
 
             $app->register(
                 new Monolog(),
-                array(
+                [
                     'monolog.logfile' => BASE_PATH.'/logs/test.log',
                     'monolog.level' => Logger::INFO,
                     'monolog.name' => 'test'
-                )
+                ]
             );
         }
     )
@@ -80,11 +80,11 @@ $app['environ']
 
             $app->register(
                 new Monolog(),
-                array(
+                [
                     'monolog.logfile' => BASE_PATH.'/logs/dev.log',
                     'monolog.level' => Logger::DEBUG,
                     'monolog.name' => 'dev'
-                )
+                ]
             );
         }
     )
@@ -103,11 +103,11 @@ $app['environ']
 
             $app->register(
                 new Monolog(),
-                array(
+                [
                     'monolog.logfile' => BASE_PATH.'/logs/prod.log',
                     'monolog.level' => Logger::WARNING,
                     'monolog.name' => 'prod'
-                )
+                ]
             );
 
             $app->error(
@@ -169,11 +169,11 @@ $app->register(new Validator());
 
 $app->register(
     new Translation(),
-    array(
+    [
         'locale_fallback' => 'fr',
-        'translator.domains' => array(
-            'messages' => array(
-                'fr' => array(
+        'translator.domains' => [
+            'messages' => [
+                'fr' => [
                     '[title]' => 'Titre',
                     '[content]' => 'Contenu',
                     '[image]' => 'Image',
@@ -181,20 +181,20 @@ $app->register(
                     'This value is not valid.' => 'Ce champ est invalide.',
                     'This value is not a valid email address.' => 'Ce champ doit contenir une adresse e-mail valide.',
                     'This value is not a valid URL.' => 'Ce champ doit contenir une URL valide.'
-                )
-            )
-        )
-    )
+                ]
+            ]
+        ]
+    ]
 );
 
-$app->register(new Twig(), array('twig.path' => BASE_PATH.'/app/views'));
-$app['twig']->addExtension(new AssetExtension($app, array('asset.directory' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']).'assets')));
+$app->register(new Twig(), ['twig.path' => BASE_PATH.'/app/views']);
+$app['twig']->addExtension(new AssetExtension($app, ['asset.directory' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']).'assets']));
 $app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
 $app['twig']->addFunction('twitter', new Twig_Function_Function('Patchwork\Tools::twitter'));
 $app['twig']->addFunction('facebook', new Twig_Function_Function('Patchwork\Tools::facebook'));
 $app['twig']->addFunction('pinterest', new Twig_Function_Function('Patchwork\Tools::pinterest'));
 $app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Tools::vulgarize'));
-$app['twig']->addFilter('dump', new Twig_Filter_Function('Patchwork\Tools::dump', array('is_safe' => array('all'))));
+$app['twig']->addFilter('dump', new Twig_Filter_Function('Patchwork\Tools::dump', ['is_safe' => ['all']]));
 $app['twig']->addGlobal('title', 'Patchwork');
 $app['twig']->addGlobal('description', '#PHP 5.4+ web framework powered by #Composer #Silex #RedBean #NPM');
 

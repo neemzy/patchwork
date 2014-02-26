@@ -34,13 +34,13 @@ class Pizza extends AbstractModel
 
     protected function asserts()
     {
-        return array(
+        return [
             'title' => new Assert\NotBlank(),
             'content' => new Assert\NotBlank(),
             'image' => new Assert\Image(),
             'position' => null,
             'active' => null
-        );
+        ];
     }
 
     
