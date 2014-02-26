@@ -22,8 +22,8 @@
         </div>
 
         {% if pizza.image %}<div class="form-group well">
-            <a class="btn btn-default pull-right" title="Supprimer l'image" href="{{ path('pizza.delete_image', { id: pizza.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');"><i class="glyphicon glyphicon-trash"></i></a>
-            <img src="{{ asset('../upload/pizza/' ~ pizza.image) }}" alt="" />
+            <a class="btn btn-default pull-right" title="Supprimer l'image" href="{{ path('pizza.delete_image', { bean: pizza.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');"><i class="glyphicon glyphicon-trash"></i></a>
+            <img src="{{ pizza.getImagePath(false) }}" alt="" />
         </div>{% endif %}
         
         <input type="hidden" name="position" value="{{ pizza.position }}" />

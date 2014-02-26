@@ -18,15 +18,15 @@
                 <li class="list-group-item clearfix">
                     <div class="btn-group pull-right">
                         {% if not loop.first %}
-                            <a class="btn btn-default btn-sm" href="{{ path('pizza.move', { id: pizza.id, up: 1 }) }}" title="Monter"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                            <a class="btn btn-default btn-sm" href="{{ path('pizza.move', { bean: pizza.id, up: 1 }) }}" title="Monter"><i class="glyphicon glyphicon-arrow-up"></i></a>
                         {% endif %}
                         {% if not loop.last %}
-                            <a class="btn btn-default btn-sm" href="{{ path('pizza.move', { id: pizza.id, up: 0 }) }}" title="Descendre"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                            <a class="btn btn-default btn-sm" href="{{ path('pizza.move', { bean: pizza.id, up: 0 }) }}" title="Descendre"><i class="glyphicon glyphicon-arrow-down"></i></a>
                         {% endif %}
-                        <a class="btn btn-default btn-sm" href="{{ path('pizza.clone', { id: pizza.id }) }}" title="Dupliquer"><i class="glyphicon glyphicon-repeat"></i></a>
-                        <a class="btn btn-default btn-sm" href="{{ path('pizza.toggle', { id: pizza.id }) }}" title="{{ toggle_title }}"><i class="glyphicon glyphicon-{{ toggle_icon }}"></i></a>
-                        <a class="btn btn-default btn-sm" href="{{ path('pizza.post', { id: pizza.id }) }}" title="Modifier"><i class="glyphicon glyphicon-edit"></i></a>
-                        <a class="btn btn-default btn-sm" href="{{ path('pizza.delete', { id: pizza.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');" title="Supprimer"><i class="glyphicon glyphicon-trash"></i></a>
+                        <a class="btn btn-default btn-sm" href="{{ path('pizza.clone', { bean: pizza.id }) }}" title="Dupliquer"><i class="glyphicon glyphicon-repeat"></i></a>
+                        <a class="btn btn-default btn-sm" href="{{ path('pizza.toggle', { bean: pizza.id }) }}" title="{{ toggle_title }}"><i class="glyphicon glyphicon-{{ toggle_icon }}"></i></a>
+                        <a class="btn btn-default btn-sm" href="{{ path('pizza.post', { bean: pizza.id }) }}" title="Modifier"><i class="glyphicon glyphicon-edit"></i></a>
+                        <a class="btn btn-default btn-sm" href="{{ path('pizza.delete', { bean: pizza.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');" title="Supprimer"><i class="glyphicon glyphicon-trash"></i></a>
                     </div>
                     {{ pizza }}
                 </li>
