@@ -9,7 +9,7 @@ use Patchwork\Model\ClonableModel;
 use Patchwork\Model\TogglableModel;
 use Patchwork\Model\SlugModel;
 use Patchwork\Model\ImageModel;
-use Patchwork\Helper\Tools;
+use Patchwork\Tools;
 
 class Pizza extends AbstractModel
 {

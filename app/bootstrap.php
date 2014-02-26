@@ -3,15 +3,25 @@
 define('BASE_PATH', dirname(__DIR__));
 require_once(BASE_PATH.'/vendor/autoload.php');
 
+use Silex\Provider\UrlGeneratorServiceProvider as UrlGenerator;
+use Silex\Provider\TwigServiceProvider as Twig;
+use Silex\Provider\ValidatorServiceProvider as Validator;
+use Silex\Provider\TranslationServiceProvider as Translation;
+use Silex\Provider\SwiftmailerServiceProvider as Swiftmailer;
+use Silex\Provider\MonologServiceProvider as Monolog;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Monolog\Logger;
 use \RedBean_Facade as R;
+use Entea\Twig\Extension\AssetExtension;
 use Patchwork\App;
+use Patchwork\ControllerCollection;
+use Patchwork\Controller\FrontController;
 use Patchwork\Controller\AdminController;
 use Patchwork\Controller\ApiController;
+use Environ\Environ;
 
-// Configuration
+// Basics
 
 define('REDBEAN_MODEL_PREFIX', 'Pizza\\Model\\');
 define('DB_HOST', 'localhost');
@@ -34,84 +44,87 @@ Request::enableHttpMethodParameterOverride();
 
 
 
-// Environments (databases, logs)
+// Environments
 
 $app = App::getInstance();
-$app['environ'] = new Environ\Environ();
+$app['environ'] = new Environ();
 
-$app['environ']->add(
-    'test',
-    function () {
-        return (! $_SERVER['HTTP_USER_AGENT']);
-    },
-    function () use ($app) {
-        R::addDatabase('test', 'sqlite:'.BASE_PATH.'/db/test.sqlite');
-        R::selectDatabase('test');
+$app['environ']
+    ->add(
+        'test',
+        function () {
+            return (! $_SERVER['HTTP_USER_AGENT']);
+        },
+        function () use ($app) {
+            R::addDatabase('test', 'sqlite:'.BASE_PATH.'/db/test.sqlite');
+            R::selectDatabase('test');
 
-        $app->register(
-            new Silex\Provider\MonologServiceProvider(),
-            array(
-                'monolog.logfile' => BASE_PATH.'/logs/test.log',
-                'monolog.level' => Logger::INFO,
-                'monolog.name' => 'test'
-            )
-        );
-    }
-)->add(
-    'dev',
-    function () {
-        return preg_match('/(localhost|192\.168|patch\.work)/', $_SERVER['SERVER_NAME']);
-    },
-    function () use ($app) {
-        R::addDatabase('dev', 'sqlite:'.BASE_PATH.'/db/dev.sqlite');
-        R::selectDatabase('dev');
+            $app->register(
+                new Monolog(),
+                array(
+                    'monolog.logfile' => BASE_PATH.'/logs/test.log',
+                    'monolog.level' => Logger::INFO,
+                    'monolog.name' => 'test'
+                )
+            );
+        }
+    )
+    ->add(
+        'dev',
+        function () {
+            return preg_match('/(localhost|192\.168|patch\.work)/', $_SERVER['SERVER_NAME']);
+        },
+        function () use ($app) {
+            R::addDatabase('dev', 'sqlite:'.BASE_PATH.'/db/dev.sqlite');
+            R::selectDatabase('dev');
 
-        $app->register(
-            new Silex\Provider\MonologServiceProvider(),
-            array(
-                'monolog.logfile' => BASE_PATH.'/logs/dev.log',
-                'monolog.level' => Logger::DEBUG,
-                'monolog.name' => 'dev'
-            )
-        );
-    }
-)->add(
-    'prod',
-    function () {
-        return true;
-    },
-    function () use ($app) {
-        error_reporting(0);
+            $app->register(
+                new Monolog(),
+                array(
+                    'monolog.logfile' => BASE_PATH.'/logs/dev.log',
+                    'monolog.level' => Logger::DEBUG,
+                    'monolog.name' => 'dev'
+                )
+            );
+        }
+    )
+    ->add(
+        'prod',
+        function () {
+            return true;
+        },
+        function () use ($app) {
+            error_reporting(0);
 
-        R::addDatabase('prod', 'mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
-        R::selectDatabase('prod');
-        R::freeze(true);
-        R::useWriterCache(true);
+            R::addDatabase('prod', 'mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
+            R::selectDatabase('prod');
+            R::freeze(true);
+            R::useWriterCache(true);
 
-        $app->register(
-            new Silex\Provider\MonologServiceProvider(),
-            array(
-                'monolog.logfile' => BASE_PATH.'/logs/prod.log',
-                'monolog.level' => Logger::WARNING,
-                'monolog.name' => 'prod'
-            )
-        );
+            $app->register(
+                new Monolog(),
+                array(
+                    'monolog.logfile' => BASE_PATH.'/logs/prod.log',
+                    'monolog.level' => Logger::WARNING,
+                    'monolog.name' => 'prod'
+                )
+            );
 
-        $app->error(
-            function (\Exception $e, $code) use ($app) {
-                $message = $e->getMessage();
+            $app->error(
+                function (\Exception $e, $code) use ($app) {
+                    $message = $e->getMessage();
 
-                switch ($code) {
-                    case 404:
-                        $message = 'La page que vous recherchez n\'existe pas ou est indisponible.';
-                        break;
+                    switch ($code) {
+                        case 404:
+                            $message = 'La page que vous recherchez n\'existe pas ou est indisponible.';
+                            break;
+                    }
+
+                    return $app['twig']->render('front/partials/error.twig', compact('message'));
                 }
-
-                return $app['twig']->render('front/partials/error.twig', compact('message'));
-            }
-        );
-    }
-);
+            );
+        }
+    );
 
 $app['environ']->init();
 $app['debug'] = (! $app['environ']->is('prod'));
@@ -121,12 +134,12 @@ $app['debug'] = (! $app['environ']->is('prod'));
 // Controllers
 
 $app['controllers_factory'] = function () use ($app) {
-    return new Patchwork\Helper\ControllerCollection($app['route_factory']);
+    return new ControllerCollection($app['route_factory']);
 };
 
 $app->mount(
     '/',
-    new Patchwork\Controller\FrontController()
+    new FrontController()
 );
 
 $app->mount(
@@ -141,7 +154,7 @@ $app->mount(
 
 
 
-// Session
+// Services
 
 $app['session'] = $app->share(
     function () {
@@ -151,15 +164,11 @@ $app['session'] = $app->share(
     }
 );
 
-
-
-// Services
-
-$app->register(new Silex\Provider\UrlGeneratorServiceProvider());
-$app->register(new Silex\Provider\ValidatorServiceProvider());
+$app->register(new UrlGenerator());
+$app->register(new Validator());
 
 $app->register(
-    new Silex\Provider\TranslationServiceProvider(),
+    new Translation(),
     array(
         'locale_fallback' => 'fr',
         'translator.domains' => array(
@@ -178,28 +187,19 @@ $app->register(
     )
 );
 
-$app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => BASE_PATH.'/app/views'));
-$app['twig']->addExtension(new Entea\Twig\Extension\AssetExtension($app, array('asset.directory' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']).'assets')));
+$app->register(new Twig(), array('twig.path' => BASE_PATH.'/app/views'));
+$app['twig']->addExtension(new AssetExtension($app, array('asset.directory' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']).'assets')));
 $app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
-$app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Helper\Tools::vulgarize'));
-$app['twig']->addFilter('dump', new Twig_Filter_Function('Patchwork\Helper\Tools::dump'));
-$app['twig']->addFunction('twitter', new Twig_Function_Function('Patchwork\Helper\Tools::twitter'));
-$app['twig']->addFunction('facebook', new Twig_Function_Function('Patchwork\Helper\Tools::facebook'));
-$app['twig']->addFunction('pinterest', new Twig_Function_Function('Patchwork\Helper\Tools::pinterest'));
+$app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Tools::vulgarize'));
+$app['twig']->addFilter('dump', new Twig_Filter_Function('Patchwork\Tools::dump'));
+$app['twig']->addFunction('twitter', new Twig_Function_Function('Patchwork\Tools::twitter'));
+$app['twig']->addFunction('facebook', new Twig_Function_Function('Patchwork\Tools::facebook'));
+$app['twig']->addFunction('pinterest', new Twig_Function_Function('Patchwork\Tools::pinterest'));
+$app['twig']->addGlobal('title', 'Patchwork');
+$app['twig']->addGlobal('description', '#PHP 5.4+ web framework powered by #Composer #Silex #RedBean #NPM');
 
-$app->register(new Silex\Provider\SwiftmailerServiceProvider());
+$app->register(new Swiftmailer());
 $app['swiftmailer.transport'] = new Swift_MailTransport();
-
-
-
-// Globals
-
-$app['globals'] = array(
-    'meta' => array(
-        'title' => 'Patchwork',
-        'description' => 'A Composer-based PHP web framework powered by Silex (microframework) and RedBean (ORM)'
-    )
-);
 
 
 
