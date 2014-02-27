@@ -21,11 +21,11 @@ class PizzaTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * @expectedException Patchwork\Helper\Exception
+     * @expectedException Patchwork\Exception
      */
     public function testCannotSaveAnInvalidPizza()
     {
-        R::store($this->pizza);
+        $this->pizza->save();
     }
 
 
@@ -34,6 +34,8 @@ class PizzaTest extends \PHPUnit_Framework_TestCase
     {
         $this->pizza->title = 'title';
         $this->pizza->content = 'content';
-        $this->assertTrue(R::store($this->pizza) > 0);
+        $this->pizza->toggle();
+
+        $this->assertTrue($this->pizza->save() > 0);
     }
 }
