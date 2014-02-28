@@ -24,11 +24,6 @@ use Environ\Environ;
 // Basics
 
 define('REDBEAN_MODEL_PREFIX', 'Pizza\\Model\\');
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'pizza');
-define('DB_USER', 'root');
-define('DB_PASS', 'admin');
-
 define('ADMIN_ROOT', 'pizza.list');
 define('ADMIN_USER', 'pizza');
 define('ADMIN_PASS', 'admin');
@@ -96,7 +91,7 @@ $app['environ']
         function () use ($app) {
             error_reporting(0);
 
-            R::addDatabase('prod', 'mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
+            R::addDatabase('prod', 'mysql:host=localhost;dbname=pizza', 'pizza', 'admin');
             R::selectDatabase('prod');
             R::freeze(true);
             R::useWriterCache(true);
