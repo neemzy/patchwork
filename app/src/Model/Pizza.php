@@ -15,7 +15,7 @@ class Pizza extends AbstractModel
 {
     use SortableModel, ClonableModel, TogglableModel, SlugModel, ImageModel;
 
-    public function getSlug()
+    public function slugify()
     {
         return Tools::vulgarize($this->title);
     }
