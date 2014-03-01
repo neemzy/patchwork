@@ -7,7 +7,7 @@
 {% block body %}
     <form method="POST" class="col-md-8 col-md-offset-2" enctype="multipart/form-data" autocomplete="off" novalidate>
         <div class="form-group">
-            <label class="show" for="title">{% trans %}[title]{% endtrans %} <small class="pull-right">{{ pizza.getSlug() }}</small></label>
+            <label class="show" for="title">{% trans %}[title]{% endtrans %}</label>
             <input type="text" class="form-control" name="title" id="title" value="{% if app.request.get('title') %}{{ app.request.get('title') }}{% else %}{{ pizza.title }}{% endif %}" />
         </div>
 
