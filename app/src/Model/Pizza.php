@@ -4,21 +4,15 @@ namespace Pizza\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Patchwork\Model\AbstractModel;
-use Patchwork\Model\SortableModel;
 use Patchwork\Model\ClonableModel;
-use Patchwork\Model\TogglableModel;
-use Patchwork\Model\SlugModel;
 use Patchwork\Model\ImageModel;
+use Patchwork\Model\SortableModel;
+use Patchwork\Model\TogglableModel;
 use Patchwork\Tools;
 
 class Pizza extends AbstractModel
 {
-    use SortableModel, ClonableModel, TogglableModel, SlugModel, ImageModel;
-
-    public function slugify()
-    {
-        return Tools::vulgarize($this->title);
-    }
+    use ClonableModel, ImageModel, SortableModel, TogglableModel;
 
 
 
@@ -35,6 +29,6 @@ class Pizza extends AbstractModel
 
     public function __toString()
     {
-        return $this->title;
+        return $this->title.' '.$this->position;
     }
 }
