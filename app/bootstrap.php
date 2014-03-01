@@ -155,6 +155,7 @@ $app['session'] = $app->share(
     function () {
         $session = new Session();
         $session->start();
+        
         return $session;
     }
 );
