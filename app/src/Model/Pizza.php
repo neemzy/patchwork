@@ -29,6 +29,6 @@ class Pizza extends AbstractModel
 
     public function __toString()
     {
-        return $this->title.' '.$this->position;
+        return $this->title;
     }
 }
