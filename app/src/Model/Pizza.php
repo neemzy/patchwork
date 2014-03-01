@@ -20,26 +20,14 @@ class Pizza extends AbstractModel
         return Tools::vulgarize($this->title);
     }
 
-    public function getWidth()
-    {
-        return 480;
-    }
-
-    public function getHeight()
-    {
-        return 320;
-    }
 
 
 
-    protected function asserts()
+    protected static function asserts()
     {
         return [
             'title' => new Assert\NotBlank(),
-            'content' => new Assert\NotBlank(),
-            'image' => new Assert\Image(),
-            'position' => null,
-            'active' => null
+            'content' => new Assert\NotBlank()
         ];
     }
 
