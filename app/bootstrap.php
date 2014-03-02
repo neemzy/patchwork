@@ -48,7 +48,7 @@ $app['environ']
     ->add(
         'test',
         function () {
-            return (! $_SERVER['HTTP_USER_AGENT']);
+            return ((! $_SERVER['HTTP_USER_AGENT']) || (preg_match('/BrowserKit|PhantomJS/', $_SERVER['HTTP_USER_AGENT'])));
         },
         function () use ($app) {
             R::addDatabase('test', 'sqlite:'.BASE_PATH.'/db/test.sqlite');
@@ -67,7 +67,7 @@ $app['environ']
     ->add(
         'dev',
         function () {
-            return preg_match('/(localhost|192\.168|patch\.work)/', $_SERVER['SERVER_NAME']);
+            return preg_match('/localhost|192\.168|patch\.work/', $_SERVER['SERVER_NAME']);
         },
         function () use ($app) {
             R::addDatabase('dev', 'sqlite:'.BASE_PATH.'/db/dev.sqlite');
