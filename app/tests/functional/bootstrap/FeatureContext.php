@@ -3,8 +3,6 @@
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Exception\PendingException;
 use Behat\MinkExtension\Context\MinkDictionary;
-use Behat\Mink\Selector\CssSelector;
-use Behat\Mink\Selector\SelectorsHandler;
 
 require_once('PHPUnit/Util/Filesystem.php');
 require_once('PHPUnit/Autoload.php');
@@ -28,8 +26,6 @@ class FeatureContext extends BehatContext
 
     private function elementHasClass($selector, $class)
     {
-        $handler = new SelectorsHandler(['css' => new CssSelector()]);
-
         $page = $this->getSession()->getPage();
         $element = $page->find('css', $selector);
 
