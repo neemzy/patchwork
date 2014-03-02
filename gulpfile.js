@@ -78,7 +78,7 @@ gulp.task('icon', function () {
 gulp.task('workflow', function () {
     if (! tasks.util.env.dist) {
         gulp.src('gulpfile.js')
-            .pipe(tasks.open('', { url: 'http://www.patch.work/' }));
+            .pipe(tasks.open('', { url: 'http://patch.work/' }));
 
         server.listen(35729, function (err) {
             gulp.watch('app/assets/less/**/*.less', ['css']);

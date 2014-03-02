@@ -13,6 +13,7 @@ npm install
 
 ```
 phpunit
+vendor/bin/behat
 gulp
 ```
 

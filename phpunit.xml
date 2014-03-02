@@ -2,7 +2,7 @@
 <phpunit backupGlobals="false" bootstrap="app/bootstrap.php" colors="true">
     <testsuites>
         <testsuite>
-            <directory>app/tests/</directory>
+            <directory>app/tests/unit/</directory>
         </testsuite>
     </testsuites>
 </phpunit>

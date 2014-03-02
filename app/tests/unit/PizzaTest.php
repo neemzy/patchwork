@@ -1,7 +1,5 @@
 <?php
 
-namespace Tests\Model;
-
 use \RedBean_Facade as R;
 
 class PizzaTest extends \PHPUnit_Framework_TestCase

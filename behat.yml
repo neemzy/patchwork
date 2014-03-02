@@ -1,0 +1,10 @@
+default:
+    paths:
+        features: app/tests/functional/
+        bootstrap: %behat.paths.features%/bootstrap/
+    extensions:
+        Behat\MinkExtension\Extension:
+            base_url: http://patch.work/
+            browser_name: phantomjs
+            goutte: ~
+            selenium2: ~
