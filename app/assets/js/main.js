@@ -1,5 +1,5 @@
 (function () {
     'use strict';
 
-    document.querySelector('html').classList.remove('nojs');
+    document.querySelector('html').classList.remove('no-js');
 })();

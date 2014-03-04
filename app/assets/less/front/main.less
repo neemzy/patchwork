@@ -1,15 +1,24 @@
-@import '../../../../vendor/neemzy/patchwork-core/assets/less/front';
+@import '../../../../vendor/neemzy/patchwork-core/assets/less/front/reset';
 @import 'imports/variables';
-@import 'imports/fonts';
-@import 'imports/responsive';
+@import 'imports/mixins';
 @import 'partials/home';
+
+
+
+@font-face {
+    .font-face(BebasNeue, bebasneue);
+}
+
+
 
 .main {
     .container();
 
+    padding: 2em;
+
     &__title {
         .bebas();
 
-        margin: 1em;
+        margin-bottom: 1em;
     }
 }
