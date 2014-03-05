@@ -15,6 +15,7 @@
                     {% set toggle_title = 'Désactiver' %}
                     {% set toggle_icon = 'ok' %}
                 {% endif %}
+                
                 <li class="list-group-item clearfix">
                     <div class="btn-group pull-right">
                         {% if not loop.first %}
@@ -28,6 +29,7 @@
                         <a class="btn btn-default btn-sm" href="{{ path('pizza.post', { bean: pizza.id }) }}" title="Modifier"><i class="glyphicon glyphicon-edit"></i></a>
                         <a class="btn btn-default btn-sm" href="{{ path('pizza.delete', { bean: pizza.id }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');" title="Supprimer"><i class="glyphicon glyphicon-trash"></i></a>
                     </div>
+                    
                     {{ pizza }}
                 </li>
             {% endfor %}
