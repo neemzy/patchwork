@@ -8,7 +8,6 @@ use Patchwork\Model\ClonableModel;
 use Patchwork\Model\ImageModel;
 use Patchwork\Model\SortableModel;
 use Patchwork\Model\TogglableModel;
-use Patchwork\Tools;
 
 class Pizza extends AbstractModel
 {
