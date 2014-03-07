@@ -14,6 +14,7 @@ gulp.task('clean', function (callback) {
 
 gulp.task('css', function () {
     gulp.src(['app/assets/less/front/main.less', 'app/assets/less/admin.less'])
+        .pipe(tasks.plumber())
         .pipe(tasks.less())
         .pipe(tasks.autoprefixer())
         .pipe(tasks.if(tasks.util.env.dist, tasks.csso()))
@@ -25,6 +26,7 @@ gulp.task('css', function () {
 
 gulp.task('js', function () {
     gulp.src('app/assets/js/main.js')
+        .pipe(tasks.plumber())
         .pipe(tasks.jshint())
         .pipe(tasks.jshint.reporter('default'))
         .pipe(tasks.browserify())
