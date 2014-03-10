@@ -19,11 +19,11 @@
 </head>
 
 <body>
-    <div class="main">
+    <main class="main">
         <h1 class="main__title">{{ title }}</h1>
 
         {% block body %}{% endblock %}
-    </div>
+    </main>
     
     <script src="{{ asset('js/main.js') }}"></script>
     {% include 'livereload.twig' %}
