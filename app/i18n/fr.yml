@@ -1,0 +1,16 @@
+'[title]': 'Titre'
+'[content]': 'Contenu'
+'[image]': 'Image'
+
+'Deletion successful.': 'La suppression a bien été effectuée.'
+'Save successful.': "L'enregistrement a bien été effectué."
+'Save failed for the following reasons :': "L'enregistrement a échoué pour les raisons suivantes :"
+'This value should not be blank.': 'Ce champ est requis.'
+'This value is not valid.': 'Ce champ est invalide.'
+'This value is not a valid email address.': 'Ce champ doit contenir une adresse e-mail valide.'
+'This value is not a valid URL.': 'Ce champ doit contenir une URL valide.'
+'Cloning successful.': 'La duplication a bien été effectuée.'
+'Image deletion successful.': "L'image a bien été supprimée."
+'An error occured during file upload.': "Une erreur est survenue lors de l'envoi du fichier."
+'The selected file is too big.': 'Le fichier sélectionné est trop lourd.'
+'Only JPEG, PNG and GIF types are allowed.': 'Seuls les formats JPEG, PNG et GIF sont autorisés.'

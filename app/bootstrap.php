@@ -11,6 +11,7 @@ use Silex\Provider\SwiftmailerServiceProvider as Swiftmailer;
 use Silex\Provider\MonologServiceProvider as Monolog;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Translation\Loader\YamlFileLoader;
 use Monolog\Logger;
 use \RedBean_Facade as R;
 use Entea\Twig\Extension\AssetExtension;
@@ -162,26 +163,18 @@ $app['session'] = $app->share(
 
 $app->register(new UrlGenerator());
 $app->register(new Validator());
+$app->register(new Translation(), ['locale_fallback' => 'fr']);
 
-$app->register(
-    new Translation(),
-    [
-        'locale_fallback' => 'fr',
-        'translator.domains' => [
-            'messages' => [
-                'fr' => [
-                    '[title]' => 'Titre',
-                    '[content]' => 'Contenu',
-                    '[image]' => 'Image',
-                    
-                    'This value should not be blank.' => 'Ce champ est requis.',
-                    'This value is not valid.' => 'Ce champ est invalide.',
-                    'This value is not a valid email address.' => 'Ce champ doit contenir une adresse e-mail valide.',
-                    'This value is not a valid URL.' => 'Ce champ doit contenir une URL valide.'
-                ]
-            ]
-        ]
-    ]
+$app['translator'] = $app->share(
+    $app->extend(
+        'translator',
+        function ($translator, $app) {
+            $translator->addLoader('yaml', new YamlFileLoader());
+            $translator->addResource('yaml', BASE_PATH.'/app/i18n/fr.yml', 'fr');
+
+            return $translator;
+        }
+    )
 );
 
 $app->register(new Twig(), ['twig.path' => BASE_PATH.'/app/views']);
