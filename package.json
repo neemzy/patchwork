@@ -1,31 +1,30 @@
 {
-    "devDependencies": {
-        "gulp": "*",
-        "gulp-load-tasks": "*",
-        "gulp-util": "*",
-        "gulp-if": "*",
-        "gulp-plumber": "*",
-        "gulp-less": "*",
-        "gulp-autoprefixer": "*",
-        "gulp-csso": "*",
-        "gulp-browserify": "*",
-        "gulp-jshint": "*",
-        "gulp-uglify": "*",
-        "gulp-imagemin": "*",
-        "gulp-ttf2woff": "*",
-        "gulp-ttf2eot": "*",
-        "gulp-open": "*",
-        "gulp-livereload": "*",
-        "tiny-lr": "*",
-        "rimraf": "*",
-        "napa": "*"
-    },
-
-    "napa": {
-        "bootstrap": "twbs/bootstrap"
-    },
-
-    "scripts": {
-        "install": "napa"
-    }
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-load-tasks": "*",
+    "gulp-util": "*",
+    "gulp-if": "*",
+    "gulp-plumber": "*",
+    "gulp-less": "*",
+    "gulp-autoprefixer": "*",
+    "gulp-csso": "*",
+    "gulp-browserify": "*",
+    "gulp-jshint": "*",
+    "gulp-uglify": "*",
+    "gulp-imagemin": "*",
+    "gulp-ttf2woff": "*",
+    "gulp-ttf2eot": "*",
+    "gulp-open": "*",
+    "gulp-livereload": "*",
+    "tiny-lr": "*",
+    "rimraf": "*",
+    "napa": "*",
+    "domqueryall": "*"
+  },
+  "napa": {
+    "bootstrap": "twbs/bootstrap"
+  },
+  "scripts": {
+    "install": "napa"
+  }
 }

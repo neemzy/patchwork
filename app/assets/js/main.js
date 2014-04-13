@@ -1,5 +1,6 @@
-(function () {
+(function ($, $$) {
     'use strict';
 
-    document.querySelector('html').classList.remove('no-js');
-})();
+    $('html').classList.remove('no-js');
+})
+(document.querySelector.bind(document), require('domqueryall'));
