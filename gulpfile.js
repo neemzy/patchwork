@@ -57,9 +57,6 @@ gulp.task('font', function () {
         to = 'public/assets/font/';
 
     gulp.src(from, { buffer: false })
-        .pipe(gulp.dest(to));
-
-    gulp.src(from, { buffer: false })
         .pipe(tasks.ttf2woff())
         .pipe(gulp.dest(to));
 
@@ -71,7 +68,9 @@ gulp.task('font', function () {
 
 
 gulp.task('icon', function () {
-    gulp.src(['node_modules/bootstrap/fonts/*', '!node_modules/bootstrap/fonts/*.svg'], { buffer: false })
+    var dir = 'node_modules/bootstrap/fonts/';
+
+    gulp.src([dir + '*.woff', dir + '*.eot'], { buffer: false })
         .pipe(gulp.dest('public/assets/font/'))
 });
 
