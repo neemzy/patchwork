@@ -1,5 +1,5 @@
 var gulp = require('gulp'),
-    tasks = require('gulp-load-tasks')(),
+    tasks = require('gulp-load-plugins')(),
     rimraf = require('rimraf'),
     server = require('tiny-lr')();
 

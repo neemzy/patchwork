@@ -1,7 +1,7 @@
 {
   "devDependencies": {
     "gulp": "*",
-    "gulp-load-tasks": "*",
+    "gulp-load-plugins": "*",
     "gulp-util": "*",
     "gulp-if": "*",
     "gulp-plumber": "*",
