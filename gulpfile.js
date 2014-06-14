@@ -71,7 +71,7 @@ gulp.task('icon', function () {
     var dir = 'node_modules/bootstrap/fonts/';
 
     gulp.src([dir + '*.woff', dir + '*.eot'], { buffer: false })
-        .pipe(gulp.dest('public/assets/font/'))
+        .pipe(gulp.dest('public/assets/font/'));
 });
 
 
