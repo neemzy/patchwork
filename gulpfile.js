@@ -54,7 +54,8 @@ gulp.task('img', function () {
 
 gulp.task('font', function () {
     var from = 'app/assets/font/*.ttf',
-        to = 'public/assets/font/';
+        to = 'public/assets/font/',
+        icons = 'node_modules/bootstrap/fonts/';
 
     gulp.src(from, { buffer: false })
         .pipe(tasks.ttf2woff())
@@ -63,14 +64,8 @@ gulp.task('font', function () {
     gulp.src(from, { buffer: false })
         .pipe(tasks.ttf2eot())
         .pipe(gulp.dest(to));
-});
 
-
-
-gulp.task('icon', function () {
-    var dir = 'node_modules/bootstrap/fonts/';
-
-    gulp.src([dir + '*.woff', dir + '*.eot'], { buffer: false })
+    gulp.src([icons + '*.woff', icons + '*.eot'], { buffer: false })
         .pipe(gulp.dest('public/assets/font/'));
 });
 
@@ -95,4 +90,4 @@ gulp.task('workflow', function () {
 
 
 
-gulp.task('default', ['clean', 'css', 'js', 'img', 'font', 'icon', 'workflow']);
+gulp.task('default', ['clean', 'css', 'js', 'img', 'font', 'workflow']);
