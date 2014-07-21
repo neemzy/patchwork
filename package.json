@@ -16,7 +16,6 @@
     "gulp-ttf2eot": "*",
     "gulp-open": "*",
     "gulp-livereload": "*",
-    "tiny-lr": "*",
     "rimraf": "*",
     "napa": "*",
     "domqueryall": "*"

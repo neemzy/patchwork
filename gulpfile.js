@@ -1,7 +1,6 @@
 var gulp = require('gulp'),
     tasks = require('gulp-load-plugins')(),
-    rimraf = require('rimraf'),
-    server = require('tiny-lr')();
+    rimraf = require('rimraf');
 
 
 
@@ -19,7 +18,7 @@ gulp.task('css', function () {
         .pipe(tasks.autoprefixer())
         .pipe(tasks.if(tasks.util.env.dist, tasks.csso()))
         .pipe(gulp.dest('public/assets/css/'))
-        .pipe(tasks.livereload(server));
+        .pipe(tasks.if(!tasks.util.env.dist, tasks.livereload()));
 });
 
 
@@ -32,7 +31,7 @@ gulp.task('js', function () {
         .pipe(tasks.browserify())
         .pipe(tasks.if(tasks.util.env.dist, tasks.uglify()))
         .pipe(gulp.dest('public/assets/js/'))
-        .pipe(tasks.livereload(server));
+        .pipe(tasks.if(!tasks.util.env.dist, tasks.livereload()));
 
     gulp.src('vendor/neemzy/patchwork-core/assets/js/nicEdit.js')
         .pipe(gulp.dest('public/assets/js/'));
@@ -44,7 +43,7 @@ gulp.task('img', function () {
     gulp.src('app/assets/img/**/*')
         .pipe(tasks.if(tasks.util.env.dist, tasks.imagemin({ interlaced: true, progressive: true })))
         .pipe(gulp.dest('public/assets/img/'))
-        .pipe(tasks.livereload(server));
+        .pipe(tasks.if(!tasks.util.env.dist, tasks.livereload()));
 
     gulp.src('vendor/neemzy/patchwork-core/assets/img/**/*')
         .pipe(gulp.dest('public/assets/img/'));
@@ -76,14 +75,13 @@ gulp.task('workflow', function () {
         gulp.src('gulpfile.js')
             .pipe(tasks.open('', { url: 'http://patch.work/' }));
 
-        server.listen(35729, function (err) {
-            gulp.watch('app/assets/less/**/*.less', ['css']);
-            gulp.watch('app/assets/js/**/*.js', ['js']);
-            gulp.watch('app/assets/img/**/*', ['img']);
+        tasks.livereload.listen();
+        gulp.watch('app/assets/less/**/*.less', ['css']);
+        gulp.watch('app/assets/js/**/*.js', ['js']);
+        gulp.watch('app/assets/img/**/*', ['img']);
 
-            gulp.watch('app/views/**/*.twig', function () {
-                gulp.src('').pipe(tasks.livereload(server));
-            });
+        gulp.watch('app/views/**/*.twig', function () {
+            gulp.src('').pipe(tasks.livereload());
         });
     }
 });
