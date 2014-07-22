@@ -16,7 +16,7 @@ gulp.task('css', function () {
         .pipe(tasks.plumber())
         .pipe(tasks.less())
         .pipe(tasks.autoprefixer())
-        .pipe(tasks.if(tasks.util.env.dist, tasks.csso()))
+        .pipe(tasks.if(!!tasks.util.env.dist, tasks.csso()))
         .pipe(gulp.dest('public/assets/css/'))
         .pipe(tasks.if(!tasks.util.env.dist, tasks.livereload()));
 });
@@ -29,7 +29,7 @@ gulp.task('js', function () {
         .pipe(tasks.jshint())
         .pipe(tasks.jshint.reporter('default'))
         .pipe(tasks.browserify())
-        .pipe(tasks.if(tasks.util.env.dist, tasks.uglify()))
+        .pipe(tasks.if(!!tasks.util.env.dist, tasks.uglify()))
         .pipe(gulp.dest('public/assets/js/'))
         .pipe(tasks.if(!tasks.util.env.dist, tasks.livereload()));
 
@@ -41,7 +41,7 @@ gulp.task('js', function () {
 
 gulp.task('img', function () {
     gulp.src('app/assets/img/**/*')
-        .pipe(tasks.if(tasks.util.env.dist, tasks.imagemin({ interlaced: true, progressive: true })))
+        .pipe(tasks.if(!!tasks.util.env.dist, tasks.imagemin({ interlaced: true, progressive: true })))
         .pipe(gulp.dest('public/assets/img/'))
         .pipe(tasks.if(!tasks.util.env.dist, tasks.livereload()));
 
@@ -71,7 +71,7 @@ gulp.task('font', function () {
 
 
 gulp.task('workflow', function () {
-    if (! tasks.util.env.dist) {
+    if (!tasks.util.env.dist) {
         gulp.src('gulpfile.js')
             .pipe(tasks.open('', { url: 'http://patch.work/' }));
 
