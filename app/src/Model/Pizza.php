@@ -5,13 +5,13 @@ namespace Pizza\Model;
 use Symfony\Component\Validator\Constraints as Assert;
 use Patchwork\Model\AbstractModel;
 use Patchwork\Model\ClonableModel;
-use Patchwork\Model\ImageModel;
+use Patchwork\Model\FileModel;
 use Patchwork\Model\SortableModel;
 use Patchwork\Model\TogglableModel;
 
 class Pizza extends AbstractModel
 {
-    use ClonableModel, ImageModel, SortableModel, TogglableModel;
+    use ClonableModel, FileModel, SortableModel, TogglableModel;
 
 
 
@@ -20,7 +20,16 @@ class Pizza extends AbstractModel
     {
         return [
             'title' => new Assert\NotBlank(),
-            'content' => new Assert\NotBlank()
+            'content' => new Assert\NotBlank(),
+
+            'image' => [
+                new Assert\NotBlank(),
+                new Assert\Image(
+                    [
+                        'maxWidth' => 350
+                    ]
+                )
+            ]
         ];
     }
 
