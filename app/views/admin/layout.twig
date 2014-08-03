@@ -23,7 +23,7 @@
     </div>
 
     <div class="container">
-        <div class="page-header clearfix">{% block head %}{% endblock %}</div>
+        <div class="page-header clearfix">{% block head '' %}</div>
 
         {% if app.session.getFlashBag().has('message') %}
             <div class="alert alert-{% if app.session.getFlashBag().has('error') %}danger{% else %}success{% endif %}">
@@ -31,10 +31,10 @@
             </div>
         {% endif %}
 
-        {% block body %}{% endblock %}
+        {% block body '' %}
     </div>
 
-    {% block js %}{% endblock %}
+    {% block js '' %}
     {% include 'livereload.twig' %}
 </body>
 

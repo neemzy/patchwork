@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="format-detection" content="telephone=no" />
     <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge" /><![endif]-->
-    <title>{% block title %}{{ title }}{% endblock %}</title>
-    <meta name="description" content="{% block description %}{{ description }}{% endblock %}" />
+    <title>{% block title title %}</title>
+    <meta name="description" content="{% block description description %}" />
     <meta name="author" content="Be Seen" />
     <meta property="og:title" content="{{ block('title') }}" />
     <meta property="og:description" content="{{ block('description') }}" />
@@ -22,7 +22,7 @@
     <main class="main">
         <h1 class="main__title">{{ title }}</h1>
 
-        {% block body %}{% endblock %}
+        {% block body '' %}
     </main>
     
     <script src="{{ asset('js/main.js') }}"></script>
