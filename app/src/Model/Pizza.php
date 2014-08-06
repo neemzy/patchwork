@@ -16,6 +16,11 @@ class Pizza extends AbstractModel
 
 
 
+    /**
+     * Describes the model's assert list
+     *
+     * @return array Assert list
+     */
     protected static function asserts()
     {
         return [
@@ -35,6 +40,11 @@ class Pizza extends AbstractModel
 
     
 
+    /**
+     * Defines this pizza's string representation
+     *
+     * @return string Pizza as a string
+     */
     public function __toString()
     {
         return $this->title;

@@ -32,6 +32,8 @@ class FeatureContext extends BehatContext
         return $element->hasAttribute('class') && preg_match('/'.$class.'/', $element->getAttribute('class'));
     }
 
+
+
     /**
      * @Then /^"([^"]*)" element should have class "([^"]*)"$/
      */
@@ -39,6 +41,8 @@ class FeatureContext extends BehatContext
     {
         assertTrue($this->elementHasClass($selector, $class));
     }
+
+
 
     /**
      * @Then /^"([^"]*)" element should not have class "([^"]*)"$/
