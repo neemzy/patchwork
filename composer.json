@@ -19,7 +19,6 @@
         "behat/mink-goutte-driver": "*",
         "behat/mink-selenium2-driver": "*",
         "neemzy/share-extension": "*"
-
     },
 
     "autoload": {
