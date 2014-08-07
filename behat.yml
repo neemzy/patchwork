@@ -1,9 +1,11 @@
 default:
-    paths:
-        features: app/tests/functional/
-        bootstrap: %behat.paths.features%/bootstrap/
+    autoload:
+        '': app/tests/functional/bootstrap/
+    suites:
+        sample:
+            paths: [ app/tests/functional/ ]
     extensions:
-        Behat\MinkExtension\Extension:
+        Behat\MinkExtension:
             base_url: http://patch.work/
             browser_name: phantomjs
             goutte: ~

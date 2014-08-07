@@ -21,6 +21,7 @@ use Patchwork\Controller\FrontController;
 use Patchwork\Controller\AdminController;
 use Patchwork\Controller\ApiController;
 use Environ\Environ;
+use ShareExtension\ShareExtension;
 
 // Basics
 
@@ -179,12 +180,10 @@ $app['translator'] = $app->share(
 
 $app->register(new Twig(), ['twig.path' => BASE_PATH.'/app/views']);
 $app['twig']->addExtension(new AssetExtension($app, ['asset.directory' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']).'assets']));
+$app['twig']->addExtension(new ShareExtension());
 $app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
-$app['twig']->addFunction('twitter', new Twig_Function_Function('Patchwork\Tools::twitter'));
-$app['twig']->addFunction('facebook', new Twig_Function_Function('Patchwork\Tools::facebook'));
-$app['twig']->addFunction('pinterest', new Twig_Function_Function('Patchwork\Tools::pinterest'));
-$app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Tools::vulgarize'));
 $app['twig']->addFilter('dump', new Twig_Filter_Function('Patchwork\Tools::dump', ['is_safe' => ['all']]));
+$app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Tools::vulgarize'));
 $app['twig']->addGlobal('title', 'Patchwork');
 $app['twig']->addGlobal('description', '#PHP 5.4+ web framework powered by #Composer #Silex #RedBean #NPM');
 

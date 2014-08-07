@@ -15,9 +15,10 @@
     "require-dev": {
         "firephp/firephp-core": "dev-master",
         "phpunit/phpunit": "dev-master",
-        "behat/mink-extension": "1.3.*@dev",
+        "behat/mink-extension": "2.0.*@dev",
         "behat/mink-goutte-driver": "*",
-        "behat/mink-selenium2-driver": "*"
+        "behat/mink-selenium2-driver": "*",
+        "neemzy/share-extension": "*"
 
     },
 
