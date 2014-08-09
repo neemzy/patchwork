@@ -41,9 +41,9 @@ class Pizza extends AbstractModel
     
 
     /**
-     * Defines this pizza's string representation
+     * Defines this bean's string representation
      *
-     * @return string Pizza as a string
+     * @return string Bean as a string
      */
     public function __toString()
     {
