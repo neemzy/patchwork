@@ -10,6 +10,7 @@ use Silex\Provider\TranslationServiceProvider as Translation;
 use Silex\Provider\SwiftmailerServiceProvider as Swiftmailer;
 use Silex\Provider\MonologServiceProvider as Monolog;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 use Monolog\Logger;
@@ -23,8 +24,9 @@ use Patchwork\Controller\ApiController;
 use Environ\Environ;
 use ShareExtension\ShareExtension;
 
-// Basics
-
+/**
+ * Basics
+ */
 define('REDBEAN_MODEL_PREFIX', 'Pizza\\Model\\');
 define('ADMIN_ROOT', 'pizza.list');
 define('ADMIN_USER', 'pizza');
@@ -41,8 +43,9 @@ Request::enableHttpMethodParameterOverride();
 
 
 
-// Environments
-
+/**
+ * Environments
+ */
 $app = App::getInstance();
 $app['environ'] = new Environ();
 
@@ -128,31 +131,9 @@ $app['debug'] = (! $app['environ']->is('prod'));
 
 
 
-// Controllers
-
-$app['controllers_factory'] = function () use ($app) {
-    return new ControllerCollection($app['route_factory']);
-};
-
-$app->mount(
-    '/',
-    new FrontController()
-);
-
-$app->mount(
-    '/admin/pizza',
-    AdminController::getInstanceFor('pizza')
-);
-
-$app->mount(
-    '/api/pizza',
-    ApiController::getInstanceFor('pizza')
-);
-
-
-
-// Services
-
+/**
+ * Services
+ */
 $app['session'] = $app->share(
     function () {
         $session = new Session();
@@ -189,6 +170,44 @@ $app['twig']->addGlobal('description', '#PHP 5.4+ web framework powered by #Comp
 
 $app->register(new Swiftmailer());
 $app['swiftmailer.transport'] = new Swift_MailTransport();
+
+
+
+/**
+ * Controllers
+ */
+$app['controllers_factory'] = function () use ($app) {
+    return new ControllerCollection($app['route_factory']);
+};
+
+$app->mount(
+    '/',
+    new FrontController()
+);
+
+$app->mount(
+    '/admin/pizza',
+    AdminController::getInstanceFor('pizza')
+);
+
+$app->mount(
+    '/api/pizza',
+    ApiController::getInstanceFor('pizza')
+);
+
+
+/**
+ * ETags
+ */
+$app->after(
+    function (Request $request, Response $response) {
+        $response->setVary('Accept-Encoding');
+        $response->headers->set('ETag', md5($response->getContent()));
+        $response->isNotModified($request);
+
+        return $response;
+    }
+);
 
 
 
