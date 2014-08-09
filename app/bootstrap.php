@@ -48,21 +48,22 @@ Request::enableHttpMethodParameterOverride();
  */
 $app = App::getInstance();
 $app['environ'] = new Environ();
+$date = date('Y-m-d');
 
 $app['environ']
     ->add(
         'test',
         function () {
-            return ((! $_SERVER['HTTP_USER_AGENT']) || (preg_match('/BrowserKit|PhantomJS/', $_SERVER['HTTP_USER_AGENT'])));
+            return (!$_SERVER['HTTP_USER_AGENT'] || preg_match('/BrowserKit|PhantomJS/', $_SERVER['HTTP_USER_AGENT']));
         },
         function () use ($app) {
-            R::addDatabase('test', 'sqlite:'.BASE_PATH.'/db/test.sqlite');
+            R::addDatabase('test', 'sqlite:'.BASE_PATH.'/var/db/test.sqlite');
             R::selectDatabase('test');
 
             $app->register(
                 new Monolog(),
                 [
-                    'monolog.logfile' => BASE_PATH.'/logs/test.log',
+                    'monolog.logfile' => BASE_PATH.'/var/log/test.log',
                     'monolog.level' => Logger::INFO,
                     'monolog.name' => 'test'
                 ]
@@ -75,13 +76,13 @@ $app['environ']
             return preg_match('/localhost|192\.168|patch\.work/', $_SERVER['SERVER_NAME']);
         },
         function () use ($app) {
-            R::addDatabase('dev', 'sqlite:'.BASE_PATH.'/db/dev.sqlite');
+            R::addDatabase('dev', 'sqlite:'.BASE_PATH.'/var/db/dev.sqlite');
             R::selectDatabase('dev');
 
             $app->register(
                 new Monolog(),
                 [
-                    'monolog.logfile' => BASE_PATH.'/logs/dev.log',
+                    'monolog.logfile' => BASE_PATH.'/var/log/dev.log',
                     'monolog.level' => Logger::DEBUG,
                     'monolog.name' => 'dev'
                 ]
@@ -104,7 +105,7 @@ $app['environ']
             $app->register(
                 new Monolog(),
                 [
-                    'monolog.logfile' => BASE_PATH.'/logs/prod.log',
+                    'monolog.logfile' => BASE_PATH.'/var/log/'.date('Y-m-d').'.log',
                     'monolog.level' => Logger::WARNING,
                     'monolog.name' => 'prod'
                 ]
@@ -115,7 +116,7 @@ $app['environ']
                     $message = $e->getMessage();
 
                     switch ($code) {
-                        case 404:
+                        case Response::HTTP_NOT_FOUND:
                             $message = 'La page que vous recherchez n\'existe pas ou est indisponible.';
                             break;
                     }
@@ -127,7 +128,7 @@ $app['environ']
     );
 
 $app['environ']->init();
-$app['debug'] = (! $app['environ']->is('prod'));
+$app['debug'] = !$app['environ']->is('prod');
 
 
 
@@ -138,7 +139,7 @@ $app['session'] = $app->share(
     function () {
         $session = new Session();
         $session->start();
-        
+
         return $session;
     }
 );
