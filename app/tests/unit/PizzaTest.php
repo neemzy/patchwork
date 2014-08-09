@@ -53,6 +53,14 @@ class PizzaTest extends \PHPUnit_Framework_TestCase
         $this->pizza->content = 'content';
         $this->pizza->toggle();
 
-        $this->assertTrue($this->pizza->save() > 0);
+        $success = true;
+
+        try {
+            $this->pizza->save();
+        } catch (Patchwork\Exception $e) {
+            $success = false;
+        }
+
+        $this->assertTrue($success);
     }
 }
