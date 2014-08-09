@@ -117,7 +117,7 @@ $app['environ']
 
                     switch ($code) {
                         case Response::HTTP_NOT_FOUND:
-                            $message = 'La page que vous recherchez n\'existe pas ou est indisponible.';
+                            $message = $app['translator']->trans('The page you are looking for does not exist or is unavailable.');
                             break;
                     }
 
@@ -195,6 +195,7 @@ $app->mount(
     '/api/pizza',
     ApiController::getInstanceFor('pizza')
 );
+
 
 
 /**

@@ -1,5 +1,5 @@
 node_modules
 vendor
-db
-logs
+var/db
+var/log
 public/upload
