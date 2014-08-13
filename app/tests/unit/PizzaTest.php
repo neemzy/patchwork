@@ -18,7 +18,7 @@ class PizzaTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * Checks if we can create a pizza
+     * Checks a pizza can be created
      *
      * @return void
      */
@@ -30,7 +30,7 @@ class PizzaTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * Checks if we cannot save an invalid pizza
+     * Checks an invalid pizza cannot be saved
      *
      * @expectedException Patchwork\Exception
      * @return void
@@ -43,7 +43,7 @@ class PizzaTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * Checks if we can save a valid pizza
+     * Checks a valid pizza can be saved
      *
      * @return void
      */

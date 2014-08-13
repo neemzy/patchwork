@@ -24,22 +24,7 @@ class FeatureContext extends MinkContext
 
 
     /**
-     * Determines if element has class
-     *
-     * @return void
-     */
-    private function elementHasClass($selector, $class)
-    {
-        $page = $this->getSession()->getPage();
-        $element = $page->find('css', $selector);
-
-        return $element && $element->hasAttribute('class') && preg_match('/'.$class.'/', $element->getAttribute('class'));
-    }
-
-
-
-    /**
-     * Checks if element has class
+     * Checks an element has a class
      *
      * @Then /^"([^"]*)" element should have class "([^"]*)"$/
      *
@@ -47,13 +32,16 @@ class FeatureContext extends MinkContext
      */
     public function elementShouldHaveClass($selector, $class)
     {
-        assertTrue($this->elementHasClass($selector, $class));
+        $page = $this->getSession()->getPage();
+        $element = $page->find('css', $selector);
+
+        assertTrue($element && $element->hasClass($class));
     }
 
 
 
     /**
-     * Checks if element doesn't have class
+     * Checks an element doesn't have a class
      *
      * @Then /^"([^"]*)" element should not have class "([^"]*)"$/
      *
@@ -61,6 +49,43 @@ class FeatureContext extends MinkContext
      */
     public function elementShouldNotHaveClass($selector, $class)
     {
-        assertFalse($this->elementHasClass($selector, $class));
+        $page = $this->getSession()->getPage();
+        $element = $page->find('css', $selector);
+
+        assertFalse($element && $element->hasClass($class));
+    }
+
+
+
+    /**
+     * Checks an element is visible
+     *
+     * @Then /^"([^"]*)" element should be visible$/
+     *
+     * @return void
+     */
+    public function elementShouldBeVisible($selector)
+    {
+        $page = $this->getSession()->getPage();
+        $element = $page->find('css', $selector);
+
+        assertTrue($element && $element->isVisible());
+    }
+
+
+
+    /**
+     * Checks an element is hidden
+     *
+     * @Then /^"([^"]*)" element should be visible$/
+     *
+     * @return void
+     */
+    public function elementShouldBeHidden($selector)
+    {
+        $page = $this->getSession()->getPage();
+        $element = $page->find('css', $selector);
+
+        assertFalse($element && $element->isVisible());
     }
 }
