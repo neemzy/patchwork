@@ -77,7 +77,7 @@ class FeatureContext extends MinkContext
     /**
      * Checks an element is hidden
      *
-     * @Then /^"([^"]*)" element should be visible$/
+     * @Then /^"([^"]*)" element should be hidden$/
      *
      * @return void
      */
