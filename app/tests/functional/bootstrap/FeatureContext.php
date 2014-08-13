@@ -33,7 +33,7 @@ class FeatureContext extends MinkContext
         $page = $this->getSession()->getPage();
         $element = $page->find('css', $selector);
 
-        return $element->hasAttribute('class') && preg_match('/'.$class.'/', $element->getAttribute('class'));
+        return $element && $element->hasAttribute('class') && preg_match('/'.$class.'/', $element->getAttribute('class'));
     }
 
 
