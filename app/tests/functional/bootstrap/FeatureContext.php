@@ -2,6 +2,7 @@
 
 use Behat\Behat\Exception\PendingException;
 use Behat\MinkExtension\Context\MinkContext;
+use Behat\Mink\Exception\ElementNotFoundException;
 
 require_once('PHPUnit/Util/Filesystem.php');
 require_once('PHPUnit/Autoload.php');
@@ -32,10 +33,15 @@ class FeatureContext extends MinkContext
      */
     public function elementShouldHaveClass($selector, $class)
     {
-        $page = $this->getSession()->getPage();
+        $session = $this->getSession();
+        $page = $session->getPage();
         $element = $page->find('css', $selector);
 
-        assertTrue($element && $element->hasClass($class));
+        if (!$element) {
+            throw new ElementNotFoundException($session, 'Element "'.$selector.'"');
+        }
+
+        assertTrue($element->hasClass($class));
     }
 
 
@@ -49,10 +55,15 @@ class FeatureContext extends MinkContext
      */
     public function elementShouldNotHaveClass($selector, $class)
     {
-        $page = $this->getSession()->getPage();
+        $session = $this->getSession();
+        $page = $session->getPage();
         $element = $page->find('css', $selector);
 
-        assertFalse($element && $element->hasClass($class));
+        if (!$element) {
+            throw new ElementNotFoundException($session, 'Element "'.$selector.'"');
+        }
+
+        assertFalse($element->hasClass($class));
     }
 
 
@@ -66,10 +77,15 @@ class FeatureContext extends MinkContext
      */
     public function elementShouldBeVisible($selector)
     {
-        $page = $this->getSession()->getPage();
+        $session = $this->getSession();
+        $page = $session->getPage();
         $element = $page->find('css', $selector);
 
-        assertTrue($element && $element->isVisible());
+        if (!$element) {
+            throw new ElementNotFoundException($session, 'Element "'.$selector.'"');
+        }
+
+        assertTrue($element->isVisible());
     }
 
 
@@ -83,9 +99,14 @@ class FeatureContext extends MinkContext
      */
     public function elementShouldBeHidden($selector)
     {
-        $page = $this->getSession()->getPage();
+        $session = $this->getSession();
+        $page = $session->getPage();
         $element = $page->find('css', $selector);
 
-        assertFalse($element && $element->isVisible());
+        if (!$element) {
+            throw new ElementNotFoundException($session, 'Element "'.$selector.'"');
+        }
+
+        assertFalse($element->isVisible());
     }
 }
