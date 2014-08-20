@@ -201,7 +201,7 @@ $app->mount(
 /**
  * ETags
  */
-$app->after(
+$app['debug'] || $app->after(
     function (Request $request, Response $response) {
         $response->setVary('Accept-Encoding');
         $response->headers->set('ETag', md5($response->getContent()));
