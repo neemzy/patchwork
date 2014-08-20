@@ -1,6 +1,7 @@
 <?php
 
 use \RedBean_Facade as R;
+use Patchwork\Exception;
 
 class PizzaTest extends \PHPUnit_Framework_TestCase
 {
@@ -57,7 +58,7 @@ class PizzaTest extends \PHPUnit_Framework_TestCase
 
         try {
             $this->pizza->save();
-        } catch (Patchwork\Exception $e) {
+        } catch (Exception $e) {
             $success = false;
         }
 
