@@ -18,9 +18,9 @@ use \RedBean_Facade as R;
 use Entea\Twig\Extension\AssetExtension;
 use Patchwork\App;
 use Patchwork\ControllerCollection;
-use Patchwork\Controller\FrontController;
 use Patchwork\Controller\AdminController;
 use Patchwork\Controller\ApiController;
+use Patchwork\Controller\FrontController;
 use Environ\Environ;
 use ShareExtension\ShareExtension;
 
@@ -182,11 +182,6 @@ $app['controllers_factory'] = function () use ($app) {
 };
 
 $app->mount(
-    '/',
-    new FrontController()
-);
-
-$app->mount(
     '/admin/pizza',
     AdminController::getInstanceFor('pizza')
 );
@@ -194,6 +189,11 @@ $app->mount(
 $app->mount(
     '/api/pizza',
     ApiController::getInstanceFor('pizza')
+);
+
+$app->mount(
+    '/',
+    new FrontController()
 );
 
 
