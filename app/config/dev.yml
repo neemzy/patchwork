@@ -1,0 +1,4 @@
+imports: [{ resource: settings.yml }]
+
+database: sqlite:%base_path%/var/db/dev.sqlite
+log_level: debug

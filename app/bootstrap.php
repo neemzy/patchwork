@@ -1,5 +1,9 @@
 <?php
 
+error_reporting(E_ALL ^ E_NOTICE);
+ini_set('session.use_trans_sid', 0);
+ini_set('session.use_only_cookies', 1);
+
 define('BASE_PATH', dirname(__DIR__));
 require_once(BASE_PATH.'/vendor/autoload.php');
 
@@ -13,8 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
-use Monolog\Logger;
 use \RedBean_Facade as R;
+use DerAlex\Silex\YamlConfigServiceProvider;
 use Entea\Twig\Extension\AssetExtension;
 use Patchwork\App;
 use Patchwork\ControllerCollection;
@@ -25,69 +29,26 @@ use Environ\Environ;
 use ShareExtension\ShareExtension;
 
 /**
- * Basics
- */
-define('REDBEAN_MODEL_PREFIX', 'Pizza\\Model\\');
-define('ADMIN_ROOT', 'pizza.list');
-define('ADMIN_USER', 'pizza');
-define('ADMIN_PASS', 'admin');
-
-error_reporting(E_ALL ^ E_NOTICE);
-ini_set('session.use_trans_sid', 0);
-ini_set('session.use_only_cookies', 1);
-mb_internal_encoding('UTF-8');
-setlocale(LC_ALL, 'fr_FR.UTF8');
-date_default_timezone_set('Europe/Paris');
-
-Request::enableHttpMethodParameterOverride();
-
-
-
-/**
  * Environments
  */
 $app = App::getInstance();
 $app['environ'] = new Environ();
-$date = date('Y-m-d');
 
 $app['environ']
     ->add(
         'test',
         function () {
-            return (!$_SERVER['HTTP_USER_AGENT'] || preg_match('/BrowserKit|PhantomJS/', $_SERVER['HTTP_USER_AGENT']));
+            $ua = $_SERVER['HTTP_USER_AGENT'];
+            return (!$ua || preg_match('/BrowserKit|PhantomJS/', $ua));
         },
-        function () use ($app) {
-            R::addDatabase('test', 'sqlite:'.BASE_PATH.'/var/db/test.sqlite');
-            R::selectDatabase('test');
-
-            $app->register(
-                new Monolog(),
-                [
-                    'monolog.logfile' => BASE_PATH.'/var/log/test.log',
-                    'monolog.level' => Logger::INFO,
-                    'monolog.name' => 'test'
-                ]
-            );
-        }
+        function () {}
     )
     ->add(
         'dev',
         function () {
             return preg_match('/localhost|192\.168|patch\.work/', $_SERVER['SERVER_NAME']);
         },
-        function () use ($app) {
-            R::addDatabase('dev', 'sqlite:'.BASE_PATH.'/var/db/dev.sqlite');
-            R::selectDatabase('dev');
-
-            $app->register(
-                new Monolog(),
-                [
-                    'monolog.logfile' => BASE_PATH.'/var/log/dev.log',
-                    'monolog.level' => Logger::DEBUG,
-                    'monolog.name' => 'dev'
-                ]
-            );
-        }
+        function () {}
     )
     ->add(
         'prod',
@@ -96,20 +57,6 @@ $app['environ']
         },
         function () use ($app) {
             error_reporting(0);
-
-            R::addDatabase('prod', 'mysql:host=localhost;dbname=pizza', 'pizza', 'admin');
-            R::selectDatabase('prod');
-            R::freeze(true);
-            R::useWriterCache(true);
-
-            $app->register(
-                new Monolog(),
-                [
-                    'monolog.logfile' => BASE_PATH.'/var/log/'.date('Y-m-d').'.log',
-                    'monolog.level' => Logger::WARNING,
-                    'monolog.name' => 'prod'
-                ]
-            );
 
             $app->error(
                 function (\Exception $e, $code) use ($app) {
@@ -124,6 +71,16 @@ $app['environ']
                     return $app['twig']->render('front/partials/error.twig', compact('message'));
                 }
             );
+
+            $app->after(
+                function (Request $request, Response $response) {
+                    $response->setVary('Accept-Encoding');
+                    $response->headers->set('ETag', md5($response->getContent()));
+                    $response->isNotModified($request);
+
+                    return $response;
+                }
+            );
         }
     );
 
@@ -135,25 +92,27 @@ $app['debug'] = !$app['environ']->is('prod');
 /**
  * Services
  */
-$app['session'] = $app->share(
-    function () {
-        $session = new Session();
-        $session->start();
+$app->register(new YamlConfigServiceProvider(BASE_PATH.'/app/config/'.$app['environ']->get().'.yml'));
 
-        return $session;
-    }
+$app->register(
+    new Monolog(),
+    [
+        'monolog.logfile' => BASE_PATH.'/var/log/'.$app['environ']->get().'_'.date('Y-m-d').'.log',
+        'monolog.level' => constant('Monolog\Logger::'.strtoupper($app['config']['log_level'])),
+        'monolog.name' => $app['environ']->get()
+    ]
 );
 
 $app->register(new UrlGenerator());
 $app->register(new Validator());
-$app->register(new Translation(), ['locale_fallback' => 'fr']);
+$app->register(new Translation(), ['locale_fallback' => $app['config']['locale']]);
 
 $app['translator'] = $app->share(
     $app->extend(
         'translator',
         function ($translator, $app) {
             $translator->addLoader('yaml', new YamlFileLoader());
-            $translator->addResource('yaml', BASE_PATH.'/app/i18n/fr.yml', 'fr');
+            $translator->addResource('yaml', BASE_PATH.'/app/config/i18n/'.$app['config']['locale'].'.yml', $app['config']['locale']);
 
             return $translator;
         }
@@ -166,11 +125,37 @@ $app['twig']->addExtension(new ShareExtension());
 $app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
 $app['twig']->addFilter('dump', new Twig_Filter_Function('Patchwork\Tools::dump', ['is_safe' => ['all']]));
 $app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Tools::vulgarize'));
-$app['twig']->addGlobal('title', 'Patchwork');
-$app['twig']->addGlobal('description', '#PHP 5.4+ web framework powered by #Composer #Silex #RedBean #NPM');
 
 $app->register(new Swiftmailer());
 $app['swiftmailer.transport'] = new Swift_MailTransport();
+
+$app['session'] = $app->share(
+    function () {
+        $session = new Session();
+        $session->start();
+
+        return $session;
+    }
+);
+
+
+
+/**
+ * Config
+ */
+mb_internal_encoding('UTF-8');
+setlocale(LC_ALL, $app['config']['full_locale']);
+date_default_timezone_set($app['config']['timezone']);
+
+define('REDBEAN_MODEL_PREFIX', $app['config']['redbean_prefix']);
+R::setup(str_replace('%base_path%', BASE_PATH, $app['config']['database']), $app['config']['db_user'], $app['config']['db_pass']);
+
+if (!$app['debug']) {
+    R::freeze(true);
+    R::useWriterCache(true);
+}
+
+Request::enableHttpMethodParameterOverride();
 
 
 
@@ -194,21 +179,6 @@ $app->mount(
 $app->mount(
     '/',
     new FrontController()
-);
-
-
-
-/**
- * ETags
- */
-$app['debug'] || $app->after(
-    function (Request $request, Response $response) {
-        $response->setVary('Accept-Encoding');
-        $response->headers->set('ETag', md5($response->getContent()));
-        $response->isNotModified($request);
-
-        return $response;
-    }
 );
 
 
