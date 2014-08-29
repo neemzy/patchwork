@@ -91,7 +91,7 @@ $app['debug'] = !$app['environ']->is('prod');
 /**
  * Services
  */
-$app->register(new YamlConfigServiceProvider(BASE_PATH.'/app/config/'.$app['environ']->get().'.yml'));
+$app->register(new YamlConfigServiceProvider(BASE_PATH.'/app/config/settings/'.$app['environ']->get().'.yml'));
 
 $app->register(
     new Monolog(),

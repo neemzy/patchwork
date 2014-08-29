@@ -1,4 +1,4 @@
-imports: [{ resource: settings.yml }]
+imports: [{ resource: common.yml }]
 
 database: mysql:host=localhost;dbname=pizza
 db_user: pizza
