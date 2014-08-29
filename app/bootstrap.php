@@ -38,8 +38,7 @@ $app['environ']
     ->add(
         'test',
         function () {
-            $ua = $_SERVER['HTTP_USER_AGENT'];
-            return (!$ua || preg_match('/BrowserKit|PhantomJS/', $ua));
+            return (!$_SERVER['HTTP_USER_AGENT'] || preg_match('/BrowserKit|PhantomJS/', $_SERVER['HTTP_USER_AGENT']));
         },
         function () {}
     )
