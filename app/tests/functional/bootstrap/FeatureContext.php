@@ -109,4 +109,18 @@ class FeatureContext extends MinkContext
 
         assertFalse($element->isVisible());
     }
+
+
+
+    /**
+     * Waits for n seconds
+     *
+     * @Then /^I wait (\d+) seconds$/
+     *
+     * @return void
+     */
+    public function iWaitSeconds($seconds)
+    {
+        $this->getSession()->getDriver()->wait($seconds * 1000, null);
+    }
 }
