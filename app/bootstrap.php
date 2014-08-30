@@ -1,6 +1,5 @@
 <?php
 
-error_reporting(E_ALL ^ E_NOTICE);
 ini_set('session.use_trans_sid', 0);
 ini_set('session.use_only_cookies', 1);
 
@@ -55,8 +54,6 @@ $app['environ']
             return true;
         },
         function () use ($app) {
-            error_reporting(0);
-
             $app->error(
                 function (\Exception $e, $code) use ($app) {
                     $message = $e->getMessage();
@@ -147,7 +144,9 @@ setlocale(LC_ALL, $app['config']['full_locale']);
 date_default_timezone_set($app['config']['timezone']);
 
 define('REDBEAN_MODEL_PREFIX', $app['config']['redbean_prefix']);
-R::setup(str_replace('%base_path%', BASE_PATH, $app['config']['database']), $app['config']['db_user'], $app['config']['db_pass']);
+$user = array_key_exists('db_user', $app['config']) ? $app['config']['db_user'] : null;
+$pass = array_key_exists('db_pass', $app['config']) ? $app['config']['db_pass'] : null;
+R::setup(str_replace('%base_path%', BASE_PATH, $app['config']['database']), $user, $pass);
 
 if (!$app['debug']) {
     R::freeze(true);
