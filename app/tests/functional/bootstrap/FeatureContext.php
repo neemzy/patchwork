@@ -3,6 +3,7 @@
 use Behat\Behat\Exception\PendingException;
 use Behat\MinkExtension\Context\MinkContext;
 use Behat\Mink\Exception\ElementNotFoundException;
+use Patchwork\Tools;
 
 require_once('PHPUnit/Util/Filesystem.php');
 require_once('PHPUnit/Autoload.php');
@@ -25,45 +26,43 @@ class FeatureContext extends MinkContext
 
 
     /**
-     * Checks an element has a class
+     * Waits for n seconds
      *
-     * @Then /^"([^"]*)" element should have class "([^"]*)"$/
+     * @Then /^I wait (\d+) seconds?$/
      *
      * @return void
      */
-    public function elementShouldHaveClass($selector, $class)
+    public function iWaitSeconds($seconds)
     {
-        $session = $this->getSession();
-        $page = $session->getPage();
-        $element = $page->find('css', $selector);
-
-        if (!$element) {
-            throw new ElementNotFoundException($session, 'Element "'.$selector.'"');
-        }
-
-        assertTrue($element->hasClass($class));
+        $this->getSession()->getDriver()->wait($seconds * 1000, null);
     }
 
 
 
     /**
-     * Checks an element doesn't have a class
+     * Dumps the page's content
      *
-     * @Then /^"([^"]*)" element should not have class "([^"]*)"$/
+     * @Then /^dump the current page$/
      *
      * @return void
      */
-    public function elementShouldNotHaveClass($selector, $class)
+    public function dumpTheCurrentPage()
     {
-        $session = $this->getSession();
-        $page = $session->getPage();
-        $element = $page->find('css', $selector);
+        echo(Tools::dump($this->getSession()->getPage()->getHtml()));
+    }
 
-        if (!$element) {
-            throw new ElementNotFoundException($session, 'Element "'.$selector.'"');
-        }
 
-        assertFalse($element->hasClass($class));
+
+    /**
+     * Takes a screenshot
+     *
+     * @Then /^take a screenshot$/
+     *
+     * @return void
+     */
+    public function takeAScreenshot()
+    {
+        file_put_contents(BASE_PATH.'/'.uniqid().'.png', $this->getSession()->getDriver()->getScreenshot());
     }
 
 
@@ -113,14 +112,44 @@ class FeatureContext extends MinkContext
 
 
     /**
-     * Waits for n seconds
+     * Checks an element has a class
      *
-     * @Then /^I wait (\d+) seconds$/
+     * @Then /^"([^"]*)" element should have class "([^"]*)"$/
      *
      * @return void
      */
-    public function iWaitSeconds($seconds)
+    public function elementShouldHaveClass($selector, $class)
     {
-        $this->getSession()->getDriver()->wait($seconds * 1000, null);
+        $session = $this->getSession();
+        $page = $session->getPage();
+        $element = $page->find('css', $selector);
+
+        if (!$element) {
+            throw new ElementNotFoundException($session, 'Element "'.$selector.'"');
+        }
+
+        assertTrue($element->hasClass($class));
+    }
+
+
+
+    /**
+     * Checks an element doesn't have a class
+     *
+     * @Then /^"([^"]*)" element should not have class "([^"]*)"$/
+     *
+     * @return void
+     */
+    public function elementShouldNotHaveClass($selector, $class)
+    {
+        $session = $this->getSession();
+        $page = $session->getPage();
+        $element = $page->find('css', $selector);
+
+        if (!$element) {
+            throw new ElementNotFoundException($session, 'Element "'.$selector.'"');
+        }
+
+        assertFalse($element->hasClass($class));
     }
 }
