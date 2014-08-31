@@ -40,14 +40,16 @@ $app['environ']
         function () {
             return (!$_SERVER['HTTP_USER_AGENT'] || preg_match('/BrowserKit|PhantomJS/', $_SERVER['HTTP_USER_AGENT']));
         },
-        function () {}
+        function () {
+        }
     )
     ->add(
         'dev',
         function () {
             return preg_match('/localhost|192\.168|patch\.work/', $_SERVER['SERVER_NAME']);
         },
-        function () {}
+        function () {
+        }
     )
     ->add(
         'prod',
@@ -122,6 +124,7 @@ $app['twig']->addExtension(new ShareExtension());
 $app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
 $app['twig']->addFilter('dump', new Twig_Filter_Function('Patchwork\Tools::dump', ['is_safe' => ['all']]));
 $app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Tools::vulgarize'));
+$app['twig']->addFilter('localeDate', new Twig_Filter_Function('Patchwork\Tools::localeDate'));
 
 $app->register(new Swiftmailer());
 $app['swiftmailer.transport'] = new Swift_MailTransport();
