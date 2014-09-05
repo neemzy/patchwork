@@ -3,7 +3,6 @@
 use Behat\Behat\Exception\PendingException;
 use Behat\MinkExtension\Context\MinkContext;
 use Behat\Mink\Exception\ElementNotFoundException;
-use Patchwork\Tools;
 
 require_once('PHPUnit/Util/Filesystem.php');
 require_once('PHPUnit/Autoload.php');
@@ -11,20 +10,6 @@ require_once('PHPUnit/Framework/Assert/Functions.php');
 
 class FeatureContext extends MinkContext
 {
-    /**
-     * Checks the response's status code
-     *
-     * @Then /^status code should be (\d+)$/
-     *
-     * @return void
-     */
-    public function statusCodeShouldBe($code)
-    {
-        assertEquals($code, $this->getSession()->getStatusCode());
-    }
-
-
-
     /**
      * Waits for n seconds
      *
@@ -35,20 +20,6 @@ class FeatureContext extends MinkContext
     public function iWaitSeconds($seconds)
     {
         $this->getSession()->getDriver()->wait($seconds * 1000, null);
-    }
-
-
-
-    /**
-     * Dumps the page's content
-     *
-     * @Then /^dump the current page$/
-     *
-     * @return void
-     */
-    public function dumpTheCurrentPage()
-    {
-        echo(Tools::dump($this->getSession()->getPage()->getHtml()));
     }
 
 
