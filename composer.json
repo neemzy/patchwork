@@ -23,7 +23,8 @@
 
     "autoload": {
         "psr-4": {
-            "Pizza\\": "app/src/"
+            "Pizza\\": "app/src/",
+            "": "app/tests/functional/bootstrap/"
         }
     }
 }

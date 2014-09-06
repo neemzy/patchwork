@@ -1,6 +1,4 @@
 default:
-    autoload:
-        '': app/tests/functional/bootstrap/
     suites:
         sample:
             paths: [ app/tests/functional/ ]
