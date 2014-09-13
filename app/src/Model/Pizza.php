@@ -38,7 +38,7 @@ class Pizza extends AbstractModel
         ];
     }
 
-    
+
 
     /**
      * Defines this bean's string representation

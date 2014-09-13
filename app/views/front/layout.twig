@@ -9,9 +9,10 @@
     <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge" /><![endif]-->
     <title>{% block title app.config.title %}</title>
     <meta name="description" content="{% block description app.config.description %}" />
-    <meta name="author" content="Be Seen" />
     <meta property="og:title" content="{{ block('title') }}" />
     <meta property="og:description" content="{{ block('description') }}" />
+    <meta name="author" content="http://www.zaibatsu.fr" />
+    <meta name="designer" content="http://www.noemiedesard.fr" />
     <base href="{{ url('home') }}" />
     <script src="//polyfill.io"></script>
     <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
@@ -23,7 +24,7 @@
 
         {% block body '' %}
     </main>
-    
+
     <script src="{{ asset('js/main.js') }}"></script>
     {% include 'livereload.twig' %}
 </body>
