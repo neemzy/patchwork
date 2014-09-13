@@ -80,7 +80,7 @@ gulp.task('workflow', function () {
         gulp.watch('app/assets/js/**/*.js', ['js']);
         gulp.watch('app/assets/img/**/*', ['img']);
 
-        gulp.watch('app/views/**/*.twig', function () {
+        gulp.watch(['app/config/**/*.yml', 'app/views/**/*.twig'], function () {
             gulp.src('').pipe(tasks.livereload());
         });
     }
