@@ -95,7 +95,11 @@ $app->register(new YamlConfigServiceProvider(BASE_PATH.'/app/config/settings/'.$
 
 define('REDBEAN_MODEL_PREFIX', $app['config']['redbean_prefix']);
 $app->register(new RedBeanServiceProvider(str_replace('%base_path%', BASE_PATH, $app['config']['database']), $app['config']['db_user'], $app['config']['db_pass']));
-$app['debug'] || ($app['redbean']->freeze(true) && $app['redbean']->useWriterCache(true));
+
+if (!$app['debug']) {
+    $app['redbean']->freeze(true);
+    $app['redbean']->useWriterCache(true);
+}
 
 $app->register(
     new Monolog(),
