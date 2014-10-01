@@ -1,8 +1,8 @@
 redbean_prefix: Pizza\Model\
 
-locale: fr
-full_locale: fr_FR.UTF8
-timezone: Europe/Paris
+locale: en
+full_locale: en_GB.UTF8
+timezone: Europe/London
 
 title: Patchwork
 description: '#PHP 5.4+ web framework powered by #Composer #Silex #RedBean #NPM'
