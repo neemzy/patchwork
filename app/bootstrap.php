@@ -120,11 +120,12 @@ $app['translator'] = $app->share(
 
 $app->register(new Twig(), ['twig.path' => BASE_PATH.'/app/views']);
 $app['twig']->addExtension(new AssetExtension($app, ['asset.directory' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']).'assets']));
+$app['twig']->addExtension(new Twig_Extensions_Extension_Intl());
+$app['twig']->addExtension(new Twig_Extensions_Extension_Text());
 $app['twig']->addExtension(new ShareExtension());
 $app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
 $app['twig']->addFilter('dump', new Twig_Filter_Function('Patchwork\Tools::dump', ['is_safe' => ['all']]));
 $app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Tools::vulgarize'));
-$app['twig']->addFilter('localeDate', new Twig_Filter_Function('Patchwork\Tools::localeDate'));
 
 $app->register(new Swiftmailer());
 $app['swiftmailer.transport'] = new Swift_MailTransport();
