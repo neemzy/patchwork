@@ -4,7 +4,7 @@ Options +FollowSymLinks
 
 RewriteEngine On
 
-RewriteCond %{HTTP_HOST} ^www\. [NC]                                                                                                                                
+RewriteCond %{HTTP_HOST} ^www\. [NC]
 RewriteRule ^(.*)$ %{HTTP_HOST}/$1 [C]
 RewriteRule ^www\.(.*)$ http://$1 [L,R=301,QSA]
 
