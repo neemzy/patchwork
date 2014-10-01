@@ -17,11 +17,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
-use \RedBean_Facade as R;
 use DerAlex\Silex\YamlConfigServiceProvider;
 use Entea\Twig\Extension\AssetExtension;
 use Patchwork\App;
 use Patchwork\ControllerCollection;
+use Patchwork\RedBean\ServiceProvider as RedBeanServiceProvider;
 use Patchwork\Controller\AdminController;
 use Patchwork\Controller\ApiController;
 use Patchwork\Controller\FrontController;
@@ -93,6 +93,10 @@ $app['debug'] = !$app['environ']->is('prod');
  */
 $app->register(new YamlConfigServiceProvider(BASE_PATH.'/app/config/settings/'.$app['environ']->get().'.yml'));
 
+define('REDBEAN_MODEL_PREFIX', $app['config']['redbean_prefix']);
+$app->register(new RedBeanServiceProvider(str_replace('%base_path%', BASE_PATH, $app['config']['database']), $app['config']['db_user'], $app['config']['db_pass']));
+$app['debug'] || ($app['redbean']->freeze(true) && $app['redbean']->useWriterCache(true));
+
 $app->register(
     new Monolog(),
     [
@@ -147,14 +151,6 @@ $app['session'] = $app->share(
 mb_internal_encoding('UTF-8');
 setlocale(LC_ALL, $app['config']['full_locale']);
 date_default_timezone_set($app['config']['timezone']);
-
-define('REDBEAN_MODEL_PREFIX', $app['config']['redbean_prefix']);
-R::setup(str_replace('%base_path%', BASE_PATH, $app['config']['database']), $app['config']['db_user'], $app['config']['db_pass']);
-
-if (!$app['debug']) {
-    R::freeze(true);
-    R::useWriterCache(true);
-}
 
 Request::enableHttpMethodParameterOverride();
 
