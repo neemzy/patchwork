@@ -1,4 +1,4 @@
 imports: [{ resource: common.yml }]
 
-database: sqlite:%base_path%/var/db/test.sqlite
+database: sqlite::memory:
 log_level: info
