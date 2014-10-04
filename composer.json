@@ -10,7 +10,7 @@
 
     "require": {
         "neemzy/patchwork-core": "*",
-        "neemzy/share-extension": "*"
+        "neemzy/share-extension": "dev-master"
     },
 
     "require-dev": {

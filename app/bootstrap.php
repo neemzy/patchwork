@@ -7,12 +7,12 @@ ini_set('session.use_only_cookies', 1);
 define('BASE_PATH', dirname(__DIR__));
 require_once(BASE_PATH.'/vendor/autoload.php');
 
-use Silex\Provider\UrlGeneratorServiceProvider as UrlGenerator;
-use Silex\Provider\TwigServiceProvider as Twig;
-use Silex\Provider\ValidatorServiceProvider as Validator;
-use Silex\Provider\TranslationServiceProvider as Translation;
-use Silex\Provider\SwiftmailerServiceProvider as Swiftmailer;
-use Silex\Provider\MonologServiceProvider as Monolog;
+use Silex\Provider\UrlGeneratorServiceProvider;
+use Silex\Provider\TwigServiceProvider;
+use Silex\Provider\ValidatorServiceProvider;
+use Silex\Provider\TranslationServiceProvider;
+use Silex\Provider\SwiftmailerServiceProvider;
+use Silex\Provider\MonologServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -21,12 +21,12 @@ use DerAlex\Silex\YamlConfigServiceProvider;
 use Entea\Twig\Extension\AssetExtension;
 use Patchwork\App;
 use Patchwork\ControllerCollection;
-use Patchwork\RedBean\ServiceProvider as RedBeanServiceProvider;
 use Patchwork\Controller\AdminController;
 use Patchwork\Controller\ApiController;
 use Patchwork\Controller\FrontController;
-use Environ\Environ;
-use ShareExtension\ShareExtension;
+use Neemzy\Environ\Manager as Environ;
+use Neemzy\Silex\Provider\RedBean\ServiceProvider as RedBeanServiceProvider;
+use Neemzy\Twig\Extension\ShareExtension;
 
 /**
  * Environments
@@ -102,7 +102,7 @@ if (!$app['debug']) {
 }
 
 $app->register(
-    new Monolog(),
+    new MonologServiceProvider(),
     [
         'monolog.logfile' => BASE_PATH.'/var/log/'.$app['environ']->get().'_'.date('Y-m-d').'.log',
         'monolog.level' => constant('Monolog\Logger::'.strtoupper($app['config']['log_level'])),
@@ -110,9 +110,9 @@ $app->register(
     ]
 );
 
-$app->register(new UrlGenerator());
-$app->register(new Validator());
-$app->register(new Translation(), ['locale_fallback' => $app['config']['locale']]);
+$app->register(new UrlGeneratorServiceProvider());
+$app->register(new ValidatorServiceProvider());
+$app->register(new TranslationServiceProvider(), ['locale_fallback' => $app['config']['locale']]);
 
 $app['translator'] = $app->share(
     $app->extend(
@@ -126,7 +126,7 @@ $app['translator'] = $app->share(
     )
 );
 
-$app->register(new Twig(), ['twig.path' => BASE_PATH.'/app/views']);
+$app->register(new TwigServiceProvider(), ['twig.path' => BASE_PATH.'/app/views']);
 $app['twig']->addExtension(new Twig_Extensions_Extension_Intl());
 $app['twig']->addExtension(new Twig_Extensions_Extension_Text());
 $app['twig']->addExtension(new AssetExtension($app, ['asset.directory' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']).'assets']));
@@ -135,7 +135,7 @@ $app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
 $app['twig']->addFilter('dump', new Twig_Filter_Function('Patchwork\Tools::dump', ['is_safe' => ['all']]));
 $app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Tools::vulgarize'));
 
-$app->register(new Swiftmailer());
+$app->register(new SwiftmailerServiceProvider());
 $app['swiftmailer.transport'] = new Swift_MailTransport();
 
 $app['session'] = $app->share(
