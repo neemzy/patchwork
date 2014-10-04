@@ -72,9 +72,6 @@ $app->register(
                         }
                     );
 
-                    $app['redbean']->freeze(true);
-                    $app['redbean']->useWriterCache(true);
-
                     $app->after(
                         function (Request $request, Response $response) {
                             $response->setVary('Accept-Encoding');
@@ -99,6 +96,11 @@ $app->register(
         $app['config']['db_pass']
     )
 );
+
+if ($app['environ']->is('prod')) {
+    $app['redbean']->freeze(true);
+    $app['redbean']->useWriterCache(true);
+}
 
 $app->register(
     new MonologServiceProvider(),
