@@ -24,82 +24,81 @@ use Patchwork\ControllerCollection;
 use Patchwork\Controller\AdminController;
 use Patchwork\Controller\ApiController;
 use Patchwork\Controller\FrontController;
-use Neemzy\Environ\Manager as Environ;
 use Neemzy\Silex\Provider\RedBean\ServiceProvider as RedBeanServiceProvider;
+use Neemzy\Silex\Provider\EnvironServiceProvider;
+use Neemzy\Environ\Environment;
 use Neemzy\Twig\Extension\ShareExtension;
 
-/**
- * Environments
- */
 $app = App::getInstance();
-$app['environ'] = new Environ();
-
-$app['environ']
-    ->add(
-        'test',
-        function () {
-            return (!$_SERVER['HTTP_USER_AGENT'] || preg_match('/BrowserKit|PhantomJS/', $_SERVER['HTTP_USER_AGENT']));
-        },
-        function () {
-        }
-    )
-    ->add(
-        'dev',
-        function () {
-            return preg_match('/localhost|192\.168|patch\.work/', $_SERVER['SERVER_NAME']);
-        },
-        function () {
-        }
-    )
-    ->add(
-        'prod',
-        function () {
-            return true;
-        },
-        function () use ($app) {
-            $app->error(
-                function (\Exception $e, $code) use ($app) {
-                    $message = $e->getMessage();
-
-                    switch ($code) {
-                        case Response::HTTP_NOT_FOUND:
-                            $message = $app['translator']->trans('The page you are looking for does not exist or is unavailable.');
-                            break;
-                    }
-
-                    return $app['twig']->render('front/partials/error.twig', compact('message'));
-                }
-            );
-
-            $app->after(
-                function (Request $request, Response $response) {
-                    $response->setVary('Accept-Encoding');
-                    $response->headers->set('ETag', md5($response->getContent()));
-                    $response->isNotModified($request);
-
-                    return $response;
-                }
-            );
-        }
-    );
-
-$app['environ']->init();
-$app['debug'] = !$app['environ']->is('prod');
 
 
 
 /**
- * Services
+ * Service providers
  */
+$app->register(
+    new EnvironServiceProvider(
+        [
+            'test' => new Neemzy\Environ\Environment(
+                function () {
+                    return (!$_SERVER['HTTP_USER_AGENT'] || preg_match('/BrowserKit|PhantomJS/', $_SERVER['HTTP_USER_AGENT']));
+                },
+                function () {
+                }
+            ),
+            'dev' => new Neemzy\Environ\Environment(
+                function () {
+                    return preg_match('/localhost|192\.168|patch\.work/', $_SERVER['SERVER_NAME']);
+                },
+                function () {
+                }
+            ),
+            'prod' => new Neemzy\Environ\Environment(
+                function () {
+                    return true;
+                },
+                function () use ($app) {
+                    $app->error(
+                        function (\Exception $e, $code) use ($app) {
+                            $message = $e->getMessage();
+
+                            switch ($code) {
+                                case Response::HTTP_NOT_FOUND:
+                                    $message = $app['translator']->trans('The page you are looking for does not exist or is unavailable.');
+                                    break;
+                            }
+
+                            return $app['twig']->render('front/partials/error.twig', compact('message'));
+                        }
+                    );
+
+                    $app['redbean']->freeze(true);
+                    $app['redbean']->useWriterCache(true);
+
+                    $app->after(
+                        function (Request $request, Response $response) {
+                            $response->setVary('Accept-Encoding');
+                            $response->headers->set('ETag', md5($response->getContent()));
+                            $response->isNotModified($request);
+
+                            return $response;
+                        }
+                    );
+                }
+            )
+        ]
+    )
+);
+
 $app->register(new YamlConfigServiceProvider(BASE_PATH.'/app/config/settings/'.$app['environ']->get().'.yml'));
 
-define('REDBEAN_MODEL_PREFIX', $app['config']['redbean_prefix']);
-$app->register(new RedBeanServiceProvider(str_replace('%base_path%', BASE_PATH, $app['config']['database']), $app['config']['db_user'], $app['config']['db_pass']));
-
-if (!$app['debug']) {
-    $app['redbean']->freeze(true);
-    $app['redbean']->useWriterCache(true);
-}
+$app->register(
+    new RedBeanServiceProvider(
+        str_replace('%base_path%', BASE_PATH, $app['config']['database']),
+        $app['config']['db_user'],
+        $app['config']['db_pass']
+    )
+);
 
 $app->register(
     new MonologServiceProvider(),
@@ -150,13 +149,15 @@ $app['session'] = $app->share(
 
 
 /**
- * Config
+ * Configuration
  */
 mb_internal_encoding('UTF-8');
 setlocale(LC_ALL, $app['config']['full_locale']);
 date_default_timezone_set($app['config']['timezone']);
 
+define('REDBEAN_MODEL_PREFIX', $app['config']['redbean_prefix']);
 Request::enableHttpMethodParameterOverride();
+$app['debug'] = !$app['environ']->is('prod');
 
 
 
