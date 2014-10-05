@@ -39,21 +39,21 @@ $app = App::getInstance();
 $app->register(
     new EnvironServiceProvider(
         [
-            'test' => new Neemzy\Environ\Environment(
+            'test' => new Environment(
                 function () {
                     return (!$_SERVER['HTTP_USER_AGENT'] || preg_match('/BrowserKit|PhantomJS/', $_SERVER['HTTP_USER_AGENT']));
                 },
                 function () {
                 }
             ),
-            'dev' => new Neemzy\Environ\Environment(
+            'dev' => new Environment(
                 function () {
                     return preg_match('/localhost|192\.168|patch\.work/', $_SERVER['SERVER_NAME']);
                 },
                 function () {
                 }
             ),
-            'prod' => new Neemzy\Environ\Environment(
+            'prod' => new Environment(
                 function () {
                     return true;
                 },
