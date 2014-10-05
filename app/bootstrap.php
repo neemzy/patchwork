@@ -97,11 +97,6 @@ $app->register(
     )
 );
 
-if ($app['environ']->is('prod')) {
-    $app['redbean']->freeze(true);
-    $app['redbean']->useWriterCache(true);
-}
-
 $app->register(
     new MonologServiceProvider(),
     [
@@ -160,6 +155,11 @@ date_default_timezone_set($app['config']['timezone']);
 define('REDBEAN_MODEL_PREFIX', $app['config']['redbean_prefix']);
 Request::enableHttpMethodParameterOverride();
 $app['debug'] = !$app['environ']->is('prod');
+
+if (!$app['debug']) {
+    $app['redbean']->freeze(true);
+    $app['redbean']->useWriterCache(true);
+}
 
 
 
