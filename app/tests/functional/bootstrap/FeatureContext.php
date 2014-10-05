@@ -33,7 +33,7 @@ class FeatureContext extends MinkContext
      */
     public function takeAScreenshot()
     {
-        file_put_contents(BASE_PATH.'/'.uniqid().'.png', $this->getSession()->getDriver()->getScreenshot());
+        file_put_contents(__DIR__.'/../../../../'.uniqid().'.png', $this->getSession()->getDriver()->getScreenshot());
     }
 
 
