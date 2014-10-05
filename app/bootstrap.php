@@ -59,7 +59,7 @@ $app->register(
                 },
                 function () use ($app) {
                     $app->error(
-                        function (\Exception $e, $code) use ($app) {
+                        function (Exception $e, $code) use ($app) {
                             $message = $e->getMessage();
 
                             switch ($code) {
