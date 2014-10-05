@@ -1,71 +1,34 @@
 <?php
 
-use Patchwork\Exception;
+use Patchwork\App;
 
 class PizzaTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test warmer
-     * Instantiates a pizza
+     * Checks a blank pizza does not validate
      *
      * @return void
      */
-    protected function setUp()
+    public function testInvalidPizza()
     {
-        $this->pizza = App::getInstance()['redbean']->dispense('pizza');
+        $pizza = App::getInstance()['redbean']->dispense('pizza');
+
+        $this->assertNotEmpty($pizza->validate());
     }
 
 
 
     /**
-     * Checks a pizza can be created
+     * Checks a valorized pizza validates
      *
      * @return void
      */
-    public function testCanCreateAPizza()
+    public function testValidPizza()
     {
-        $this->assertNotNull($this->pizza);
-    }
+        $pizza = App::getInstance()['redbean']->dispense('pizza');
+        $pizza->title = 'title';
+        $pizza->content = 'content';
 
-
-
-    /**
-     * Checks an invalid pizza cannot be saved
-     *
-     * @depends testCanCreateAPizza
-     *
-     * @expectedException Patchwork\Exception
-     * @return void
-     */
-    public function testCannotSaveAnInvalidPizza()
-    {
-        $this->pizza->save();
-    }
-
-
-
-    /**
-     * Checks a valid pizza can be saved
-     *
-     * @depends testCanCreateAPizza
-     *
-     * @return void
-     */
-    public function testCanSaveAValidPizza()
-    {
-        $this->pizza->title = 'title';
-        $this->pizza->content = 'content';
-        $this->pizza->toggle();
-
-        $success = true;
-
-        // An exception is thrown upon failure
-        try {
-            $this->pizza->save();
-        } catch (Exception $e) {
-            $success = false;
-        }
-
-        $this->assertTrue($success);
+        $this->assertEmpty($pizza->validate());
     }
 }
