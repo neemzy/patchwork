@@ -3,6 +3,7 @@
 namespace Pizza\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Patchwork\Model\AbstractModel;
 use Patchwork\Model\ClonableModel;
 use Patchwork\Model\ImageModel;
@@ -13,29 +14,34 @@ class Pizza extends AbstractModel
 {
     use ClonableModel, ImageModel, SortableModel, TogglableModel;
 
+    /**
+     * @var string Pizza name
+     */
+    public $title;
+
+    /**
+     * @var string Pizza description
+     */
+    public $content;
+
+    /**
+     * @var string Pizza image path
+     */
+    public $image;
 
 
 
     /**
-     * Describes the model's assert list
+     * Valorizes the model's validation metadata
      *
-     * @return array Assert list
+     * @return void
      */
-    protected static function asserts()
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
-        return [
-            'title' => new Assert\NotBlank(),
-            'content' => new Assert\NotBlank(),
-
-            'image' => [
-                new Assert\NotBlank(),
-                new Assert\Image(
-                    [
-                        'maxWidth' => 350
-                    ]
-                )
-            ]
-        ];
+        $metadata->addPropertyConstraint('title', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('content', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('image', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('image', new Assert\Image(['maxWidth' => 400]));
     }
 
 

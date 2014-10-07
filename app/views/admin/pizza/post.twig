@@ -1,34 +1,34 @@
 {% extends 'admin/layout.twig' %}
 
 {% block head %}
-    <h1>{% if pizza.id %}Modifier{% else %}Ajouter{% endif %} une pizza</h1>
+    <h1>{% if pizza.id %}Edit{% else %}Add{% endif %} a pizza</h1>
 {% endblock %}
 
 {% block body %}
     <form method="POST" class="col-md-8 col-md-offset-2" enctype="multipart/form-data" autocomplete="off" novalidate>
         <div class="form-group">
-            <label for="title">{% trans %}[title]{% endtrans %}</label>
+            <label for="title">{% trans %}title{% endtrans %}</label>
             <input type="text" class="form-control" name="title" id="title" value="{% if app.request.get('title') %}{{ app.request.get('title') }}{% else %}{{ pizza.title }}{% endif %}" />
         </div>
 
         <div class="form-group">
-            <label for="content">{% trans %}[content]{% endtrans %}</label>
+            <label for="content">{% trans %}content{% endtrans %}</label>
             <textarea class="form-control" name="content" id="content">{% if app.request.get('content') %}{{ app.request.get('content') }}{% else %}{{ pizza.content }}{% endif %}</textarea>
         </div>
 
         <div class="form-group">
-            <label for="image">{% trans %}[image]{% endtrans %}</label>
+            <label for="image">{% trans %}image{% endtrans %}</label>
             <input class="form-control" type="file" name="image" id="image" />
         </div>
 
         {% if pizza.image %}<div class="form-group well">
-            <a class="btn btn-default pull-right" title="Supprimer l'image" href="{{ path('pizza.delete_file', { bean: pizza.id, key: 'image' }) }}" onclick="return confirm('Êtes-vous sûr(e) ?');"><i class="glyphicon glyphicon-trash"></i></a>
+            <a class="btn btn-default pull-right" title="Supprimer l'image" href="{{ path('pizza.delete_file', { bean: pizza.id, key: 'image' }) }}" onclick="return confirm('Are you sure ?');"><i class="glyphicon glyphicon-trash"></i></a>
             <img src="{{ pizza.getFilePath('image', false) }}" alt="" />
         </div>{% endif %}
 
         <div class="btn-group pull-right">
-            <a class="btn btn-default" href="{{ path('pizza.list') }}"><i class="glyphicon glyphicon-list"></i> Retour à la liste</a>
-            <button class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i> Valider</button>
+            <a class="btn btn-default" href="{{ path('pizza.list') }}"><i class="glyphicon glyphicon-list"></i> Back to list</a>
+            <button class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i> Submit</button>
         </div>
     </form>
 {% endblock %}

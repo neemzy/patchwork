@@ -1,9 +1,27 @@
 <?php
 
+use Symfony\Component\Validator\Validator;
+use Symfony\Component\Validator\DefaultTranslator;
 use Patchwork\App;
+use Pizza\Model\Pizza;
 
 class PizzaTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Test warmer
+     * Instantiates validator
+     */
+    public function setUp()
+    {
+        $app = App::getInstance();
+
+        $this->validator = new Validator(
+            $app['validator.mapping.class_metadata_factory'],
+            $app['validator.validator_factory'],
+            new DefaultTranslator()
+        );
+    }
+
     /**
      * Checks a blank pizza does not validate
      *
@@ -11,9 +29,9 @@ class PizzaTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidPizza()
     {
-        $pizza = App::getInstance()['redbean']->dispense('pizza');
+        $pizza = new Pizza();
 
-        $this->assertNotEmpty($pizza->validate());
+        $this->assertNotEmpty($this->validator->validate($pizza));
     }
 
 
@@ -25,10 +43,12 @@ class PizzaTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidPizza()
     {
-        $pizza = App::getInstance()['redbean']->dispense('pizza');
+        $pizza = new Pizza();
+
         $pizza->title = 'title';
         $pizza->content = 'content';
+        $pizza->image = __DIR__.'/../../../vendor/neemzy/patchwork-core/assets/img/nicEditorIcons.gif';
 
-        $this->assertEmpty($pizza->validate());
+        $this->assertEmpty($this->validator->validate($pizza));
     }
 }
