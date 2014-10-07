@@ -9,7 +9,6 @@ require_once(BASE_PATH.'/vendor/autoload.php');
 
 use Silex\Provider\UrlGeneratorServiceProvider;
 use Silex\Provider\TwigServiceProvider;
-use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\SwiftmailerServiceProvider;
 use Silex\Provider\MonologServiceProvider;
@@ -20,6 +19,7 @@ use Symfony\Component\Translation\Loader\YamlFileLoader;
 use DerAlex\Silex\YamlConfigServiceProvider;
 use Entea\Twig\Extension\AssetExtension;
 use Patchwork\App;
+use Patchwork\ValidatorServiceProvider;
 use Patchwork\ControllerCollection;
 use Patchwork\Controller\AdminController;
 use Patchwork\Controller\ApiController;
@@ -115,12 +115,21 @@ $app['translator'] = $app->share(
         'translator',
         function ($translator, $app) {
             $translator->addLoader('yaml', new YamlFileLoader());
-            $translator->addResource('yaml', BASE_PATH.'/app/config/i18n/'.$app['config']['locale'].'.yml', $app['config']['locale']);
+            $dir = BASE_PATH.'/app/config/i18n/';
+
+            foreach (scandir($dir) as $file) {
+                if (preg_match('/([a-z]+\.)?'.$app['config']['locale'].'.yml/', $file, $matches)) {
+                    array_shift($matches);
+                    $domain = rtrim(implode('', $matches), '.') ?: null;
+                    $translator->addResource('yaml', BASE_PATH.'/app/config/i18n/'.$file, $app['config']['locale'], $domain);
+                }
+            }
 
             return $translator;
         }
     )
 );
+
 
 $app->register(new TwigServiceProvider(), ['twig.path' => BASE_PATH.'/app/views']);
 $app['twig']->addExtension(new Twig_Extensions_Extension_Intl());
@@ -154,6 +163,7 @@ date_default_timezone_set($app['config']['timezone']);
 
 define('REDBEAN_MODEL_PREFIX', $app['config']['redbean_prefix']);
 Request::enableHttpMethodParameterOverride();
+$app['locale'] = $app['config']['locale'];
 $app['debug'] = !$app['environ']->is('prod');
 
 if (!$app['debug']) {
