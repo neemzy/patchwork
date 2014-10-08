@@ -1,3 +1,9 @@
 'title': 'Title'
 'content': 'Content'
 'image': 'Image'
+
+success:
+    cloning: 'Cloning successful.'
+    deletion: 'Deletion successful.'
+    save: 'Save successful.'
+    file_deletion: 'File deletion successful.'

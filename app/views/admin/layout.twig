@@ -25,9 +25,21 @@
     <div class="container">
         <div class="page-header clearfix">{% block head '' %}</div>
 
-        {% if app.session.getFlashBag().has('message') %}
-            <div class="alert alert-{% if app.session.getFlashBag().has('error') %}danger{% else %}success{% endif %}">
-                {{ app.session.getFlashBag().get('message')[0]|raw }}
+        {% if app.session.getFlashBag().has('error') %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for error in app.session.getFlashBag().get('error') %}
+                        {% for field, message in error %}
+                            <li><b>{{ field }}</b> : {{ message }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% elseif app.session.getFlashBag().has('success') %}
+            <div class="alert alert-success">
+                {% for message in app.session.getFlashBag().get('success') %}
+                    {{ message }}
+                {% endfor %}
             </div>
         {% endif %}
 
