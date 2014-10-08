@@ -9,6 +9,7 @@ require_once(BASE_PATH.'/vendor/autoload.php');
 
 use Silex\Provider\UrlGeneratorServiceProvider;
 use Silex\Provider\TwigServiceProvider;
+use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\SwiftmailerServiceProvider;
 use Silex\Provider\MonologServiceProvider;
@@ -19,7 +20,6 @@ use Symfony\Component\Translation\Loader\YamlFileLoader;
 use DerAlex\Silex\YamlConfigServiceProvider;
 use Entea\Twig\Extension\AssetExtension;
 use Patchwork\App;
-use Patchwork\ValidatorServiceProvider;
 use Patchwork\ControllerCollection;
 use Patchwork\Controller\AdminController;
 use Patchwork\Controller\ApiController;
