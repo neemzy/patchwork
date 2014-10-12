@@ -1,6 +1,6 @@
-'title': 'Title'
-'content': 'Content'
-'image': 'Image'
+title: 'Title'
+content: 'Content'
+image: 'Image'
 
 success:
     cloning: 'Cloning successful.'
