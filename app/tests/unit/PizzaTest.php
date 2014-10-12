@@ -1,26 +1,26 @@
 <?php
 
-use Symfony\Component\Validator\Validator;
-use Symfony\Component\Validator\DefaultTranslator;
-use Patchwork\App;
+use Silex\Application;
+use Silex\Provider\ValidatorServiceProvider;
 use Pizza\Model\Pizza;
 
 class PizzaTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test warmer
-     * Instantiates validator
+     * Instantiates model and validator
      */
     public function setUp()
     {
-        $app = App::getInstance();
+        $this->pizza = new Pizza();
+        $this->pizza->loadBean(new RedBean_OODBBean());
 
-        $this->validator = new Validator(
-            $app['validator.mapping.class_metadata_factory'],
-            $app['validator.validator_factory'],
-            new DefaultTranslator()
-        );
+        $app = new Application();
+        $app->register(new ValidatorServiceProvider());
+        $this->validator = $app['validator'];
     }
+
+
 
     /**
      * Checks a blank pizza does not validate
@@ -29,9 +29,7 @@ class PizzaTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidPizza()
     {
-        $pizza = new Pizza();
-
-        $this->assertNotEmpty($this->validator->validate($pizza));
+        $this->assertNotEmpty($this->validator->validate($this->pizza));
     }
 
 
@@ -43,12 +41,10 @@ class PizzaTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidPizza()
     {
-        $pizza = new Pizza();
+        $this->pizza->title = 'title';
+        $this->pizza->content = 'content';
+        $this->pizza->image = __DIR__.'/../../../vendor/neemzy/patchwork-core/assets/img/nicEditorIcons.gif';
 
-        $pizza->title = 'title';
-        $pizza->content = 'content';
-        $pizza->image = __DIR__.'/../../../vendor/neemzy/patchwork-core/assets/img/nicEditorIcons.gif';
-
-        $this->assertEmpty($this->validator->validate($pizza));
+        $this->assertEmpty($this->validator->validate($this->pizza));
     }
 }
