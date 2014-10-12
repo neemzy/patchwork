@@ -130,7 +130,6 @@ $app['translator'] = $app->share(
     )
 );
 
-
 $app->register(new TwigServiceProvider(), ['twig.path' => BASE_PATH.'/app/views']);
 $app['twig']->addExtension(new Twig_Extensions_Extension_Intl());
 $app['twig']->addExtension(new Twig_Extensions_Extension_Text());
