@@ -41,7 +41,7 @@ $app->register(
         [
             'test' => new Environment(
                 function () {
-                    return (!$_SERVER['HTTP_USER_AGENT'] || preg_match('/BrowserKit|PhantomJS/', $_SERVER['HTTP_USER_AGENT']));
+                    return preg_match('/BrowserKit|PhantomJS/', $_SERVER['HTTP_USER_AGENT']);
                 },
                 function () {
                 }
