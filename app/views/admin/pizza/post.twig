@@ -23,7 +23,7 @@
 
         {% if pizza.image %}<div class="form-group well">
             <a class="btn btn-default pull-right" title="Supprimer l'image" href="{{ path('pizza.delete_file', { model: pizza.id, field: 'image' }) }}" onclick="return confirm('Are you sure ?');"><i class="glyphicon glyphicon-trash"></i></a>
-            <img src="{{ pizza.getWebPath('image') }}" alt="" />
+            <img src="{{ pizza.getFilePath('image') }}" alt="" />
         </div>{% endif %}
 
         <div class="btn-group pull-right">

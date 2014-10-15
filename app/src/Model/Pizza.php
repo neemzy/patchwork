@@ -4,10 +4,10 @@ namespace Pizza\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
-use Patchwork\Model\AbstractModel;
-use Patchwork\Model\ImageModel;
-use Patchwork\Model\SortableModel;
-use Patchwork\Model\TogglableModel;
+use Neemzy\Patchwork\Model\AbstractModel;
+use Neemzy\Patchwork\Model\ImageModel;
+use Neemzy\Patchwork\Model\SortableModel;
+use Neemzy\Patchwork\Model\TogglableModel;
 
 class Pizza extends AbstractModel
 {
@@ -45,7 +45,7 @@ class Pizza extends AbstractModel
      */
     public function getImage()
     {
-        return $this->image;
+        return $this->getFilePath('image', true);
     }
 
 
