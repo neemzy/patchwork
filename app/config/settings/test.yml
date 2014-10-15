@@ -1,4 +1,6 @@
 imports: [{ resource: common.yml }]
 
-database: sqlite::memory:
+redbean:
+    database: sqlite::memory:
+
 log_level: info

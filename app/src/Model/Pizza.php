@@ -5,12 +5,13 @@ namespace Pizza\Model;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Patchwork\Model\AbstractModel;
+use Patchwork\Model\ImageModel;
 use Patchwork\Model\SortableModel;
 use Patchwork\Model\TogglableModel;
 
 class Pizza extends AbstractModel
 {
-    use SortableModel, TogglableModel;
+    use ImageModel, SortableModel, TogglableModel;
 
 
     /**

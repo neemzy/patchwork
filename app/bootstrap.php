@@ -7,6 +7,7 @@ ini_set('session.use_only_cookies', 1);
 define('BASE_PATH', dirname(__DIR__));
 require_once(BASE_PATH.'/vendor/autoload.php');
 
+use Silex\Application;
 use Silex\Provider\UrlGeneratorServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
@@ -19,17 +20,17 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 use DerAlex\Silex\YamlConfigServiceProvider;
 use Entea\Twig\Extension\AssetExtension;
-use Patchwork\App;
 use Patchwork\ControllerCollection;
 use Patchwork\Controller\AdminController;
 use Patchwork\Controller\ApiController;
 use Patchwork\Controller\FrontController;
+use Patchwork\Tools;
 use Neemzy\Silex\Provider\RedBean\ServiceProvider as RedBeanServiceProvider;
 use Neemzy\Silex\Provider\EnvironServiceProvider;
 use Neemzy\Environ\Environment;
 use Neemzy\Twig\Extension\ShareExtension;
 
-$app = App::getInstance();
+$app = new Application();
 
 
 
@@ -90,11 +91,12 @@ $app->register(
 $app->register(new YamlConfigServiceProvider(BASE_PATH.'/app/config/settings/'.$app['environ']->get().'.yml'));
 
 $app->register(
-    new RedBeanServiceProvider(
-        str_replace('%base_path%', BASE_PATH, $app['config']['database']),
-        $app['config']['db_user'],
-        $app['config']['db_pass']
-    )
+    new RedBeanServiceProvider(),
+    [
+        'redbean.database' => str_replace('%base_path%', BASE_PATH, $app['config']['redbean']['database']),
+        'redbean.username' => $app['config']['redbean']['username'],
+        'redbean.password' => $app['config']['redbean']['password']
+    ]
 );
 
 $app->register(
@@ -108,7 +110,7 @@ $app->register(
 
 $app->register(new UrlGeneratorServiceProvider());
 $app->register(new ValidatorServiceProvider());
-$app->register(new TranslationServiceProvider(), ['locale_fallback' => $app['config']['locale']]);
+$app->register(new TranslationServiceProvider());
 
 $app['translator'] = $app->share(
     $app->extend(
@@ -130,14 +132,15 @@ $app['translator'] = $app->share(
     )
 );
 
+$app['tools'] = new Tools();
+
 $app->register(new TwigServiceProvider(), ['twig.path' => BASE_PATH.'/app/views']);
 $app['twig']->addExtension(new Twig_Extensions_Extension_Intl());
 $app['twig']->addExtension(new Twig_Extensions_Extension_Text());
 $app['twig']->addExtension(new AssetExtension($app, ['asset.directory' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']).'assets']));
 $app['twig']->addExtension(new ShareExtension());
 $app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
-$app['twig']->addFilter('dump', new Twig_Filter_Function('Patchwork\Tools::dump', ['is_safe' => ['all']]));
-$app['twig']->addFilter('vulgarize', new Twig_Filter_Function('Patchwork\Tools::vulgarize'));
+$app['twig']->addFilter('dump', new Twig_Filter_Function([$app['tools'], 'dump'], ['is_safe' => ['all']]));
 
 $app->register(new SwiftmailerServiceProvider());
 $app['swiftmailer.transport'] = new Swift_MailTransport();
@@ -160,7 +163,7 @@ mb_internal_encoding('UTF-8');
 setlocale(LC_ALL, $app['config']['full_locale']);
 date_default_timezone_set($app['config']['timezone']);
 
-define('REDBEAN_MODEL_PREFIX', $app['config']['redbean_prefix']);
+define('REDBEAN_MODEL_PREFIX', $app['config']['redbean']['prefix']);
 Request::enableHttpMethodParameterOverride();
 $app['locale'] = $app['config']['locale'];
 $app['debug'] = !$app['environ']->is('prod');
@@ -181,12 +184,12 @@ $app['controllers_factory'] = function () use ($app) {
 
 $app->mount(
     '/admin/pizza',
-    AdminController::getInstanceFor('pizza')
+    AdminController::getInstance('pizza')
 );
 
 $app->mount(
     '/api/pizza',
-    ApiController::getInstanceFor('pizza')
+    ApiController::getInstance('pizza')
 );
 
 $app->mount(

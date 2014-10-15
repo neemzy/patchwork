@@ -1,4 +1,6 @@
 imports: [{ resource: common.yml }]
 
-database: sqlite:%base_path%/var/db/dev.sqlite
+redbean:
+    database: sqlite:%base_path%/var/db/dev.sqlite
+
 log_level: debug

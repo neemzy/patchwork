@@ -1,7 +1,12 @@
 imports: [{ resource: common.yml }]
 
-database: mysql:host=localhost;dbname=pizza
-db_user: pizza
-db_pass: admin
+redbean:
+    database: mysql:host=localhost;dbname=pizza
+    username: pizza
+    password: admin
+
+admin:
+    username: pizza
+    password: admin
 
 log_level: warning

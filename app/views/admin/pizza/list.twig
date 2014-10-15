@@ -19,15 +19,15 @@
                 <li class="list-group-item clearfix">
                     <div class="btn-group pull-right">
                         {% if not loop.first %}
-                            <a class="btn btn-default btn-sm" href="{{ path('pizza.move', { bean: pizza.id, up: 1 }) }}" title="Move up"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                            <a class="btn btn-default btn-sm" href="{{ path('pizza.move', { model: pizza.id, up: 1 }) }}" title="Move up"><i class="glyphicon glyphicon-arrow-up"></i></a>
                         {% endif %}
                         {% if not loop.last %}
-                            <a class="btn btn-default btn-sm" href="{{ path('pizza.move', { bean: pizza.id, up: 0 }) }}" title="Move down"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                            <a class="btn btn-default btn-sm" href="{{ path('pizza.move', { model: pizza.id, up: 0 }) }}" title="Move down"><i class="glyphicon glyphicon-arrow-down"></i></a>
                         {% endif %}
-                        <a class="btn btn-default btn-sm" href="{{ path('pizza.clone', { bean: pizza.id }) }}" title="Duplicate"><i class="glyphicon glyphicon-repeat"></i></a>
-                        <a class="btn btn-default btn-sm" href="{{ path('pizza.toggle', { bean: pizza.id }) }}" title="{{ toggle_title }}"><i class="glyphicon glyphicon-{{ toggle_icon }}"></i></a>
-                        <a class="btn btn-default btn-sm" href="{{ path('pizza.post', { bean: pizza.id }) }}" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
-                        <a class="btn btn-default btn-sm" href="{{ path('pizza.delete', { bean: pizza.id }) }}" onclick="return confirm('Are you sure ?');" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
+                        <a class="btn btn-default btn-sm" href="{{ path('pizza.clone', { model: pizza.id }) }}" title="Duplicate"><i class="glyphicon glyphicon-repeat"></i></a>
+                        <a class="btn btn-default btn-sm" href="{{ path('pizza.toggle', { model: pizza.id }) }}" title="{{ toggle_title }}"><i class="glyphicon glyphicon-{{ toggle_icon }}"></i></a>
+                        <a class="btn btn-default btn-sm" href="{{ path('pizza.post', { model: pizza.id }) }}" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
+                        <a class="btn btn-default btn-sm" href="{{ path('pizza.delete', { model: pizza.id }) }}" onclick="return confirm('Are you sure ?');" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
                     </div>
 
                     {{ pizza }}
