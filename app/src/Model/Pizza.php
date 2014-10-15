@@ -4,12 +4,12 @@ namespace Pizza\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
-use Neemzy\Patchwork\Model\AbstractModel;
+use Neemzy\Patchwork\Model\Entity;
 use Neemzy\Patchwork\Model\ImageModel;
 use Neemzy\Patchwork\Model\SortableModel;
 use Neemzy\Patchwork\Model\TogglableModel;
 
-class Pizza extends AbstractModel
+class Pizza extends Entity
 {
     use ImageModel, SortableModel, TogglableModel;
 

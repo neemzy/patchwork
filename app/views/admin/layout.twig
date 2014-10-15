@@ -30,7 +30,7 @@
                 <ul>
                     {% for error in app.session.getFlashBag().get('error') %}
                         {% for field, message in error %}
-                            <li><b>{{ field }}</b> : {{ message }}</li>
+                            <li><b>{{ field|trans }}</b> : {{ message }}</li>
                         {% endfor %}
                     {% endfor %}
                 </ul>

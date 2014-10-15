@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 use DerAlex\Silex\YamlConfigServiceProvider;
 use Entea\Twig\Extension\AssetExtension;
-use Neemzy\Patchwork\ControllerCollection;
+use Neemzy\Patchwork\Controller\Collection;
 use Neemzy\Patchwork\Controller\AdminController;
 use Neemzy\Patchwork\Controller\ApiController;
 use Neemzy\Patchwork\Controller\FrontController;
@@ -179,17 +179,17 @@ if (!$app['debug']) {
  * Controllers
  */
 $app['controllers_factory'] = function () use ($app) {
-    return new ControllerCollection($app['route_factory']);
+    return new Collection($app['route_factory']);
 };
 
 $app->mount(
     '/admin/pizza',
-    AdminController::getInstance('pizza')
+    new AdminController('pizza')
 );
 
 $app->mount(
     '/api/pizza',
-    ApiController::getInstance('pizza')
+    new ApiController('pizza')
 );
 
 $app->mount(
