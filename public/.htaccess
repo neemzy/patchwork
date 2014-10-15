@@ -12,7 +12,7 @@ RewriteCond %{THE_REQUEST} \ (.*)//+(.*)\  [NC]
 RewriteRule ^(.*)$ %1/%2 [L,R=301]
 RewriteCond %{HTTP_HOST} (.*)\.$
 RewriteRule ^(.*)$ http://%1/$1 [L,R=301]
-RewriteCond %{THE_REQUEST} ^(GET|HEAD|POST)\ /[^\ \?]*\?($|\ )
+RewriteCond %{THE_REQUEST} ^[A-Z]+\ /[^\ \?]*\?($|\ )
 RewriteRule ^(.*)$ /$1? [L,R=301]
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} !^/api/
