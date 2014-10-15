@@ -1,29 +1,33 @@
 {
-  "devDependencies": {
-    "gulp": "*",
-    "gulp-load-plugins": "*",
-    "gulp-util": "*",
-    "gulp-if": "*",
-    "gulp-plumber": "*",
-    "gulp-less": "*",
-    "gulp-autoprefixer": "*",
-    "gulp-csso": "*",
-    "gulp-browserify": "*",
-    "gulp-jshint": "*",
-    "gulp-uglify": "*",
-    "gulp-imagemin": "*",
-    "gulp-ttf2woff": "*",
-    "gulp-ttf2eot": "*",
-    "gulp-open": "*",
-    "gulp-livereload": "*",
-    "rimraf": "*",
-    "napa": "*",
-    "domqueryall": "*"
-  },
-  "napa": {
-    "bootstrap": "twbs/bootstrap"
-  },
-  "scripts": {
-    "install": "napa"
-  }
+    "devDependencies": {
+        "gulp": "*",
+        "gulp-load-plugins": "*",
+        "gulp-util": "*",
+        "gulp-if": "*",
+        "gulp-plumber": "*",
+        "gulp-less": "*",
+        "gulp-autoprefixer": "*",
+        "gulp-csso": "*",
+        "gulp-browserify": "*",
+        "gulp-jshint": "*",
+        "gulp-uglify": "*",
+        "gulp-imagemin": "*",
+        "gulp-ttf2woff": "*",
+        "gulp-ttf2eot": "*",
+        "gulp-open": "*",
+        "gulp-livereload": "*",
+        "rimraf": "*",
+        "imagemin-gifsicle": "*",
+        "imagemin-jpegtran": "*",
+        "imagemin-optipng": "*",
+        "imagemin-pngquant": "*",
+        "napa": "*",
+        "domqueryall": "*"
+    },
+    "napa": {
+        "bootstrap": "twbs/bootstrap"
+    },
+    "scripts": {
+        "install": "napa"
+    }
 }
