@@ -1,11 +1,7 @@
 <?php
 
 error_reporting(E_ALL ^ E_NOTICE);
-ini_set('session.use_trans_sid', 0);
-ini_set('session.use_only_cookies', 1);
-
-define('BASE_PATH', dirname(__DIR__));
-require_once(BASE_PATH.'/vendor/autoload.php');
+require_once(dirname(__DIR__).'/vendor/autoload.php');
 
 use Silex\Application;
 use Silex\Provider\UrlGeneratorServiceProvider;
@@ -20,17 +16,16 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 use DerAlex\Silex\YamlConfigServiceProvider;
 use Entea\Twig\Extension\AssetExtension;
-use Neemzy\Patchwork\Controller\Collection;
 use Neemzy\Patchwork\Controller\AdminController;
 use Neemzy\Patchwork\Controller\ApiController;
 use Neemzy\Patchwork\Controller\FrontController;
-use Neemzy\Patchwork\Tools;
 use Neemzy\Environ\Environment;
 use Neemzy\Silex\Provider\EnvironServiceProvider;
 use Neemzy\Silex\Provider\RedBean\ServiceProvider as RedBeanServiceProvider;
 use Neemzy\Twig\Extension\ShareExtension;
 
 $app = new Application();
+$app['base_path'] = dirname(__DIR__);
 
 
 
@@ -49,7 +44,7 @@ $app->register(
             ),
             'dev' => new Environment(
                 function () {
-                    return preg_match('/localhost|192\.168|patch\.work/', $_SERVER['SERVER_NAME']);
+                    return preg_match('/localhost|192\.168/', $_SERVER['SERVER_NAME']);
                 },
                 function () {
                 }
@@ -88,12 +83,12 @@ $app->register(
     )
 );
 
-$app->register(new YamlConfigServiceProvider(BASE_PATH.'/app/config/settings/'.$app['environ']->get().'.yml'));
+$app->register(new YamlConfigServiceProvider($app['base_path'].'/app/config/settings/'.$app['environ']->get().'.yml'));
 
 $app->register(
     new RedBeanServiceProvider(),
     [
-        'redbean.database' => str_replace('%base_path%', BASE_PATH, $app['config']['redbean']['database']),
+        'redbean.database' => str_replace('%base_path%', $app['base_path'], $app['config']['redbean']['database']),
         'redbean.username' => $app['config']['redbean']['username'],
         'redbean.password' => $app['config']['redbean']['password']
     ]
@@ -102,7 +97,7 @@ $app->register(
 $app->register(
     new MonologServiceProvider(),
     [
-        'monolog.logfile' => BASE_PATH.'/var/log/'.$app['environ']->get().'_'.date('Y-m-d').'.log',
+        'monolog.logfile' => $app['base_path'].'/var/log/'.$app['environ']->get().'_'.date('Y-m-d').'.log',
         'monolog.level' => constant('Monolog\Logger::'.strtoupper($app['config']['log_level'])),
         'monolog.name' => $app['environ']->get()
     ]
@@ -117,13 +112,13 @@ $app['translator'] = $app->share(
         'translator',
         function ($translator, $app) {
             $translator->addLoader('yaml', new YamlFileLoader());
-            $dir = BASE_PATH.'/app/config/i18n/';
+            $dir = $app['base_path'].'/app/config/i18n/';
 
             foreach (scandir($dir) as $file) {
                 if (preg_match('/([a-z]+\.)?'.$app['config']['locale'].'.yml/', $file, $matches)) {
                     array_shift($matches);
                     $domain = rtrim(implode('', $matches), '.') ?: null;
-                    $translator->addResource('yaml', BASE_PATH.'/app/config/i18n/'.$file, $app['config']['locale'], $domain);
+                    $translator->addResource('yaml', $app['base_path'].'/app/config/i18n/'.$file, $app['config']['locale'], $domain);
                 }
             }
 
@@ -132,15 +127,12 @@ $app['translator'] = $app->share(
     )
 );
 
-$app['tools'] = new Tools();
-
-$app->register(new TwigServiceProvider(), ['twig.path' => BASE_PATH.'/app/views']);
+$app->register(new TwigServiceProvider(), ['twig.path' => $app['base_path'].'/app/views']);
 $app['twig']->addExtension(new Twig_Extensions_Extension_Intl());
 $app['twig']->addExtension(new Twig_Extensions_Extension_Text());
 $app['twig']->addExtension(new AssetExtension($app, ['asset.directory' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']).'assets']));
 $app['twig']->addExtension(new ShareExtension());
 $app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
-$app['twig']->addFilter('dump', new Twig_Filter_Function([$app['tools'], 'dump'], ['is_safe' => ['all']]));
 
 $app->register(new SwiftmailerServiceProvider());
 $app['swiftmailer.transport'] = new Swift_MailTransport();
@@ -159,6 +151,8 @@ $app['session'] = $app->share(
 /**
  * Configuration
  */
+ini_set('session.use_trans_sid', 0);
+ini_set('session.use_only_cookies', 1);
 mb_internal_encoding('UTF-8');
 setlocale(LC_ALL, $app['config']['full_locale']);
 date_default_timezone_set($app['config']['timezone']);
@@ -178,10 +172,6 @@ if (!$app['debug']) {
 /**
  * Controllers
  */
-$app['controllers_factory'] = function () use ($app) {
-    return new Collection($app['route_factory']);
-};
-
 $app->mount(
     '/admin/pizza',
     new AdminController('pizza')

@@ -1,5 +1,7 @@
 {
     "minimum-stability": "dev",
+    "post-install-cmd": "npm install",
+    "post-install-cmd": "gulp",
 
     "repositories": [
         {
@@ -23,7 +25,12 @@
     "autoload": {
         "psr-4": {
             "Pizza\\": "app/src/",
+            "Pizza\\Tests\\": "app/tests/unit/",
             "": "app/tests/functional/bootstrap/"
         }
+    },
+
+    "scripts": {
+        "post-install-cmd": "npm install"
     }
 }

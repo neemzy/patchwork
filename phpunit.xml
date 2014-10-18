@@ -2,6 +2,9 @@
 <phpunit backupGlobals="false" bootstrap="vendor/autoload.php" colors="true">
     <testsuites>
         <testsuite>
+            <directory>vendor/neemzy/patchwork-core/tests/</directory>
+        </testsuite>
+        <testsuite>
             <directory>app/tests/unit/</directory>
         </testsuite>
     </testsuites>
