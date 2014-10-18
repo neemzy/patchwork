@@ -1,6 +1,6 @@
 default:
     suites:
-        sample:
+        default:
             paths: [ app/tests/functional/ ]
     extensions:
         Behat\MinkExtension:

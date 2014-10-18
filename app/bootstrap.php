@@ -20,7 +20,6 @@ use Neemzy\Patchwork\Controller\Collection;
 use Neemzy\Patchwork\Controller\AdminController;
 use Neemzy\Patchwork\Controller\ApiController;
 use Neemzy\Patchwork\Controller\FrontController;
-use Neemzy\Patchwork\Tools;
 use Neemzy\Environ\Environment;
 use Neemzy\Silex\Provider\EnvironServiceProvider;
 use Neemzy\Silex\Provider\RedBean\ServiceProvider as RedBeanServiceProvider;
@@ -129,15 +128,12 @@ $app['translator'] = $app->share(
     )
 );
 
-$app['tools'] = new Tools();
-
 $app->register(new TwigServiceProvider(), ['twig.path' => $app['base_path'].'/app/views']);
 $app['twig']->addExtension(new Twig_Extensions_Extension_Intl());
 $app['twig']->addExtension(new Twig_Extensions_Extension_Text());
 $app['twig']->addExtension(new AssetExtension($app, ['asset.directory' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']).'assets']));
 $app['twig']->addExtension(new ShareExtension());
 $app['twig']->addFunction('strpos', new Twig_Function_Function('strpos'));
-$app['twig']->addFilter('dump', new Twig_Filter_Function([$app['tools'], 'dump'], ['is_safe' => ['all']]));
 
 $app->register(new SwiftmailerServiceProvider());
 $app['swiftmailer.transport'] = new Swift_MailTransport();

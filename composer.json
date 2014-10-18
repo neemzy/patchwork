@@ -1,5 +1,7 @@
 {
     "minimum-stability": "dev",
+    "post-install-cmd": "npm install",
+    "post-install-cmd": "gulp",
 
     "repositories": [
         {
@@ -23,8 +25,8 @@
     "autoload": {
         "psr-4": {
             "Pizza\\": "app/src/",
-            "": "app/tests/functional/bootstrap/",
-            "Neemzy\\Patchwork\\Tests\\": "app/tests/unit/"
+            "Pizza\\Tests\\": "app/tests/unit/",
+            "": "app/tests/functional/bootstrap/"
         }
     }
 }
