@@ -73,7 +73,7 @@ gulp.task('font', function () {
 gulp.task('workflow', function () {
     if (!tasks.util.env.dist) {
         gulp.src('gulpfile.js')
-            .pipe(tasks.open('', { url: 'http://patch.work/' }));
+            .pipe(tasks.open('', { url: 'http://localhost:8000/' }));
 
         tasks.livereload.listen();
         gulp.watch('app/assets/less/**/*.less', ['css']);

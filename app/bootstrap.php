@@ -44,7 +44,7 @@ $app->register(
             ),
             'dev' => new Environment(
                 function () {
-                    return preg_match('/localhost|192\.168|patch\.work/', $_SERVER['SERVER_NAME']);
+                    return preg_match('/localhost|192\.168/', $_SERVER['SERVER_NAME']);
                 },
                 function () {
                 }
