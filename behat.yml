@@ -4,7 +4,7 @@ default:
             paths: [ app/tests/functional/ ]
     extensions:
         Behat\MinkExtension:
-            base_url: http://patch.work/
-            browser_name: phantomjs
+            base_url: http://localhost:8000
             goutte: ~
             selenium2: ~
+            browser_name: phantomjs
