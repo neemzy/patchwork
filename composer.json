@@ -28,5 +28,9 @@
             "Pizza\\Tests\\": "app/tests/unit/",
             "": "app/tests/functional/bootstrap/"
         }
+    },
+
+    "scripts": {
+        "post-install-cmd": "npm install"
     }
 }
