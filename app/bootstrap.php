@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 use DerAlex\Silex\YamlConfigServiceProvider;
 use Entea\Twig\Extension\AssetExtension;
-use Neemzy\Patchwork\Controller\Collection;
 use Neemzy\Patchwork\Controller\AdminController;
 use Neemzy\Patchwork\Controller\ApiController;
 use Neemzy\Patchwork\Controller\FrontController;
@@ -173,10 +172,6 @@ if (!$app['debug']) {
 /**
  * Controllers
  */
-$app['controllers_factory'] = function () use ($app) {
-    return new Collection($app['route_factory']);
-};
-
 $app->mount(
     '/admin/pizza',
     new AdminController('pizza')
