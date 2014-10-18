@@ -36,15 +36,55 @@
 
 - [Browserify]() : a front-end JavaScript dependency manager, which allows using CommonJS's `require` method to help keep a good code structure.
 
-- [Behat]() and [Mink]() : functional tests tools, that can pilot a browser to use your app. Running JavaScript-capable tests will require the use of [Selenium]().
+- [Behat]() and [Mink]() : functional tests tools, that can pilot a browser to use your app. Running JavaScript-capable tests will require the use of [Selenium]() and [PhantomJS]().
 
 ## Structure and installation
 
 All code that could possibly handle inheritance/dispatching in one way or another (which includes PHP classes, basic LESS stylesheets and [NicEdit](), a JavaScript WYSIWYG editor) is contained into the framework's **core**, available as a separate package. The framework's repository itself is mainly a sample app - about pizzas - designed to help you getting started quickly.
 
-The best way to start is to use Composer, which will clone that repository and install all required dependencies :
+The best way to start is to use Composer, which will clone that repository and install all required dependencies (make sure Composer and NPM are installed first) :
 
 ```
 composer create-project neemzy/patchwork pizza
 ```
 
+You then have to check a few steps :
+
+- The `var` folder and its subdirectories should be writable by your web server's user.
+- Your web server/virtual host should be configured right. A sample `.htaccess` file is provided in the `public` directory, if by any chance you use [Apache]().
+- For development, Gulp should be installed globally (`npm install -g gulp`).
+- For development as well, [SQLite]() and the corresponding PHP extension should be installed (`sudo apt-get install sqlite php5-sqlite` on Debian and Ubuntu).
+
+(configuration)
+
+Finally, run `gulp` to have your browser open at the URL you have chosen above and a livereload server started, and start coding !
+
+## Directory structure
+
+(coming soon)
+
+## Back-end development
+
+### Views
+
+(coming soon)
+
+### Models
+
+(coming soon)
+
+### Controllers
+
+(coming soon)
+
+## Front-end development
+
+### Stylesheets
+
+(coming soon)
+
+### JavaScript
+
+## Testing
+
+(coming soon)
