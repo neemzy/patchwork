@@ -1,5 +1,7 @@
 # Patchwork
 
+*Note : the docs aren't fully finished yet, but it is coming very soon.*
+
 **Patchwork** is a **PHP 5.4+ full-stack web framework**, which main purpose is to gather the best tools available together in order to provide a minimalist yet complete start point for building small to medium **web applications**.
 
 ## Round table
