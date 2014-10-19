@@ -4,7 +4,7 @@
     "minimum-stability": "dev",
 
     "require": {
-        "neemzy/patchwork-core": "dev-master",
+        "neemzy/patchwork-core": "1.0",
         "neemzy/share-extension": "dev-master"
     },
 
