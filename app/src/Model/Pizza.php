@@ -62,16 +62,4 @@ class Pizza extends Entity
         $metadata->addGetterConstraint('image', new Assert\NotBlank());
         $metadata->addGetterConstraint('image', new Assert\Image(['maxWidth' => 400]));
     }
-
-
-
-    /**
-     * Defines this model's string representation
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->title;
-    }
 }

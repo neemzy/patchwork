@@ -30,7 +30,7 @@
                         <a class="btn btn-default btn-sm" href="{{ path('pizza.delete', { model: pizza.id }) }}" onclick="return confirm('Are you sure ?');" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
                     </div>
 
-                    {{ pizza }}
+                    {{ pizza.title }}
                 </li>
             {% endfor %}
         </ul>
