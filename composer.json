@@ -5,15 +5,8 @@
     "post-install-cmd": "npm install",
     "post-install-cmd": "gulp",
 
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://bitbucket.org/neemzy/patchwork-core.git"
-        }
-    ],
-
     "require": {
-        "neemzy/patchwork-core": "*",
+        "neemzy/patchwork-core": "dev-master",
         "neemzy/share-extension": "dev-master"
     },
 
