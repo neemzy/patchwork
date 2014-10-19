@@ -1,4 +1,6 @@
 {
+    "name": "neemzy/patchwork",
+    "description": "PHP 5.4+ full-stack web framework",
     "minimum-stability": "dev",
     "post-install-cmd": "npm install",
     "post-install-cmd": "gulp",
