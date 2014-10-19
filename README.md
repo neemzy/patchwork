@@ -258,7 +258,7 @@ $app->mount(
 
 #### `EntityController`
 
-The `EntityController` classes describes a controller dedicated to managing a certain model (its constructor takes a table name as a parameter). This class is abstract and extended by :
+The `EntityController` class describes a controller dedicated to managing a certain model (its constructor takes a table name as a parameter). This class is abstract and extended by :
 
 - `AdminController`, that binds an HTTP authentication to itself and exposes CRUD GUI routes.
 - `ApiController`, that exposes a RESTful API for your models and takes a boolean `$readonly` (second) parameter to know whether it should expose `POST`/`PUT` routes.
