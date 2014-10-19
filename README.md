@@ -231,19 +231,72 @@ This trait extends `FileModel` (which should no more be `use`d in your model onc
 
 ##### `SlugModel`
 
-(TODO)
+This trait adds a `slug` field to your models, which contains an URL-valid identifier based on the return of the `getSluggable` method, or the table name appended with the id if the latter yields an empty string (which is its default behavior) :
+
+```php
+// The Pizza model has no getSluggable method
+$pizza = $app['redbean']->dispense();
+$pizza->name = 'La Grandiosa Margarita !';
+$app['redbean']->store($pizza); // Pizza's id is 12
+echo($pizza->slug); // 'pizza-12'
+
+// Now, the Pizza model has a getSluggable method that returns the pizza's name
+$pizza = $app['redbean']->dispense();
+$pizza->name = 'La Grandiosa Margarita !';
+$app['redbean']->store($pizza);
+echo($pizza->slug); // 'la-grandiosa-margarita'
+
+It also exposes a `slugify` method to regenerate the slug if the data it relies on has changed but the model hasn't been updated yet.
 
 ##### `SortableModel`
 
-(TODO)
+This trait adds a `position` field to your models, which get automatically calculated upon insertion, deletion (to keep a straight count by updating siblings) and, of course, move :
+
+```php
+$pizza1 = $app['redbean']->dispense('pizza');
+$app['redbean']->store($pizza1);
+echo($pizza1->position); // '1'
+
+$pizza2 = $app['redbean']->dispense('pizza');
+$app['redbean']->store($pizza2);
+echo($pizza2->position); // '2'
+
+$pizza1->move(); // Move down
+echo($pizza1->position); // '2'
+echo($pizza2->position); // '1'
+
+$pizza1->move(true); // Move up
+echo($pizza1->position); // '1'
+echo($pizza2->position); // '2'
+
+$pizza1->move(true); // Moving the first up does not affect anything
+echo($pizza1->position); // '1'
+
+$pizza2->move(); // Neither does moving the last down
+echo($pizza2->position); // '2'
+
+$app['redbean']->trash($pizza1);
+echo($pizza2->position); // '1'
+```
 
 ##### `TimestampModel`
 
-(TODO)
+This trait adds `created` and `updated` `datetime` fields to your models, and valorizes them according to their names.
 
 ##### `TogglableModel`
 
-(TODO)
+This trait adds an `active` boolean field to your models, togglable via the `toggle` method and valorized upon insertion according to the `getDefaultState` method, which initially yields `false` but can be overridden in your model class :
+
+```php
+// The Pizza model has a getDefaultState method which returns true
+$pizza = $app['dispense']->pizza();
+echo(+$pizza->active); // '1'
+
+$pizza->toggle();
+echo(+$pizza->active); // '0'
+
+$pizza->toggle(false); // You can force the given state
+echo(+$pizza->active); // '0'
 
 ### Controllers
 
