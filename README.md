@@ -54,7 +54,7 @@ composer create-project neemzy/patchwork pizza
 
 You then have to check a few steps :
 
-- The `var` folder and its subdirectories should be writable by your web server's user.
+- `var/db` and `var/log` should be writable by your web server's user.
 - Your web server/virtual host should be configured right. A sample `.htaccess` file is provided in the `public` directory, if by any chance you use [Apache](https://www.apache.org/).
 - For development, Gulp should be installed globally (`npm install -g gulp`).
 - For development as well, [SQLite](https://sqlite.org/) and the corresponding PHP extension should be installed (`sudo apt-get install sqlite php5-sqlite` on Debian and Ubuntu).
@@ -78,6 +78,8 @@ app                : application data and code
     \-- i18n       : translations
     \-- settings   : per-environment application settings
 \-- src            : PHP code
+    \-- Controller : business logic classes
+    \-- Model      : entity classes
 \-- tests          : automated tests
     \-- functional : Behat tests
     \-- unit       : PHPUnit tests
@@ -155,22 +157,22 @@ admin             : back-office templates
 \-- [model name]  : pages for a model
     \-- list.twig : list template
     \-- post.twig : form template
-\-- admin.twig    : back-office layout
+\-- layout.twig   : back-office layout
 front             : front-office templates
 \-- includes      : reusable components (often linked to a stylesheet and maybe a JS module)
 \-- partials      : pages
-\-- main.less     : main stylesheet that includes both folders' contents
+\-- layout.twig   : front-office layout
 ```
+
+[Twig manual](http://twig.sensiolabs.org/documentation)
 
 #### Asset paths
 
-Patchwork brings in [Simple Twig Asset Extension]() :
+Patchwork brings in [Simple Twig Asset Extension](https://github.com/Entea/Silex-Twig-Simple-Asset-Extension) :
 
 ```twig
 <script src="{{ asset('js/script.js') }}"></script>
 ```
-
-[Twig manual](http://twig.sensiolabs.org/documentation)
 
 ### Models
 
@@ -214,7 +216,7 @@ Some traits are available out of the box but you can roll out your own if requir
 
 This trait enables support for files :
 
-- Upon file upload, move it to a permanent location and generate its name
+- Upon file upload, moves it to a permanent location and generate its name
 - Upon model deletion, deletes related files
 
 File fields getters in your models should expose the file's full path, but returning `$this->getFilePath($field, true)`;
@@ -300,7 +302,7 @@ The recommended directory structure for your `app/assets/less` directory looks l
 front : front-office stylesheets
     imports : generale purpose styles and scaffolding (variables, mixins...)
     modules : reusable components
-    main.less : main stylesheet that includes both folders' contents
+    main.less : main stylesheet that includes both directories' contents
 admin.less : back-office stylesheet
 ```
 
