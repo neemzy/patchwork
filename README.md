@@ -32,7 +32,7 @@
 
 ### Front-end
 
-- [gulp](http://gulpjs.com/) : a task runner for asset processing and optimization, which allows for live compilation and reloading during development. Along with the libraries listed below, it makes use of [JSHint](http://jshint.com/) and image minification and font conversion utilities.
+- [gulp](http://gulpjs.com/) : a task runner for asset processing and optimization, which allows for live compilation and reloading during development. Along with the libraries listed below, it makes use of [Autoprefixer](https://github.com/postcss/autoprefixer), [CSSO](https://bem.info/tools/optimizers/csso/), [JSHint](http://jshint.com/), [UglifyJS]() and image minification and font conversion utilities.
 
 - [LESS](http://lesscss.org/) : a CSS preprocessor.
 
@@ -44,13 +44,17 @@
 
 ## Structure and installation
 
-All code that could possibly handle inheritance/dispatching in one way or another (which includes PHP classes, basic LESS stylesheets and [NicEdit](http://nicedit.com/), a JavaScript WYSIWYG editor) is contained into the framework's **core**, available as a separate package. The framework's repository itself is mainly a sample app - about pizzas - designed to help you getting started quickly.
+All code that could possibly handle inheritance/dispatching in one way or another (which includes PHP classes, basic LESS stylesheets and [NicEdit](http://nicedit.com/), a JavaScript WYSIWYG editor) is contained into the framework's **core**, available [as a separate package](https://github.com/neemzy/patchwork-core). The framework's repository itself is mainly a sample app - about pizzas - designed to help you getting started quickly.
 
 The best way to start is to use Composer, which will clone that repository and install all required dependencies (make sure Composer and NPM are installed first) :
 
 ```
-composer create-project neemzy/patchwork pizza
+composer create-project neemzy/patchwork -s dev [directory] && cd $_
 ```
+
+You must use the `-s dev` option to match Patchwork's `minimum-stability` flag, which is required to provide the latest version of some packages (such as Behat 3).
+
+After installing dependencies, the installer will ask you if you want to remove Git history from the repository. You want to agree to that, since you are building your own project and not contributing to this one !
 
 You then have to check a few steps :
 
@@ -73,23 +77,23 @@ This is a quick tour around Patchwork's directory structure, in order to take a 
 
 ```
 app                : application data and code
-\-- assets         : development (uncompiled) assets
-\-- config         : YAML configuration files
-    \-- i18n       : translations
-    \-- settings   : per-environment application settings
-\-- src            : PHP code
-    \-- Controller : business logic classes
-    \-- Model      : entity classes
-\-- tests          : automated tests
-    \-- functional : Behat tests
-    \-- unit       : PHPUnit tests
-\-- views          : Twig templates
+|-- assets         : raw assets (LESS stylesheets, JS modules...)
+|-- config         : YAML configuration files
+    |-- i18n       : translations
+    |-- settings   : per-environment application settings
+|-- src            : PHP code
+    |-- Controller : business logic classes
+    |-- Model      : entity classes
+|-- tests          : automated tests
+    |-- functional : Behat tests
+    |-- unit       : PHPUnit tests
+|-- views          : Twig templates
 public             : web root
-\-- assets         : production (compiled) assets
-\-- upload         : user-uploaded files
+|-- assets         : compiled assets (CSS stylesheets, single JS file...)
+|-- upload         : user-uploaded files
 var                : runtime-specific files
-\-- db             : SQLite development databases
-\-- log            : log files
+|-- db             : SQLite development databases
+|-- log            : log files
 ```
 
 ## Bootstrap file
@@ -154,14 +158,14 @@ The recommended directory structure for your `app/views` directory looks like th
 
 ```
 admin             : back-office templates
-\-- [model name]  : pages for a model
-    \-- list.twig : list template
-    \-- post.twig : form template
-\-- layout.twig   : back-office layout
+|-- [model name]  : pages for a model
+    |-- list.twig : list template
+    |-- post.twig : form template
+|-- layout.twig   : back-office layout
 front             : front-office templates
-\-- includes      : reusable components (often linked to a stylesheet and maybe a JS module)
-\-- partials      : pages
-\-- layout.twig   : front-office layout
+|-- includes      : reusable components (often linked to a stylesheet and maybe a JS module)
+|-- partials      : pages
+|-- layout.twig   : front-office layout
 ```
 
 [Twig manual](http://twig.sensiolabs.org/documentation)
@@ -282,7 +286,7 @@ You can also create your own entity controllers by extending the abstract class 
 
 ### Third-party packages
 
-(TODO : composer)
+Adding new packages to your application is as simple as running `composer require [package]` (eventually along with the `--dev` option, depending on whether the package will be used on production).
 
 ## Front-end development
 
@@ -290,33 +294,126 @@ You can also create your own entity controllers by extending the abstract class 
 
 When running `gulp` without a parameter, it runs a `workflow` task which processes your assets and launches a livereload server triggered by a file change in a template or config file, or directly in an asset (which also rebuilds it specifically).
 
-Once you're done with coding, kill the livereload server and run `gulp --dist` to generate production assets.
+Once you're done with coding, kill the livereload server and run `gulp --dist` to generate production-ready assets.
 
 ### Stylesheets
 
 You can either use LESS or plain CSS.
 
-The recommended directory structure for your `app/assets/less` directory looks like this :
+The recommended structure for your `app/assets/less` directory looks like this :
 
 ```
-front : front-office stylesheets
-    imports : generale purpose styles and scaffolding (variables, mixins...)
-    modules : reusable components
-    main.less : main stylesheet that includes both directories' contents
-admin.less : back-office stylesheet
+front                  : front-office stylesheets
+|-- imports            : generale purpose styles and scaffolding
+    |-- fonts.less     : font configuration (see below)
+    |-- mixins.less    : helper mixins
+    |-- variables.less : style variables
+|-- modules            : reusable components
+|-- main.less          : main stylesheet that includes both directories' contents
+admin.less             : back-office stylesheet
+```
+
+#### Main stylesheet
+
+Check out `app/assets/less/front/main.less` to see how core stylesheets are used :
+
+- It includes `reset.less`, which homogenizes styles across browsers.
+- It includes a local `variables.less` file which extends the core's eponymous one (see below).
+- It includes a local `fonts.less` file to define fonts (see below).
+- It includes a local `mixins.less` file which extends the core's eponymous one (see below).
+
+#### Variables
+
+Here are the core-defined (and overrideable) variables :
+
+```less
+@max-width; // Maximum page width, above which no more responsive styles will be applied (and the content will not enlarge more)
+@min-width; // Minimum page width, under which no more responsive styles will be applied (and the content will not narrow more)
+@background; // Default background color
+@font-family; // Default text font
+@font-size; // Default text size
+@font-color; // Default text color
+@placeholder-color; // HTML5 placeholder text color
+
+@phone-max; // "Phone" responsive screen category maximum width
+@phone-only; // Media query targetting "phone" screens only (from @min-width to @phone-max)
+
+@hybrid-max; // "Hybrid" responsive screen category maximum width
+@hybrid-up; // Media query targetting "hybrid" screens and larger
+@hybrid-only; // Media query targetting "hybrid" screens only (from @phone-max + 1 to @hybrid-max)
+@hybrid-down; // Media query targetting "hybrid" screens and narrower
+
+@tablet-max; // "Tablet" responsive screen category maximum width
+@tablet-up; // Media query targetting "tablet" screens and larger
+@tablet-only; // Media query targetting "tablet" screens only (from @hybrid-max + 1 to @tablet-max)
+@tablet-down; // Media query targetting "tablet" screens and narrower
+
+@desktop-max; // "Desktop" responsive screen category maximum width
+@desktop-up; // Media query targetting "desktop" screens and larger
+@desktop-only; // Media query targetting "desktop" screens only (from @tablet-max + 1 to @desktop-max)
+@desktop-down; // Media query targetting "desktop" screens and narrower
+
+@large-only; // Media query targetting "large" screens only (from @desktop-max + 1 to infinity)
+
+@hi-density; // Minimum pixel density ratio to be considered "high"
+@retina; // Media query targetting "high density" screens
+```
+
+You can thus write media queries like `@media screen and @large-only, @retina`.
+
+#### Mixins
+
+The following mixins are available :
+
+```less
+.appearance(@value); // shortcut for appearance CSS rule with and without prefixes (not handled by Autoprefixer)
+.hide-responsive(@query); // apply display: none; to the element when the media query is truthy
+.container(); // makes the element a centered block with a width of @max-width
+.mono-height(@height); // sets height and line-height to given value, useful for vertical centering
+.text-size-adjust(@value); // shortcut for text-size-adjust CSS rule with and without prefixes (not handled by Autoprefixer)
 ```
 
 ### JavaScript
 
-(TODO)
+You `app/assets/js` directory should contain a `main.js` file, which will be the entry point of your front-end code. It can make use of other files through the `require` method, as long as these files expose a `module.exports` property, according to the CommonJS module definition.
+
+Everything will then be compiled into a single `public/assets/js/main.js` file by gulp.
+
+You may use the provided [domqueryall](https://github.com/timmak/domqueryall) to get an array instead of a `NodeList` when querying the DOM for multiple elements :
+
+```js
+(function ($, $$) {
+    'use strict';
+
+    // $('#one-element');
+    // $$('.multiple-elements');
+})
+(document.querySelector.bind(document), require('domqueryall'));
+```
 
 ### Images
 
-(TODO : minification through gulp)
+Images are copied from `app/assets/img` to `public/img` by gulp, and minified when it is ran in production mode.
 
 ### Fonts
 
-(TODO : format conversion through gulp)
+TTF fonts are copied from `app/assets/font` to `public/font` and declined in EOT and WOFF formats by gulp.
+
+Webfont handling is helped by Patchwork's LESS mixins :
+
+```less
+// fonts.less
+// Automatically declare the font with multiple file formats (here, /bebasneue.(ttf|eot|woff)/)
+@font-face {
+    .font-face(BebasNeue, bebasneue);
+}
+
+// You can use such mixins if you want to reset font-weight and font-style at the same time
+// to avoid display issues on some browsers
+.bebas() {
+    .font-reset(BebasNeue);
+}
+```
 
 ### Back-office
 
@@ -326,14 +423,51 @@ In the back-office, Patchwork relies on Twitter's Bootstrap for building CRUD in
 
 ### Third-party packages
 
-(TODO : npm/napa, use in gulp)
+Adding new packages to your application is as simple as running `npm install [package] --save-dev`. You will always use this option since production JS code will always consist of files of your own, where third-party code is compiled within, and will thus never deploy such code "as-is".
+
+You can also install a package from its GitHub repository if it not available on NPM (e.g. Bootstrap), through [napa](https://github.com/shama/napa).
+
+Extra [gulp plugins](http://gulpjs.com/plugins/) may be installed as well, in order to enhance further the front-end build process by editing `gulpfile.js`.
 
 [gulp manual](https://github.com/gulpjs/gulp/blob/master/docs/README.md)
 
 ## Testing
 
-(TODO)
+### Unit
+
+PHPUnit classes are to be located in `app/tests/unit` and to wear the `[App]\Tests' namespace. You can then simply run `phpunit` at the application's root to play your tests.
+
+PHPUnit's configuration is done through the `phpunit.xml` file.
 
 [PHPUnit manual](https://phpunit.de/manual/current/en/phpunit-book.html)
+
+### Functional
+
+Behat features are to be located in `app/tests/functional`, and context classes go in `bootstrap`, which is a subdirectory of the latter. A sample context class is already provided and extends `Neemzy\Patchwork\Tests\FeatureContext`, which adds some vocabulary to Mink.
+
 [Behat manual](http://docs.behat.org/en/latest/)
 [Mink manual](http://mink.behat.org/)
+
+## Deployment
+
+How to will deploy your app to production is up to you. If you run `composer install` on your production server, make sure to use the `--no-dev` option to avoid installing development dependencies such as test tools.
+
+### Assets
+
+You are not supposed to compile your assets on your production server. It is not his role to worry about that. This is why, in its basic setup, Patchwork doesn't `.gitignore` the `public/assets` folder. You can then version production-ready (compiled and minified) assets to have them deployed instead (if you version-control compiled assets anyway, you may as well only commit these).
+
+If you use continuous integration (better), you can safely `.gitignore` `public/assets` and have production-ready asset compilation be handled by your build.
+
+## Credits
+
+Written by [neemzy](http://www.zaibatsu.fr) since 2012.
+
+You may check out the following PHP packages of mine, which are used in Patchwork :
+
+- [patchwork-core](https://packagist.org/packages/neemzy/patchwork-core) : Core files for Patchwork
+- [environ](https://packagist.org/packages/neemzy/environ) : Lightweight environment manager
+- [environ-service-provider](https://packagist.org/packages/neemzy/environ-service-provider) : Environ service provider for Silex micro-framework
+- [redbean-service-provider](https://packagist.org/packages/neemzy/redbean-service-provider) : RedBean ORM service provider for Silex micro-framework
+- [share-extension](https://packagist.org/packages/neemzy/share-extension) : Twig extension providing social share links
+
+Contributions and pull requests are very welcome :)
