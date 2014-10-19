@@ -1,5 +1,5 @@
 redbean:
-    prefix: Pizza\Model\
+    namespace: Pizza\Model\
 
 admin:
     root: pizza.list

@@ -90,7 +90,8 @@ $app->register(
     [
         'redbean.database' => str_replace('%base_path%', $app['base_path'], $app['config']['redbean']['database']),
         'redbean.username' => $app['config']['redbean']['username'],
-        'redbean.password' => $app['config']['redbean']['password']
+        'redbean.password' => $app['config']['redbean']['password'],
+        'redbean.namespace' => $app['config']['redbean']['namespace']
     ]
 );
 
@@ -157,7 +158,6 @@ mb_internal_encoding('UTF-8');
 setlocale(LC_ALL, $app['config']['full_locale']);
 date_default_timezone_set($app['config']['timezone']);
 
-define('REDBEAN_MODEL_PREFIX', $app['config']['redbean']['prefix']);
 Request::enableHttpMethodParameterOverride();
 $app['locale'] = $app['config']['locale'];
 $app['debug'] = !$app['environ']->is('prod');
