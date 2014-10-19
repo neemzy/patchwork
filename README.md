@@ -4,13 +4,25 @@
 
 **Patchwork** is a **PHP 5.4+ full-stack web framework**, which main purpose is to gather the best tools available together in order to provide a minimalist yet complete start point for building small to medium **web applications**.
 
+## Table of contents
+
+- [Round table](#round-table)
+- [Structure and installation](#structure-and-installation)
+- [Directory structure](#directory-structure)
+- [Bootstrap file](#bootstrap-file)
+- [Back-end development](#back-end-development)
+- [Front-end development](#front-end-development)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [Credits](#credits)
+
 ## Round table
 
 ### Package management
 
 - [Composer](https://getcomposer.org/) : the now standard package manager for PHP.
 
-- [NPM](https://www.npmjs.org/) : node.js's package manager, which is used to install front-end dependencies along with Napa.
+- [NPM](https://www.npmjs.org/) : node.js's package manager, which is used to install front-end dependencies along with napa.
 
 ### Back-end
 
@@ -98,7 +110,7 @@ var                : runtime-specific files
 
 ## Bootstrap file
 
-Patchwork's main file is located at `app/bootstrap.php`. This file is included by `public/index.php` in order to bootstrap the Silex application, which the latter then runs. It is responsible to service and controller binding as well as some extra configuration, both of which you will most certainly find yourself tweaking when starting crafting your own app.
+Patchwork's main file is located at `app/bootstrap.php`. This file is included by `public/index.php` in order to bootstrap the Silex application, which the latter then runs. It is responsible to service and controller binding as well as some extra configuration.
 
 Note that topics explained below are, for the most part, already pre-configured in the initial setup, and are detailed here for clarity purposes (helping you tweak them to suit your needs).
 
@@ -122,7 +134,7 @@ $app->register(
                     return preg_match('/localhost|192\.168/', $_SERVER['SERVER_NAME']);
                 },
                 function () {
-                    // development-specific code
+                    // development-specific code executed when the app runs
                 }
             ),
             'prod' => new Environment(
@@ -130,13 +142,18 @@ $app->register(
                     return true;
                 },
                 function () {
-                    // production-specific code
+                    // production-specific code executed when the app runs
                 }
             )
         ]
     )
 );
+
+echo($app['environ']->get()); // 'dev' or 'prod'
+echo(+$app['environ']->is('prod')); // '0' or '1'
 ```
+
+In the sample setup, the `prod` environment binds an error handler to the app (that renders error pages with the `app/views/front/partials/error.twig` template) and uses ETags to create request cache. It also disables the `$app['debug']` parameter.
 
 ### Configuration
 
@@ -144,7 +161,7 @@ Config parameters are read from YAML files read from `app/config/settings`, the 
 
 ### Translations
 
-Translations are also read from YAML files, this times coming from `app/config/i18n`. As they are fed to an instance of `Symfony\Component\Validator\Validator`, they eventually belong a specific domain (allowing Silex to automatically fetch them for translating validation error messages or date formatting, among other things). Patchwork thus allows you to easily get your translations loaded correctly, by naming your files `[domain].[locale].yml`, e.g. `validators.fr.yml`.
+Translations are also read from YAML files, this time coming from `app/config/i18n`. As they are fed to an instance of `Symfony\Component\Validator\Validator`, they eventually belong to a specific domain (allowing Silex to automatically fetch them for translating validation error messages or date formatting, among other things). Patchwork thus allows you to easily get your translations loaded correctly, by naming your files `[domain].[locale].yml`, e.g. `validators.fr.yml`.
 
 A file name without a domain (like `en.yml`) will be loaded to the default domain, and may serve for generic translations.
 
@@ -192,7 +209,35 @@ RedBean's configuration (including connection informations as well as model clas
 
 #### Validation
 
-Validation constraints are defined through `public static function loadValidatorMetadata(ClassMetadata $metadata)`. You must [getter constraints](http://api.symfony.com/2.0/Symfony/Component/Validator/Mapping/ClassMetadata.html#method_addGetterConstraint) and to define getters for your model's members accordingly as no properties shall be directly defined, in order to let RedBean's catch-all getter do its magic. Doing so also allows you to keep control over the validated data.
+Validation constraints are defined through `public static function loadValidatorMetadata(ClassMetadata $metadata)`. You must use [getter constraints](http://api.symfony.com/2.0/Symfony/Component/Validator/Mapping/ClassMetadata.html#method_addGetterConstraint) and define getters for your model's members accordingly, as no properties shall be directly defined (in order to let RedBean's catch-all getter do its magic). Doing so also allows you to keep control over the validated data :
+
+```php
+use Neemzy\Patchwork\Model\Entity;
+use Neemzy\Patchwork\Model\FileModel;
+
+class Pizza extends Entity
+{
+    use FileModel; // (see below)
+
+    // This method is only used for validation
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    // It allows us to adapt it if required
+    public function getImage()
+    {
+        return $this->getFilePath('image', true); // absolute path
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addGetterConstraint('name', new Assert\NotBlank());
+        $metadata->addGetterConstraint('image', new Assert\Image());
+    }
+}
+```
 
 [Symfony validation manual](http://symfony.com/doc/current/book/validation.html)
 
@@ -220,7 +265,7 @@ Some traits are available out of the box but you can roll out your own if requir
 
 This trait enables support for files :
 
-- Upon file upload, moves it to a permanent location and generate its name
+- Upon file upload (if one of the model's fields contains an instance of `Symfony\Component\HttpFoundation\File\UploadedFile`), moves it to a permanent location and generate its name if validated
 - Upon model deletion, deletes related files
 
 File fields getters in your models should expose the file's full path, but returning `$this->getFilePath($field, true)`;
@@ -245,6 +290,7 @@ $pizza = $app['redbean']->dispense();
 $pizza->name = 'La Grandiosa Margarita !';
 $app['redbean']->store($pizza);
 echo($pizza->slug); // 'la-grandiosa-margarita'
+```
 
 It also exposes a `slugify` method to regenerate the slug if the data it relies on has changed but the model hasn't been updated yet.
 
@@ -297,6 +343,7 @@ echo(+$pizza->active); // '0'
 
 $pizza->toggle(false); // You can force the given state
 echo(+$pizza->active); // '0'
+```
 
 ### Controllers
 
@@ -336,6 +383,14 @@ public function connect(Application $app)
 ```
 
 You can also create your own entity controllers by extending the abstract class itself (e.g. if you need a `RSSController` or something among these lines).
+
+#### `FrontController`
+
+The `FrontController` class binds some basic routes to the app's root :
+
+- `/` : renders the `app/views/front/partials/home.twig` template
+- `/robots.txt` : renders a basic `robots.txt` file depending on the environment
+- `/admin` : redirects the user to the route defined in the `app/config/settings/common.yml` file (at `admin.root`)
 
 ### Third-party packages
 
@@ -444,6 +499,8 @@ You may use the provided [domqueryall](https://github.com/timmak/domqueryall) to
 (document.querySelector.bind(document), require('domqueryall'));
 ```
 
+[Browserify manual](https://github.com/substack/node-browserify#example)
+
 ### Images
 
 Images are copied from `app/assets/img` to `public/img` by gulp, and minified when it is ran in production mode.
@@ -455,22 +512,18 @@ TTF fonts are copied from `app/assets/font` to `public/font` and declined in EOT
 Webfont handling is helped by Patchwork's LESS mixins :
 
 ```less
-// fonts.less
 // Automatically declare the font with multiple file formats (here, /bebasneue.(ttf|eot|woff)/)
 @font-face {
     .font-face(BebasNeue, bebasneue);
 }
 
-// You can use such mixins if you want to reset font-weight and font-style at the same time
-// to avoid display issues on some browsers
-.bebas() {
-    .font-reset(BebasNeue);
-}
+// Set font-family and reset font-weight and font-style, to avoid rendering issues with some browsers
+.font-reset(BebasNeue);
 ```
 
 ### Back-office
 
-In the back-office, Patchwork relies on Twitter's Bootstrap for building CRUD interfaces.
+In the back-office, Patchwork relies on Twitter's Bootstrap for building CRUD interfaces. Check out `app/views/admin/pizza` for working samples.
 
 [Bootstrap manual](http://getbootstrap.com/getting-started/)
 
@@ -488,7 +541,7 @@ Extra [gulp plugins](http://gulpjs.com/plugins/) may be installed as well, in or
 
 ### Unit
 
-PHPUnit classes are to be located in `app/tests/unit` and to wear the `[App]\Tests' namespace. You can then simply run `phpunit` at the application's root to play your tests.
+PHPUnit classes are to be located in `app/tests/unit` and to wear the `[App]\Tests` namespace. You can then simply run `phpunit` at the application's root to play your tests.
 
 PHPUnit's configuration is done through the `phpunit.xml` file.
 
@@ -496,7 +549,16 @@ PHPUnit's configuration is done through the `phpunit.xml` file.
 
 ### Functional
 
-Behat features are to be located in `app/tests/functional`, and context classes go in `bootstrap`, which is a subdirectory of the latter. A sample context class is already provided and extends `Neemzy\Patchwork\Tests\FeatureContext`, which adds some vocabulary to Mink.
+Behat features are to be located in `app/tests/functional`, and context classes go in `bootstrap`, which is a subdirectory of the latter. A sample context class is already provided and extends `Neemzy\Patchwork\Tests\FeatureContext`, which adds some vocabulary to Mink :
+
+```
+Then wait 5 seconds
+Then take a screenshot
+Then ".togglable" element should be visible
+Then ".togglable" element should be hidden
+Then ".togglable" element should have class "togglable--hidden"
+Then ".togglable" element should not have class "togglable--hidden"
+```
 
 [Behat manual](http://docs.behat.org/en/latest/)
 [Mink manual](http://mink.behat.org/)
@@ -513,9 +575,7 @@ If you use continuous integration (better), you can safely `.gitignore` `public/
 
 ## Credits
 
-Written by [neemzy](http://www.zaibatsu.fr) since 2012.
-
-You may check out the following PHP packages of mine, which are used in Patchwork :
+Written by [neemzy](http://www.zaibatsu.fr). You may check out the following PHP packages of mine, which are used in Patchwork :
 
 - [patchwork-core](https://packagist.org/packages/neemzy/patchwork-core) : Core files for Patchwork
 - [environ](https://packagist.org/packages/neemzy/environ) : Lightweight environment manager
