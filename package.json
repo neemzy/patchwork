@@ -24,9 +24,11 @@
         "napa": "*",
         "domqueryall": "*"
     },
+
     "napa": {
         "bootstrap": "twbs/bootstrap"
     },
+
     "scripts": {
         "install": "napa"
     }
