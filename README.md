@@ -59,7 +59,7 @@ All code that could possibly handle inheritance/dispatching in one way or anothe
 The best way to start is to use Composer, which will clone that repository and install all required dependencies (make sure Composer and NPM are installed first) :
 
 ```
-composer create-project neemzy/patchwork -s dev [directory] && cd $_
+composer create-project neemzy/patchwork -s dev [directory] 1.0
 ```
 
 You must use the `-s dev` option to match Patchwork's `minimum-stability` flag, which is required to provide the latest version of some packages (such as Behat 3).
@@ -79,7 +79,7 @@ At this point, you may want to adapt some configuration settings :
 - Define your project's PHP namespace in `composer.json` and `app/config/settings/common.yml`.
 - In the latter file, edit your app's title and short description.
 
-Finally, run `gulp` to have your browser open at the URL you have chosen above and a livereload server started, and start coding !
+Finally, run `gulp` at the application's root to have your browser open at the URL you have chosen above and a livereload server started, and start coding !
 
 ## Directory structure
 
