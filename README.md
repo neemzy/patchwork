@@ -59,7 +59,7 @@ All code that could possibly handle inheritance/dispatching in one way or anothe
 The best way to start is to use Composer, which will clone that repository and install all required dependencies (make sure Composer and NPM are installed first) :
 
 ```
-composer create-project neemzy/patchwork -s dev [directory] 1.0
+composer create-project neemzy/patchwork -s dev [directory] [version]
 ```
 
 You must use the `-s dev` option to match Patchwork's `minimum-stability` flag, which is required to provide the latest version of some packages (such as Behat 3).
