@@ -38,7 +38,7 @@
 
 - [Image Workshop](http://phpimageworkshop.com/) : an image library used for resizing and cropping images.
 
-- [PHPUnit](https://github.com/sebastianbergmann/phpunit) : one of the major unit tests tools for PHP.
+- [PHPUnit](https://github.com/sebastianbergmann/phpunit) : one of the major unit testing tools for PHP.
 
 ### Front-end
 
@@ -156,6 +156,16 @@ In the sample setup, the `prod` environment binds an error handler to the app (t
 ### Configuration
 
 Config parameters are read from YAML files read from `app/config/settings`, the best practice being to define one file per environment (see above) that all include and extend a `common.yml` file if required.
+
+It will then all be available through `$app['config']`, adding an array dimension for every configuration level :
+
+```yaml
+toto:
+    tata:
+        tutu: titi
+
+# $app['config']['toto']['tata']['tutu'] contains "titi"
+```
 
 ### Translations
 
