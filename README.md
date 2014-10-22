@@ -62,7 +62,7 @@ The best way to start is to use Composer, which will clone that repository and i
 composer create-project neemzy/patchwork -s dev [directory] [version]
 ```
 
-You must use the `-s dev` option to match Patchwork's `minimum-stability` flag, which is required to provide the latest version of some packages (such as Behat 3).
+You must use the `-s dev` option to match Patchwork's `minimum-stability` flag, which is required to provide the latest version of some packages (such as Behat 3). Specifying the version is optional but thus helps ensure getting a stable release.
 
 After installing dependencies, the installer will ask you if you want to remove Git history from the repository. You want to agree to that, since you are building your own project and not contributing to this one !
 
@@ -573,7 +573,7 @@ Then ".togglable" element should not have class "togglable--hidden"
 
 ## Deployment
 
-How to will deploy your app to production is up to you. If you run `composer install` on your production server, make sure to use the `--no-dev` option to avoid installing development dependencies such as test tools.
+How to will deploy your app to production is up to you. If you run `composer install` on your production server, make sure to use the `--no-dev` option to avoid installing development dependencies such as test tools. It is also recommended to then run `composer dump-autoload --optimize` to generate a more efficient autoloader.
 
 ### Assets
 
