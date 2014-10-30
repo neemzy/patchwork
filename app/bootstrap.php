@@ -19,6 +19,7 @@ use Entea\Twig\Extension\AssetExtension;
 use Neemzy\Patchwork\Controller\AdminController;
 use Neemzy\Patchwork\Controller\ApiController;
 use Neemzy\Patchwork\Controller\FrontController;
+use Neemzy\Patchwork\Service\Hydrator\Provider as HydratorServiceProvider;
 use Neemzy\Environ\Environment;
 use Neemzy\Silex\Provider\EnvironServiceProvider;
 use Neemzy\Silex\Provider\RedBean\ServiceProvider as RedBeanServiceProvider;
@@ -105,6 +106,7 @@ $app->register(
 );
 
 $app->register(new UrlGeneratorServiceProvider());
+$app->register(new HydratorServiceProvider());
 $app->register(new ValidatorServiceProvider());
 $app->register(new TranslationServiceProvider());
 
