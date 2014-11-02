@@ -162,7 +162,7 @@ date_default_timezone_set($app['config']['timezone']);
 
 Request::enableHttpMethodParameterOverride();
 $app['locale'] = $app['config']['locale'];
-$app['debug'] = !$app['environ']->is('prod');
+$app['debug'] = $app['environ']->is('dev');
 
 if (!$app['debug']) {
     $app['redbean']->freeze(true);
