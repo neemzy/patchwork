@@ -568,7 +568,10 @@ Then ".togglable" element should have class "togglable--hidden"
 Then ".togglable" element should not have class "togglable--hidden"
 ```
 
+Tests are ran through BrowserKit, or PhantomJS when features are prefixed with `@javascript`.
+
 [Behat manual](http://docs.behat.org/en/latest/)
+
 [Mink manual](http://mink.behat.org/)
 
 ## Deployment
