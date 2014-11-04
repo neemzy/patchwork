@@ -169,7 +169,7 @@ toto:
 
 ### Translations
 
-Translations are also read from YAML files, this time coming from `app/config/i18n`. As they are fed to an instance of `Symfony\Component\Validator\Validator`, they eventually belong to a specific domain (allowing Silex to automatically fetch them for translating validation error messages or date formatting, among other things). Patchwork thus allows you to easily get your translations loaded correctly, by naming your files `[domain].[locale].yml`, e.g. `validators.fr.yml`.
+Translations are also read from YAML files, this time coming from `app/config/i18n`. As they are fed to an instance of `Symfony\Component\Translation\Translator`, they eventually belong to a specific domain (allowing Silex to automatically fetch them for translating validation error messages or date formatting, among other things). Patchwork thus allows you to easily get your translations loaded correctly, by naming your files `[domain].[locale].yml`, e.g. `validators.fr.yml`.
 
 A file name without a domain (like `en.yml`) will be loaded to the default domain, and may serve for generic translations.
 
