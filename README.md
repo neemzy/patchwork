@@ -121,8 +121,8 @@ Use `$app['base_path'] = dirname(__DIR__);` to expose your app's base path (`Fil
 Register an instance of `Neemzy\Silex\Provider\EnvironServiceProvider` to your Silex app and feed it `Environment` instances :
 
 ```php
+use Neemzy\Environ\Environment;
 use Neemzy\Silex\Provider\EnvironServiceProvider;
-use Neemzy\Silex\Provider\Environment;
 
 $app->register(
     new EnvironServiceProvider(
