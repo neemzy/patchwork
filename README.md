@@ -592,6 +592,6 @@ Written by [neemzy](http://www.zaibatsu.fr). You may check out the following PHP
 - [environ](https://packagist.org/packages/neemzy/environ) : Lightweight environment manager
 - [environ-service-provider](https://packagist.org/packages/neemzy/environ-service-provider) : Environ service provider for Silex micro-framework
 - [redbean-service-provider](https://packagist.org/packages/neemzy/redbean-service-provider) : RedBean ORM service provider for Silex micro-framework
-- [share-extension](https://packagist.org/packages/neemzy/share-extension) : Twig extension providing social share links
+- [share-extension](https://packagist.org/packages/neemzy/share-extension) : Twig extension providing social sharing links
 
 Contributions and pull requests are very welcome :)
