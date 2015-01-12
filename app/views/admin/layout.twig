@@ -16,7 +16,7 @@
             <div class="navbar-collapse">
                 <ul class="nav navbar-nav">
                     {% set uri = app.request.getRequestURI() %}
-                    <li{% if strpos(uri, '/pizza/') %} class="active"{% endif %}><a href="{{ path('pizza.list') }}">Pizzas</a></li>
+                    <li{% if '/pizza/' in uri %} class="active"{% endif %}><a href="{{ path('pizza.list') }}">Pizzas</a></li>
                 </ul>
             </div>
         </div>
