@@ -20,7 +20,7 @@
 
 - [Composer](https://getcomposer.org/) : the now standard package manager for PHP.
 
-- [NPM](https://www.npmjs.org/) : node.js's package manager, which is used to install front-end dependencies along with napa.
+- [NPM](https://www.npmjs.org/) : node.js's package manager, which is used to install front-end dependencies.
 
 ### Back-end
 
@@ -68,7 +68,7 @@ You then have to check a few steps :
 
 - `var/db` and `var/log` should be writable by your web server's user.
 - Your web server/virtual host should be configured right. A sample `.htaccess` file is provided in the `public` directory, if by any chance you use [Apache](https://www.apache.org/).
-- For development, Gulp should be installed globally (`npm install -g gulp`).
+- For development, gulp should be installed globally (`npm install -g gulp`).
 - For development as well, [SQLite](https://sqlite.org/) and the corresponding PHP extension should be installed (`sudo apt-get install sqlite php5-sqlite` on Debian and Ubuntu).
 
 At this point, you may want to adapt some configuration settings :
@@ -536,8 +536,6 @@ In the back-office, Patchwork relies on Twitter's Bootstrap for building CRUD in
 ### Third-party packages
 
 Adding new packages to your application is as simple as running `npm install [package] --save-dev`. You will always use this option since production JS code will always consist of files of your own, where third-party code is compiled within, and will thus never deploy such code "as-is".
-
-You can also install a package from its GitHub repository if it not available on NPM (e.g. Bootstrap), through [napa](https://github.com/shama/napa).
 
 Extra [gulp plugins](http://gulpjs.com/plugins/) may be installed as well, in order to enhance further the front-end build process by editing `gulpfile.js`.
 
