@@ -13,7 +13,6 @@
         "gulp-uglify": "1.x",
         "gulp-imagemin": "2.x",
         "gulp-ttf2woff": "1.x",
-        "gulp-ttf2eot": "1.x",
         "gulp-open": "0.3.x",
         "gulp-livereload": "3.x",
         "rimraf": "2.x",
