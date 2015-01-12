@@ -1,35 +1,27 @@
 {
     "devDependencies": {
-        "gulp": "*",
-        "gulp-load-plugins": "*",
-        "gulp-util": "*",
-        "gulp-if": "*",
-        "gulp-plumber": "*",
-        "gulp-less": "*",
-        "gulp-autoprefixer": "*",
-        "gulp-csso": "*",
-        "gulp-browserify": "*",
-        "gulp-jshint": "*",
-        "gulp-uglify": "*",
-        "gulp-imagemin": "*",
-        "gulp-ttf2woff": "*",
-        "gulp-ttf2eot": "*",
-        "gulp-open": "*",
-        "gulp-livereload": "*",
-        "rimraf": "*",
-        "imagemin-gifsicle": "*",
-        "imagemin-jpegtran": "*",
-        "imagemin-optipng": "*",
-        "imagemin-pngquant": "*",
-        "napa": "*",
-        "domqueryall": "*"
-    },
-
-    "napa": {
-        "bootstrap": "twbs/bootstrap"
-    },
-
-    "scripts": {
-        "install": "napa"
+        "gulp": "3.x",
+        "gulp-load-plugins": "0.8.x",
+        "gulp-util": "3.x",
+        "gulp-if": "1.x",
+        "gulp-plumber": "0.6.x",
+        "gulp-less": "2.x",
+        "gulp-autoprefixer": "2.x",
+        "gulp-csso": "0.2.x",
+        "gulp-browserify": "0.5.x",
+        "gulp-jshint": "1.x",
+        "gulp-uglify": "1.x",
+        "gulp-imagemin": "2.x",
+        "gulp-ttf2woff": "1.x",
+        "gulp-ttf2eot": "1.x",
+        "gulp-open": "0.3.x",
+        "gulp-livereload": "3.x",
+        "rimraf": "2.x",
+        "imagemin-gifsicle": "4.x",
+        "imagemin-jpegtran": "4.x",
+        "imagemin-optipng": "4.x",
+        "imagemin-pngquant": "4.x",
+        "bootstrap": "3.x",
+        "domqueryall": "0.1.x"
     }
 }
