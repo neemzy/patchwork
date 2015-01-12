@@ -586,7 +586,7 @@ If you use continuous integration (better), you can safely `.gitignore` `public/
 
 ## Credits
 
-Written by [neemzy](http://www.zaibatsu.fr). You may check out the following PHP packages of mine, which are used in Patchwork :
+Written by [neemzy](http://neemzy.org). You may check out the following PHP packages of mine, which are used in Patchwork :
 
 - [patchwork-core](https://packagist.org/packages/neemzy/patchwork-core) : Core files for Patchwork
 - [environ](https://packagist.org/packages/neemzy/environ) : Lightweight environment manager
