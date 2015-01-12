@@ -576,7 +576,9 @@ Tests are ran through BrowserKit, or PhantomJS when features are prefixed with `
 
 ## Deployment
 
-How to will deploy your app to production is up to you. If you run `composer install` on your production server, make sure to use the `--no-dev` option to avoid installing development dependencies such as test tools. It is also recommended to then run `composer dump-autoload --optimize` to generate a more efficient autoloader.
+### PHP dependencies
+
+Run `composer install --no-dev -o` on your production server (or during your continuous integration build) to only retrieve the packages your application actually uses, and generate an optimized autoloader.
 
 ### Assets
 
