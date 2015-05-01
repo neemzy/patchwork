@@ -1,9 +1,10 @@
 # Patchwork
 
-**Patchwork** is a **PHP 5.4+ full-stack web framework**, which main purpose is to gather the best tools available together in order to provide a minimalist yet complete start point for building small to medium **web applications**.
+**Patchwork** is a **PHP 5.4+ full-stack web framework**, which main purpose is to provide a minimalist yet complete start point for building **websites**.
 
 ## Table of contents
 
+- [Philosophy](#philosophy)
 - [Round table](#round-table)
 - [Structure and installation](#structure-and-installation)
 - [Directory structure](#directory-structure)
@@ -13,6 +14,14 @@
 - [Testing](#testing)
 - [Deployment](#deployment)
 - [Credits](#credits)
+
+## Philosophy
+
+Patchwork aims at solving one subset of web development : building small to medium-sized websites for equivalent corporations, should they only display data in a nice way or offer some more user interaction, like a blog or an online shop. When large frameworks are way too heavy for the task and old-school CMS do not provide the flexibility you need, Patchwork comes to the rescue.
+
+Instead of providing yet another incomplete solution to every problem, Patchwork gathers together the best web development tools available and takes care of the boilerplate code. Define your data model, set up your business logic, polish the UI and make your clients happy in a breeze.
+
+Patchwork has been crafted throughout many projects among the lines of the above, and will keep evolving the same way : pragmatic, simple, pleasant to use, and damn efficient.
 
 ## Round table
 
@@ -368,14 +377,30 @@ $app->mount(
 
 [Silex manual](http://silex.sensiolabs.org/documentation)
 
+#### `FrontController`
+
+The `FrontController` class binds some basic routes to the app's root :
+
+- `/` : renders the `app/views/front/partials/home.twig` template
+- `/robots.txt` : renders a generic `robots.txt` file depending on the environment
+- `/admin` : redirects the user to the route defined in the `app/config/settings/common.yml` file (at `admin.root`)
+
 #### `EntityController`
 
-The `EntityController` class describes a controller dedicated to managing a certain model (its constructor takes a table name as a parameter). This class is abstract and extended by :
+The `EntityController` class describes a controller dedicated to managing a certain model (its constructor takes a table name as a parameter).
 
-- `AdminController`, that binds an HTTP authentication to itself and exposes CRUD GUI routes.
-- `ApiController`, that exposes a RESTful API for your models and takes a boolean `$readonly` (second) parameter to know whether it should expose `POST`/`PUT` routes.
+This class is abstract and extended by `AdminController`, that binds an HTTP authentication mechanism to itself and exposes CRUD GUI routes :
 
-You can inherit from these classes in your own controllers in order to customize their behaviour. To do so, you simply need to declare a `connect` method :
+```php
+use Neemzy\Patchwork\Controller\AdminController;
+
+$app->mount(
+    '/',
+    new AdminController('pizza')
+);
+```
+
+You can also inherit from it in your own controllers in order to customize its behaviour. To do so, you simply need to declare a `connect` method :
 
 ```php
 public function connect(Application $app)
@@ -388,15 +413,7 @@ public function connect(Application $app)
 }
 ```
 
-You can also create your own entity controllers by extending the abstract class itself (e.g. if you need a `RSSController` or something among these lines).
-
-#### `FrontController`
-
-The `FrontController` class binds some basic routes to the app's root :
-
-- `/` : renders the `app/views/front/partials/home.twig` template
-- `/robots.txt` : renders a basic `robots.txt` file depending on the environment
-- `/admin` : redirects the user to the route defined in the `app/config/settings/common.yml` file (at `admin.root`)
+Finally, you can also create your own entity controllers by extending the abstract class itself (e.g. if you need a `RSSController` or something among these lines).
 
 ### Third-party packages
 
