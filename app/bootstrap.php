@@ -1,38 +1,38 @@
 <?php
 
 error_reporting(E_ALL ^ E_NOTICE);
+ini_set('session.use_only_cookies', 1);
+ini_set('session.use_trans_sid', 0);
+mb_internal_encoding('UTF-8');
 require_once(dirname(__DIR__).'/vendor/autoload.php');
 
+use DerAlex\Silex\YamlConfigServiceProvider;
+use Entea\Twig\Extension\AssetExtension;
+use Neemzy\Environ\Environment;
+use Neemzy\Patchwork\Controller\AdminController;
+use Neemzy\Patchwork\Controller\FrontController;
+use Neemzy\Patchwork\Service\Hydrator\Provider as HydratorServiceProvider;
+use Neemzy\Silex\Provider\EnvironServiceProvider;
+use Neemzy\Silex\Provider\RedBean\ServiceProvider as RedBeanServiceProvider;
+use Neemzy\Twig\Extension\ShareExtension;
 use Silex\Application;
-use Silex\Provider\UrlGeneratorServiceProvider;
-use Silex\Provider\TwigServiceProvider;
-use Silex\Provider\ValidatorServiceProvider;
-use Silex\Provider\TranslationServiceProvider;
-use Silex\Provider\SwiftmailerServiceProvider;
 use Silex\Provider\MonologServiceProvider;
+use Silex\Provider\SwiftmailerServiceProvider;
+use Silex\Provider\TranslationServiceProvider;
+use Silex\Provider\TwigServiceProvider;
+use Silex\Provider\UrlGeneratorServiceProvider;
+use Silex\Provider\ValidatorServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
-use DerAlex\Silex\YamlConfigServiceProvider;
-use Entea\Twig\Extension\AssetExtension;
-use Neemzy\Patchwork\Controller\AdminController;
-use Neemzy\Patchwork\Controller\ApiController;
-use Neemzy\Patchwork\Controller\FrontController;
-use Neemzy\Patchwork\Service\Hydrator\Provider as HydratorServiceProvider;
-use Neemzy\Environ\Environment;
-use Neemzy\Silex\Provider\EnvironServiceProvider;
-use Neemzy\Silex\Provider\RedBean\ServiceProvider as RedBeanServiceProvider;
-use Neemzy\Twig\Extension\ShareExtension;
 
+// Silex
+Request::enableHttpMethodParameterOverride();
 $app = new Application();
 $app['base_path'] = dirname(__DIR__);
 
-
-
-/**
- * Service providers
- */
+// Environ
 $app->register(
     new EnvironServiceProvider(
         [
@@ -84,8 +84,15 @@ $app->register(
     )
 );
 
-$app->register(new YamlConfigServiceProvider($app['base_path'].'/app/config/settings/'.$app['environ']->get().'.yml'));
+$app['debug'] = $app['environ']->is('dev');
 
+// Configuration and localization
+$app->register(new YamlConfigServiceProvider($app['base_path'].'/app/config/settings/'.$app['environ']->get().'.yml'));
+$app['locale'] = $app['config']['locale'];
+setlocale(LC_ALL, $app['config']['full_locale']);
+date_default_timezone_set($app['config']['timezone']);
+
+// RedBean
 $app->register(
     new RedBeanServiceProvider(),
     [
@@ -96,6 +103,12 @@ $app->register(
     ]
 );
 
+if (!$app['debug']) {
+    $app['redbean']->freeze(true);
+    $app['redbean']->useWriterCache(true);
+}
+
+// Monolog
 $app->register(
     new MonologServiceProvider(),
     [
@@ -105,9 +118,11 @@ $app->register(
     ]
 );
 
-$app->register(new UrlGeneratorServiceProvider());
-$app->register(new HydratorServiceProvider());
-$app->register(new ValidatorServiceProvider());
+// Swift Mailer
+$app->register(new SwiftmailerServiceProvider());
+$app['swiftmailer.transport'] = new Swift_MailTransport();
+
+// Translator
 $app->register(new TranslationServiceProvider());
 
 $app['translator'] = $app->share(
@@ -118,10 +133,10 @@ $app['translator'] = $app->share(
             $dir = $app['base_path'].'/app/config/i18n/';
 
             foreach (scandir($dir) as $file) {
-                if (preg_match('/([a-z]+\.)?'.$app['config']['locale'].'.yml/', $file, $matches)) {
+                if (preg_match('/([a-z]+\.)?'.$app['locale'].'.yml/', $file, $matches)) {
                     array_shift($matches);
                     $domain = rtrim(implode('', $matches), '.') ?: null;
-                    $translator->addResource('yaml', $app['base_path'].'/app/config/i18n/'.$file, $app['config']['locale'], $domain);
+                    $translator->addResource('yaml', $app['base_path'].'/app/config/i18n/'.$file, $app['locale'], $domain);
                 }
             }
 
@@ -130,15 +145,20 @@ $app['translator'] = $app->share(
     )
 );
 
-$app->register(new TwigServiceProvider(), ['twig.path' => $app['base_path'].'/app/views']);
+// Misc
+$app->register(new UrlGeneratorServiceProvider());
+$app->register(new ValidatorServiceProvider());
+$app->register(new HydratorServiceProvider());
+
+// Twig
+$app->register(new TwigServiceProvider(), ['twig.path' => $app['base_path'].'/app/views', 'twig.options' => ['debug' => $app['debug']]]);
+$app['twig']->addExtension(new Twig_Extension_Debug());
 $app['twig']->addExtension(new Twig_Extensions_Extension_Intl());
 $app['twig']->addExtension(new Twig_Extensions_Extension_Text());
 $app['twig']->addExtension(new AssetExtension($app, ['asset.directory' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']).'assets']));
 $app['twig']->addExtension(new ShareExtension());
 
-$app->register(new SwiftmailerServiceProvider());
-$app['swiftmailer.transport'] = new Swift_MailTransport();
-
+// Session
 $app['session'] = $app->share(
     function () {
         $session = new Session();
@@ -148,46 +168,8 @@ $app['session'] = $app->share(
     }
 );
 
-
-
-/**
- * Configuration
- */
-ini_set('session.use_trans_sid', 0);
-ini_set('session.use_only_cookies', 1);
-mb_internal_encoding('UTF-8');
-setlocale(LC_ALL, $app['config']['full_locale']);
-date_default_timezone_set($app['config']['timezone']);
-
-Request::enableHttpMethodParameterOverride();
-$app['locale'] = $app['config']['locale'];
-$app['debug'] = $app['environ']->is('dev');
-
-if (!$app['debug']) {
-    $app['redbean']->freeze(true);
-    $app['redbean']->useWriterCache(true);
-}
-
-
-
-/**
- * Controllers
- */
-$app->mount(
-    '/admin/pizza',
-    new AdminController('pizza')
-);
-
-$app->mount(
-    '/api/pizza',
-    new ApiController('pizza')
-);
-
-$app->mount(
-    '/',
-    new FrontController()
-);
-
-
+// Controllers
+$app->mount('/admin/pizza', new AdminController('pizza'));
+$app->mount('/', new FrontController());
 
 return $app;
