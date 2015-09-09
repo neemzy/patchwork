@@ -156,7 +156,7 @@ $app['twig']->addExtension(new Twig_Extension_Debug());
 $app['twig']->addExtension(new Twig_Extensions_Extension_Intl());
 $app['twig']->addExtension(new Twig_Extensions_Extension_Text());
 $app['twig']->addExtension(new AssetExtension($app, ['asset.directory' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']).'assets']));
-$app['twig']->addExtension(new ShareExtension());
+$app['twig']->addExtension(ShareExtension::getInstance());
 
 // Session
 $app['session'] = $app->share(
