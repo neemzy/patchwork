@@ -14,7 +14,7 @@ use Neemzy\Patchwork\Controller\FrontController;
 use Neemzy\Patchwork\Service\Hydrator\Provider as HydratorServiceProvider;
 use Neemzy\Silex\Provider\EnvironServiceProvider;
 use Neemzy\Silex\Provider\RedBean\ServiceProvider as RedBeanServiceProvider;
-use Neemzy\Twig\Extension\ShareExtension;
+use Neemzy\Twig\Extension\Share\ShareExtension;
 use Silex\Application;
 use Silex\Provider\MonologServiceProvider;
 use Silex\Provider\SwiftmailerServiceProvider;

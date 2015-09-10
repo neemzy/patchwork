@@ -17,80 +17,80 @@
 
 ## Philosophy
 
-Patchwork aims at solving one subset of web development : building small to medium-sized websites for equivalent corporations, should they only display data in a nice way or offer some more user interaction, like a blog or an online shop. When large frameworks are way too heavy for the task and old-school CMS do not provide the flexibility you need, Patchwork comes to the rescue.
+Patchwork aims at solving one subset of web development: building small to medium-sized websites for equivalent corporations, should they only display data in a nice way or offer some more user interaction, like a blog or an online shop. When large frameworks are way too heavy for the task and old-school CMS do not provide the flexibility you need, Patchwork comes to the rescue.
 
 Instead of providing yet another incomplete solution to every problem, Patchwork gathers together the best web development tools available and takes care of the boilerplate code. Define your data model, set up your business logic, polish the UI and make your clients happy in a breeze.
 
-Patchwork has been crafted throughout many projects among the lines of the above, and will keep evolving the same way : pragmatic, simple, pleasant to use, and damn efficient.
+Patchwork has been crafted throughout many projects among the lines of the above, and will keep evolving the same way: pragmatic, simple, pleasant to use, and damn efficient.
 
 ## Round table
 
 ### Package management
 
-- [Composer](https://getcomposer.org/) : the now standard package manager for PHP.
+- [Composer](https://getcomposer.org/): the now standard package manager for PHP.
 
-- [NPM](https://www.npmjs.org/) : node.js's package manager, which is used to install front-end dependencies.
+- [NPM](https://www.npmjs.org/): node.js's package manager, which is used to install front-end dependencies.
 
 ### Back-end
 
-- [Silex](https://github.com/silexphp/Silex) : a micro-framework built around Symfony components, which provides a dependency injection container and a basic web application structure. It comes in Patchwork along with multiple service providers.
+- [Silex](https://github.com/silexphp/Silex): a micro-framework built around Symfony components, which provides a dependency injection container and a basic web application structure. It comes in Patchwork along with multiple service providers.
 
-- [Twig](https://github.com/twigphp/Twig) : Symfony's *de facto* templating engine, used by default in Silex. It comes in Patchwork along with multiple extensions.
+- [Twig](https://github.com/twigphp/Twig): Symfony's *de facto* templating engine, used by default in Silex. It comes in Patchwork along with multiple extensions.
 
-- [Swift Mailer](http://swiftmailer.org/) : Symfony's *de facto* mail sender, used by default in Silex.
+- [Swift Mailer](http://swiftmailer.org/): Symfony's *de facto* mail sender, used by default in Silex.
 
-- [RedBean](https://github.com/gabordemooij/redbean) : an ORM which particularity is that it creates your database schema itself as you write code. Its integration with Silex is handled by a dedicated service provider, in order to make it available as an instance rather than a static facade.
+- [RedBean](https://github.com/gabordemooij/redbean): an ORM which particularity is that it creates your database schema itself as you write code. Its integration with Silex is handled by a dedicated service provider, in order to make it available as an instance rather than a static facade.
 
-- [Monolog](https://github.com/Seldaek/monolog) : the standard logger for PHP.
+- [Monolog](https://github.com/Seldaek/monolog): the standard logger for PHP.
 
-- [Environ](https://github.com/neemzy/environ) : an environment manager which allows defining environments triggered by a boolean callback (typically based on hostname detection) and executing environment-specific code.
+- [Environ](https://github.com/neemzy/environ): an environment manager which allows defining environments triggered by a boolean callback (typically based on hostname detection) and executing environment-specific code.
 
-- [Image Workshop](http://phpimageworkshop.com/) : an image library used for resizing and cropping images.
+- [Image Workshop](http://phpimageworkshop.com/): an image library used for resizing and cropping images.
 
-- [PHPUnit](https://github.com/sebastianbergmann/phpunit) : one of the major unit testing tools for PHP.
+- [PHPUnit](https://github.com/sebastianbergmann/phpunit): one of the major unit testing tools for PHP.
 
 ### Front-end
 
-- [gulp](http://gulpjs.com/) : a task runner for asset processing and optimization, which allows for live compilation and reloading during development. Along with the libraries listed below, it makes use of [Autoprefixer](https://github.com/postcss/autoprefixer), [CSSO](https://bem.info/tools/optimizers/csso/), [JSHint](http://jshint.com/), [UglifyJS]() and image minification and font conversion utilities.
+- [gulp](http://gulpjs.com/): a task runner for asset processing and optimization, which allows for live compilation and reloading during development. Along with the libraries listed below, it makes use of [Autoprefixer](https://github.com/postcss/autoprefixer), [CSSO](https://bem.info/tools/optimizers/csso/), [JSHint](http://jshint.com/), [UglifyJS]() and image minification and font conversion utilities.
 
-- [LESS](http://lesscss.org/) : a CSS preprocessor.
+- [LESS](http://lesscss.org/): a CSS preprocessor.
 
-- [Browserify](http://browserify.org/) : a front-end JavaScript dependency manager, which allows using CommonJS's `require` method to help keep a good code structure.
+- [Browserify](http://browserify.org/): a front-end JavaScript dependency manager, which allows using CommonJS's `require` method to help keep a good code structure.
 
-- [Bootstrap](https://github.com/twbs/bootstrap) : Twitter's HTML/CSS framework, powered by LESS and used to build back-office user interfaces.
+- [Bootstrap](https://github.com/twbs/bootstrap): Twitter's HTML/CSS framework, powered by LESS and used to build back-office user interfaces.
 
-- [Behat](https://github.com/Behat/Behat) and [Mink](https://github.com/Behat/Mink) : functional tests tools, that can pilot a browser to use your app. Running JavaScript-capable tests will require the use of [Selenium](http://docs.seleniumhq.org/) and [PhantomJS](http://phantomjs.org/).
+- [Behat](https://github.com/Behat/Behat) and [Mink](https://github.com/Behat/Mink): functional tests tools, that can pilot a browser to use your app. Running JavaScript-capable tests will require the use of [Selenium](http://docs.seleniumhq.org/) and [PhantomJS](http://phantomjs.org/).
 
 ## Structure and installation
 
 All code that could possibly handle inheritance/dispatching in one way or another (which includes PHP classes, basic LESS stylesheets and [NicEdit](http://nicedit.com/), a JavaScript WYSIWYG editor) is contained into the framework's **core**, available [as a separate package](https://github.com/neemzy/patchwork-core). The framework's repository itself is mainly a sample app - about pizzas - designed to help you getting started quickly.
 
-The best way to start is to use Composer, which will clone that repository and install all required dependencies (make sure Composer and NPM are installed first) :
+The best way to start is to use Composer, which will clone that repository and install all required dependencies (make sure Composer and NPM are installed first):
 
 ```
 composer create-project neemzy/patchwork [directory]
 ```
 
-After installing dependencies, the installer will ask you if you want to remove Git history from the repository. You want to agree to that, since you are building your own project and not contributing to this one !
+After installing dependencies, the installer will ask you if you want to remove Git history from the repository. You want to agree to that, since you are building your own project and not contributing to this one!
 
-You then have to check a few steps :
+You then have to check a few steps:
 
 - `var/db` and `var/log` should be writable by your web server's user.
 - Your web server/virtual host should be configured right. A sample `.htaccess` file is provided in the `public` directory, if by any chance you use [Apache](https://www.apache.org/).
 - For development, gulp should be installed globally (`npm install -g gulp`).
 - For development as well, [SQLite](https://sqlite.org/) and the corresponding PHP extension should be installed (`sudo apt-get install sqlite php5-sqlite` on Debian and Ubuntu).
 
-At this point, you may want to adapt some configuration settings :
+At this point, you may want to adapt some configuration settings:
 
 - Set your app's root URL in `gulpfile.js` and `behat.yml`.
 - Define your project's PHP namespace in `composer.json` and `app/config/settings/common.yml`.
 - In the latter file, edit your app's title and short description.
 
-Finally, run `gulp` at the application's root to have your browser open at the URL you have chosen above and a livereload server started, and start coding !
+Finally, run `gulp` at the application's root to have your browser open at the URL you have chosen above and a livereload server started, and start coding!
 
 ## Directory structure
 
-This is a quick tour around Patchwork's directory structure, in order to take a first glance at how it works. The following represents the directory structure's state as of installation, and is by no mean an obligation to follow it in its deepest details, as most of it can be set up differently through appropriate configuration :
+This is a quick tour around Patchwork's directory structure, in order to take a first glance at how it works. The following represents the directory structure's state as of installation, and is by no mean an obligation to follow it in its deepest details, as most of it can be set up differently through appropriate configuration:
 
 ```
 app                : application data and code
@@ -125,7 +125,7 @@ Use `$app['base_path'] = dirname(__DIR__);` to expose your app's base path (`Fil
 
 ### Defining environments
 
-Register an instance of `Neemzy\Silex\Provider\EnvironServiceProvider` to your Silex app and feed it `Environment` instances :
+Register an instance of `Neemzy\Silex\Provider\EnvironServiceProvider` to your Silex app and feed it `Environment` instances:
 
 ```php
 use Neemzy\Environ\Environment;
@@ -164,7 +164,7 @@ In the sample setup, the `prod` environment binds an error handler to the app (t
 
 Config parameters are read from YAML files read from `app/config/settings`, the best practice being to define one file per environment (see above) that all include and extend a `common.yml` file if required.
 
-It will then all be available through `$app['config']`, adding an array dimension for every configuration level :
+It will then all be available through `$app['config']`, adding an array dimension for every configuration level:
 
 ```yaml
 toto:
@@ -186,7 +186,7 @@ A file name without a domain (like `en.yml`) will be loaded to the default domai
 
 Views are handled by Twig. The main thing to remember is that your application is accessible in templates through the `app` variable, which will let you expose pretty much anything you may need. Twig extensions are also defined in `app/bootstrap.php`.
 
-The recommended directory structure for your `app/views` directory looks like this :
+The recommended directory structure for your `app/views` directory looks like this:
 
 ```
 admin             : back-office templates
@@ -204,7 +204,7 @@ front             : front-office templates
 
 #### Asset paths
 
-Patchwork brings in [Simple Twig Asset Extension](https://github.com/Entea/Silex-Twig-Simple-Asset-Extension) :
+Patchwork brings in [Simple Twig Asset Extension](https://github.com/Entea/Silex-Twig-Simple-Asset-Extension):
 
 ```twig
 <script src="{{ asset('js/script.js') }}"></script>
@@ -224,7 +224,7 @@ RedBean's configuration (including connection informations as well as model clas
 
 #### Validation
 
-Validation constraints are defined through `public static function loadValidatorMetadata(ClassMetadata $metadata)`. You must use [getter constraints](http://api.symfony.com/2.0/Symfony/Component/Validator/Mapping/ClassMetadata.html#method_addGetterConstraint) and define getters for your model's members accordingly, as no properties shall be directly defined (in order to let RedBean's catch-all getter do its magic). Doing so also allows you to keep control over the validated data :
+Validation constraints are defined through `public static function loadValidatorMetadata(ClassMetadata $metadata)`. You must use [getter constraints](http://api.symfony.com/2.0/Symfony/Component/Validator/Mapping/ClassMetadata.html#method_addGetterConstraint) and define getters for your model's members accordingly, as no properties shall be directly defined (in order to let RedBean's catch-all getter do its magic). Doing so also allows you to keep control over the validated data:
 
 ```php
 use Neemzy\Patchwork\Model\Entity;
@@ -259,7 +259,7 @@ class Pizza extends Entity
 #### Traits
 
 Patchwork uses a poor man's event dispatching system through PHP traits in order to share common entity functionality.
-It works by enabling the possibility of dispatching a method call among the class's used traits, through an eponymous method :
+It works by enabling the possibility of dispatching a method call among the class's used traits, through an eponymous method:
 
 ```php
 $pizza = $app['redbean']->dispense('pizza');
@@ -278,7 +278,7 @@ Some traits are available out of the box but you can roll out your own if requir
 
 ##### `FileModel`
 
-This trait enables support for files :
+This trait enables support for files:
 
 - Upon file upload (if one of the model's fields contains an instance of `Symfony\Component\HttpFoundation\File\UploadedFile`), moves it to a permanent location and generate its name if validated
 - Upon model deletion, deletes related files
@@ -291,18 +291,18 @@ This trait extends `FileModel` (which should no more be `use`d in your model onc
 
 ##### `SlugModel`
 
-This trait adds a `slug` field to your models, which contains an URL-valid identifier based on the return of the `getSluggable` method, or the table name appended with the id if the latter yields an empty string (which is its default behavior) :
+This trait adds a `slug` field to your models, which contains an URL-valid identifier based on the return of the `getSluggable` method, or the table name appended with the id if the latter yields an empty string (which is its default behavior):
 
 ```php
 // The Pizza model has no getSluggable method
 $pizza = $app['redbean']->dispense();
-$pizza->name = 'La Grandiosa Margarita !';
+$pizza->name = 'La Grandiosa Margarita!';
 $app['redbean']->store($pizza); // Pizza's id is 12
 echo($pizza->slug); // 'pizza-12'
 
 // Now, the Pizza model has a getSluggable method that returns the pizza's name
 $pizza = $app['redbean']->dispense();
-$pizza->name = 'La Grandiosa Margarita !';
+$pizza->name = 'La Grandiosa Margarita!';
 $app['redbean']->store($pizza);
 echo($pizza->slug); // 'la-grandiosa-margarita'
 ```
@@ -311,7 +311,7 @@ It also exposes a `slugify` method to regenerate the slug if the data it relies 
 
 ##### `SortableModel`
 
-This trait adds a `position` field to your models, which get automatically calculated upon insertion, deletion (to keep a straight count by updating siblings) and, of course, move :
+This trait adds a `position` field to your models, which get automatically calculated upon insertion, deletion (to keep a straight count by updating siblings) and, of course, move:
 
 ```php
 $pizza1 = $app['redbean']->dispense('pizza');
@@ -346,7 +346,7 @@ This trait adds `created` and `updated` `datetime` fields to your models, and va
 
 ##### `TogglableModel`
 
-This trait adds an `active` boolean field to your models, togglable via the `toggle` method and valorized upon insertion according to the `getDefaultState` method, which initially yields `false` but can be overridden in your model class :
+This trait adds an `active` boolean field to your models, togglable via the `toggle` method and valorized upon insertion according to the `getDefaultState` method, which initially yields `false` but can be overridden in your model class:
 
 ```php
 // The Pizza model has a getDefaultState method which returns true
@@ -364,7 +364,7 @@ echo(+$pizza->active); // '0'
 
 #### Routing
 
-Controllers in Patchwork are plain Silex controllers, where you basically bind a callback to an URL/HTTP method couple. You can "mount" them to an URL endpoint in `app/bootstrap.php` :
+Controllers in Patchwork are plain Silex controllers, where you basically bind a callback to an URL/HTTP method couple. You can "mount" them to an URL endpoint in `app/bootstrap.php`:
 
 ```php
 use Neemzy\Patchwork\Controller\FrontController;
@@ -379,17 +379,17 @@ $app->mount(
 
 #### `FrontController`
 
-The `FrontController` class binds some basic routes to the app's root :
+The `FrontController` class binds some basic routes to the app's root:
 
-- `/` : renders the `app/views/front/partials/home.twig` template
-- `/robots.txt` : renders a generic `robots.txt` file depending on the environment
-- `/admin` : redirects the user to the route defined in the `app/config/settings/common.yml` file (at `admin.root`)
+- `/`: renders the `app/views/front/partials/home.twig` template
+- `/robots.txt`: renders a generic `robots.txt` file depending on the environment
+- `/admin`: redirects the user to the route defined in the `app/config/settings/common.yml` file (at `admin.root`)
 
 #### `EntityController`
 
 The `EntityController` class describes a controller dedicated to managing a certain model (its constructor takes a table name as a parameter).
 
-This class is abstract and extended by `AdminController`, that binds an HTTP authentication mechanism to itself and exposes CRUD GUI routes :
+This class is abstract and extended by `AdminController`, that binds an HTTP authentication mechanism to itself and exposes CRUD GUI routes:
 
 ```php
 use Neemzy\Patchwork\Controller\AdminController;
@@ -400,7 +400,7 @@ $app->mount(
 );
 ```
 
-You can also inherit from it in your own controllers in order to customize its behaviour. To do so, you simply need to declare a `connect` method :
+You can also inherit from it in your own controllers in order to customize its behaviour. To do so, you simply need to declare a `connect` method:
 
 ```php
 public function connect(Application $app)
@@ -431,7 +431,7 @@ Once you're done with coding, kill the livereload server and run `gulp --dist` t
 
 You can either use LESS or plain CSS.
 
-The recommended structure for your `app/assets/less` directory looks like this :
+The recommended structure for your `app/assets/less` directory looks like this:
 
 ```
 front                  : front-office stylesheets
@@ -446,7 +446,7 @@ admin.less             : back-office stylesheet
 
 #### Main stylesheet
 
-Check out `app/assets/less/front/main.less` to see how core stylesheets are used :
+Check out `app/assets/less/front/main.less` to see how core stylesheets are used:
 
 - It includes `reset.less`, which homogenizes styles across browsers.
 - It includes a local `variables.less` file which extends the core's eponymous one (see below).
@@ -455,7 +455,7 @@ Check out `app/assets/less/front/main.less` to see how core stylesheets are used
 
 #### Variables
 
-Here are the core-defined (and overrideable) variables :
+Here are the core-defined (and overrideable) variables:
 
 ```less
 @max-width; // Maximum page width, above which no more responsive styles will be applied (and the content will not enlarge more)
@@ -494,7 +494,7 @@ You can thus write media queries like `@media screen and @large-only, @retina`.
 
 #### Mixins
 
-The following mixins are available :
+The following mixins are available:
 
 ```less
 .appearance(@value); // shortcut for appearance CSS rule with and without prefixes (not handled by Autoprefixer)
@@ -510,7 +510,7 @@ You `app/assets/js` directory should contain a `main.js` file, which will be the
 
 Everything will then be compiled into a single `public/assets/js/main.js` file by gulp.
 
-You may use the provided [domqueryall](https://github.com/timmak/domqueryall) to get an array instead of a `NodeList` when querying the DOM for multiple elements :
+You may use the provided [domqueryall](https://github.com/timmak/domqueryall) to get an array instead of a `NodeList` when querying the DOM for multiple elements:
 
 ```js
 (function ($, $$) {
@@ -532,7 +532,7 @@ Images are copied from `app/assets/img` to `public/img` by gulp, and minified wh
 
 TTF fonts are copied from `app/assets/font` to `public/font` and declined in EOT and WOFF formats by gulp.
 
-Webfont handling is helped by Patchwork's LESS mixins :
+Webfont handling is helped by Patchwork's LESS mixins:
 
 ```less
 // Automatically declare the font with multiple file formats (here, /bebasneue.(ttf|eot|woff)/)
@@ -570,7 +570,7 @@ PHPUnit's configuration is done through the `phpunit.xml` file.
 
 ### Functional
 
-Behat features are to be located in `app/tests/functional`, and context classes go in `bootstrap`, which is a subdirectory of the latter. A sample context class is already provided and extends `Neemzy\Patchwork\Tests\FeatureContext`, which adds some vocabulary to Mink :
+Behat features are to be located in `app/tests/functional`, and context classes go in `bootstrap`, which is a subdirectory of the latter. A sample context class is already provided and extends `Neemzy\Patchwork\Tests\FeatureContext`, which adds some vocabulary to Mink:
 
 ```
 Then wait 5 seconds
@@ -601,12 +601,12 @@ If you use continuous integration (better), you can safely `.gitignore` `public/
 
 ## Credits
 
-Written by [neemzy](http://neemzy.org). You may check out the following PHP packages of mine, which are used in Patchwork :
+Written by [neemzy](http://neemzy.org). You may check out the following PHP packages of mine, which are used in Patchwork:
 
-- [patchwork-core](https://packagist.org/packages/neemzy/patchwork-core) : Core files for Patchwork
-- [environ](https://packagist.org/packages/neemzy/environ) : Lightweight environment manager
-- [environ-service-provider](https://packagist.org/packages/neemzy/environ-service-provider) : Environ service provider for Silex micro-framework
-- [redbean-service-provider](https://packagist.org/packages/neemzy/redbean-service-provider) : RedBean ORM service provider for Silex micro-framework
-- [share-extension](https://packagist.org/packages/neemzy/share-extension) : Twig extension providing social sharing links
+- [patchwork-core](https://packagist.org/packages/neemzy/patchwork-core): Core files for Patchwork
+- [environ](https://packagist.org/packages/neemzy/environ): Lightweight environment manager
+- [environ-service-provider](https://packagist.org/packages/neemzy/environ-service-provider): Environ service provider for Silex micro-framework
+- [redbean-service-provider](https://packagist.org/packages/neemzy/redbean-service-provider): RedBean ORM service provider for Silex micro-framework
+- [share-extension](https://packagist.org/packages/neemzy/share-extension): Twig extension providing social sharing links
 
 Contributions and pull requests are very welcome :)
