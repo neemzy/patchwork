@@ -20,7 +20,6 @@
         "imagemin-jpegtran": "4.x",
         "imagemin-optipng": "4.x",
         "imagemin-pngquant": "4.x",
-        "bootstrap": "3.x",
-        "domqueryall": "0.1.x"
+        "bootstrap": "3.x"
     }
 }
