@@ -1,6 +1,7 @@
 {
     "name": "neemzy/patchwork",
     "description": "PHP 5.4+ full-stack web framework",
+    "license": "MIT",
 
     "minimum-stability": "dev",
     "prefer-stable": true,
